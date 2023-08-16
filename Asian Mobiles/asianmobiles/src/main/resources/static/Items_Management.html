@@ -1,0 +1,506 @@
+<html>
+
+<head>
+
+    <!--JQUARY LINK-->
+    <script src="Assets/jquery/jquery.js"></script>
+
+    <link rel="stylesheet" href="Assets/datatable/css/datatables.min.css">
+    <script src="Assets/datatable/js/datatables.min.js"></script>
+
+    <!--BOOSTRAP CSS & JS LINK-->
+    <link rel="stylesheet" href="Assets/bootstrap/css/bootstrap.min.css">
+    <script src="Assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--FONT AWESOME LINK-->
+    <link rel="stylesheet" href="Assets/fontawesome/css/all.css">
+
+    <!--employee_js.JS , employee_css & COMMON.JS LINK-->
+    <link rel="stylesheet" href="Assets/style/common.css">
+    <script src="Assets/script/common.js"></script>
+    <script src="Assets/script/items.js"></script>
+
+    <!--SWEET ALERT 2 LINK-->
+    <link rel="stylesheet" href="Assets/sweetalert2/package/dist/sweetalert2.min.css">
+    <script src="Assets/sweetalert2/package/dist/sweetalert2.min.js"></script>
+
+    <title>Items_Management-Asian_Mobiles</title>
+
+</head>
+
+<!--ADDED BACKGROUND PICTURE ON BODY TAG BY CSS-->
+<body style="background-image: url(Assets/images/desmal14.jpg); overflow-x: hidden; overflow-y: hidden; background-size: cover;">
+
+
+    <!--NAVIGATION BAR BY BOOSTRAP5-->
+    <div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
+        <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                                Administration
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                                Sales
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                                <li><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                                Purchase
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                                Inventory
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                                <li><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/items">Items Managaement System</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                                repair
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item fw-bold" href="#">Employee Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="#">User Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="#">Privilage Management System</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold" href="/logout" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-fluid body">
+
+
+        <div class="row empManTitelText">
+            <h1 class="fw-bold">ITEMS MANAGEMENT SYSTEM</h1>
+        </div>
+
+        <div class="empMancontainer" id="empMancontainer">
+
+            <!----ITEMS TABLE CONTAINER-->
+            <div class="form-container sign-in-container" id="employeeFormContainer">
+
+                <!--ITEMS TABLE-->
+                <div class="row">
+
+                    <div class="col-9">
+
+                        <h2 class="fw-bold"><i class="fa fa-table"></i>ITEMS TABLE</h2>
+
+                    </div>
+
+                    <div class="col-3 text-end">
+
+                        <button type="button" class="btn btn-outline-primary" onclick="printTable(tableItems)">PRINT TABLE</button>
+
+                    </div>
+
+                </div><br>
+
+                <table class="table table-hover table-dark table-striped-columns" id="tableItems">
+
+                    <thead class="table-secondary">
+
+                    <tr class="fw-bold">
+                        <th class="text-center">#</th>
+                        <th class="text-center" style="font-size: 13px">ITEM NAME</th>
+                        <th class="text-center" style="font-size: 13px">ITEM CODE NO</th>
+                        <th class="text-center" style="font-size: 13px;">IMEI NUMBER 01 </th>
+                        <th class="text-center" style="font-size: 13px">IMEI NUMBER 02</th>
+                        <th class="text-center" style="font-size: 13px">SERIAL NUMBER</th>
+                        <th class="text-center" style="font-size: 13px">STATUS</th>
+                        <th class="text-center modify" style="column-width: 800px;font-size: 13px">MODIFY</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+
+            <!----ITEMS FORM CONTAINER-->
+            <div class="form-container sign-up-container">
+
+                <!--  ITEMS FORM -->
+                <form onsubmit="return false">
+
+                    <!--- ITEMS FORM HEADING -->
+                    <div class="row">
+
+                        <h2 class="fw-bold"><i class="fa fa-sitemap"></i>ITEMS FORM</h2>
+
+                    </div>
+
+                    <!--- REQUIRED STAR MARK  -->
+                    <div class="row text-end">
+
+                        <span class="fw-bold" style="font-size: 18px;"><span id="star">*</span> Required </span>
+
+                    </div><br>
+
+                    <!--ITEMS MODEL / ITEM NAME-->
+                    <div class="row">
+
+                        <!--ITEMS MODEL-->
+                        <div class="col-6 selectStyle" style="width: 50%;">
+
+                            <label for="itemModelName" id="labelItemModelName" class="fw-bold"> Item Model Name : <span id="star">*</span></label>
+
+                            <select id="itemModelName" class="fw-bold" onchange="selectValidator(itemModelName, '','item', 'model_id','oldItem');" required>
+
+                            </select>
+
+                            <i style="top: 171px; width: 48%"></i>
+
+                        </div>
+
+                        <!--ITEMS NAME-->
+                        <div class="col-6 inputBox" style="width: 50%;">
+
+                            <input type="text" class="fw-bold" id="itemName"  onkeyup="textFeildValidtor(itemName,'','item','item_name','oldItem');" required>
+
+                            <label for="itemName" id="labelItemName" class="fw-bold"> Item Name :  <span id="star">*</span></label>
+
+                            <i style="width: 100%"> </i>
+
+                        </div>
+
+
+                    </div><br>
+
+                    <!--ITEM IMEI NUMBER 01 /ITEM IMEI NUMBER 02-->
+                    <div class="row">
+
+                        <!-- ITEM IMEI NUMBER 01 -->
+                        <div class="col-6 inputBox" style="width: 50%;">
+
+                            <input type="text" class="fw-bold" id="itemImeiNumber01"  onkeyup="textFeildValidtor(itemImeiNumber01,'^[0-9]{15}$','item','iemi_number_1','oldItem')" required>
+
+                            <label for="itemImeiNumber01" id="labelItemImeiNumber01" class="fw-bold"> Item Imei Number 01 :  <span id="star">*</span></label>
+
+                            <i style="width: 100%"> </i>
+
+                        </div>
+
+                        <!-- ITEM IMEI NUMBER 02 -->
+                        <div class="col-6 inputBox" style="width: 50%;">
+
+                            <input type="text" class="fw-bold" id="itemImeiNumber02"  onkeyup="textFeildValidtor(itemImeiNumber02,'^[0-9]{15}$','item','iemi_number_2','oldItem')" >
+
+                            <label for="itemImeiNumber02" id="labelItemImeiNumber02" class="fw-bold"> Item Imei Number 02 : </label>
+
+                            <i style="width: 100%"> </i>
+
+                        </div>
+
+
+                    </div><br>
+
+                    <!-- ITEM SERIAL NUMBER / ITEM CODE NUMBER -->
+                    <div class="row">
+
+                        <!-- ITEM SERIAL NUMBER -->
+                        <div class="col-6 inputBox" style="width: 50%;">
+
+                            <input type="text" class="fw-bold" id="itemSerialNumber" onkeyup="textFeildValidtor(itemSerialNumber,'^[A-Za-z0-9]{7,16}$','item','serial_number','oldItem')"  required>
+
+                            <label for="itemSerialNumber" id="labelItemSerialNumber" class="fw-bold">Item Serial Number : <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 100%"></i>
+
+                        </div>
+
+
+                        <!-- ITEM CODE NUMBER -->
+                        <div class="col-6 inputBox" style="width: 50%;">
+
+                            <input type="text" class="fw-bold" id="itemCodeNumber" onkeyup="textFeildValidtor(itemCodeNumber,'^[A-Z][0-9]{5,9}$','item','item_code_number','oldItem')"  required>
+
+                            <label for="itemCodeNumber" id="labelItemCodeNumber" class="fw-bold">Item Code Number (Ex:-Axxxxxxxxxx) : <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 100%"></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!-- ITEM STATUS -->
+                    <div class="row">
+
+                        <!--ITEM STATUS -->
+                        <div class="col-6 selectStyle" style="width: 50%;">
+
+                            <label for="itemStatus" id="labelItemStatus" class="fw-bold">Item Status : <span id="star">*</span></label>
+
+                            <select id="itemStatus" class="fw-bold" onchange="selectValidator(itemStatus, '','item', 'item_status_id','oldItem')" required>
+
+                            </select>
+
+                            <i style="top: 371px; width: 48%"></i>
+
+                        </div>
+
+
+                    </div><br>
+
+
+                    <!--ITEM NOTE-->
+                    <div class="row">
+
+                        <!--ITEM NOTE-->
+                        <div class="col-12">
+
+                            <label for="itemNote" class="fw-bold empDescriptionLabel"> Customer Note :
+                            </label>
+
+                            <textarea class="textArea fw-bold" id="itemNote" cols="100" rows="5" onkeyup="textFeildValidtor(itemNote,'^[A-Za-z0-9\\/\\.\\,\\s]{1,250}$','item','note','oldItem')"></textarea>
+
+                        </div>
+
+                    </div><br><br><br>
+
+                    <!-- ADD, UPDATE & CLEAR BUTTON -->
+                    <div class="row text-center">
+
+                        <!--ADD BUTTON-->
+                        <div class="col-4">
+
+                            <button class="addBtn" id="btnAdd" onclick="submitBtnFunction()" > ADD  </button>
+
+                        </div>
+
+                        <!--UPDATE BUTTON-->
+                        <div class="col-4">
+
+                            <button class="updateBtn" id="btnUpdate"  onclick="updateBTN()" > UPDATE </button>
+
+                        </div>
+
+                        <!--CLEAR BUTTON-->
+                        <div class="col-4">
+
+                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR  </button>
+
+                        </div>
+
+                    </div><br>
+
+                </form>
+
+            </div>
+
+            <!--OVERLAY SLIDE-->
+            <div class="overlay-container">
+
+                <div class="overlay">
+
+                    <div class="overlay-panel overlay-left">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Items Table!</h1>
+                        <p id="p" class="fw-bold">Please click the below button to display the Items Table...</p>
+                        <button class="press" id="empTableBtn">Items Table</button>
+
+                    </div>
+
+                    <div class="overlay-panel overlay-right">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Items Form!</h1>
+                        <p class="fw-bold">Please click the below button to display the Items Form...</p>
+                        <button class="press" id="empFormBtn">Items Form</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                   <div class="row">
+
+                       <div class="col-5" style="background-image: url(Assets/images/allmobiles.jpg); background-size: cover" >
+
+                       </div>
+
+                       <div class="col-7">
+
+                           <div class="row">
+
+                               <div class="col-10">
+                                   <h4 class="modal-title" id="exampleModalLabel"> <i class="fa fa-sitemap"></i> Item Details</h4>
+
+                               </div>
+
+                               <div class="col-2">
+
+                                   <button type="button" class="btn-close btn-outline-danger text-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                               </div>
+
+                           </div> <br>
+
+                           <div class="row">
+
+                               <div class="col-12">
+
+                                   <table id="viewTable" class="table  table-striped table-hover shadow rounded">
+
+                                       <tr>
+                                           <th>
+                                                Item Name :
+                                           </th>
+
+                                           <td id="modItemName">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Item Imei Number 01 :
+                                           </th>
+
+                                           <td id="modItemImeiNo01">
+
+                                           </td>
+                                       </tr>
+
+                                           <th>
+                                               Item Imei Number 02 :
+                                           </th>
+
+                                           <td id="modItemImeiNo02">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Serial Number :
+                                           </th>
+
+                                           <td id="modSerialNo">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Item Code Number :
+                                           </th>
+
+                                           <td id="modItemCodeNo">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Item Status :
+                                           </th>
+
+                                           <td id="modItemStatus">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Item Note :
+                                           </th>
+
+                                           <td id="modItemNote">
+
+                                           </td>
+                                       </tr>
+
+
+                                   </table>
+
+                               </div>
+
+                           </div>
+
+                           <div class="row">
+
+                               <div class="col text-end">
+
+                                   <button type="button" class="btn btn-outline-primary" onclick="printView()">PRINT</button>
+
+                               </div>
+
+                           </div>
+
+                       </div>
+
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+

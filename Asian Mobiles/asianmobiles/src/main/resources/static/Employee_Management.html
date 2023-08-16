@@ -1,0 +1,579 @@
+<html>
+
+<head>
+
+    <!--JQUARY LINK-->
+    <script src="Assets/jquery/jquery.js"></script>
+
+    <link rel="stylesheet" href="Assets/datatable/css/datatables.min.css">
+    <script src="Assets/datatable/js/datatables.min.js"></script>
+
+    <!--BOOSTRAP CSS & JS LINK-->
+    <link rel="stylesheet" href="Assets/bootstrap/css/bootstrap.min.css">
+    <script src="Assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--FONT AWESOME LINK-->
+    <link rel="stylesheet" href="Assets/fontawesome/css/all.css">
+
+    <!--employee_js.JS , employee_css & COMMON.JS LINK-->
+    <link rel="stylesheet" href="Assets/style/common.css">
+    <script src="Assets/script/common.js"></script>
+    <script src="Assets/script/employee.js"></script>
+
+    <!--SWEET ALERT 2 LINK-->
+    <link rel="stylesheet" href="Assets/sweetalert2/package/dist/sweetalert2.min.css">
+    <script src="Assets/sweetalert2/package/dist/sweetalert2.min.js"></script>
+
+    <title>Employee_Management-Asian_Mobiles</title>
+
+</head>
+
+<!--ADDED BACKGROUND PICTURE ON BODY TAG BY CSS-->
+<body style="background-image: url(Assets/images/desmal14.jpg); overflow-x: hidden; overflow-y: hidden; background-size: cover;">
+
+
+    <!--NAVIGATION BAR BY BOOSTRAP5-->
+    <div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
+        <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                                Administration
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                                Sales
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                                <li><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                                Purchase
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                                Inventory
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                                <li><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="/items">Items Managaement System</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                                repair
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item fw-bold" href="#">Employee Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="#">User Management System</a></li>
+                                <li><a class="dropdown-item fw-bold" href="#">Privilage Management System</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold" href="/logout" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-fluid body">
+
+
+        <div class="row empManTitelText">
+            <h1 class="fw-bold">EMPLOYEE MANAGEMENT SYSTEM</h1>
+        </div>
+
+        <div class="empMancontainer" id="empMancontainer">
+
+            <!----EMPLOYEE TABLE CONTAINER-->
+            <div class="form-container sign-in-container" id="employeeFormContainer">
+
+                <!--EMPLOYEE TABLE-->
+                <div class="row">
+
+                    <div class="col-9">
+
+                        <h2 class="fw-bold"><i class="fa fa-table"></i>EMPLOYEE TABLE</h2>
+
+                    </div>
+
+                    <div class="col-3 text-end">
+
+                        <button type="button" class="btn btn-outline-primary" onclick="printTable(tableEmployee)">PRINT TABLE</button>
+
+                    </div>
+
+                </div><br>
+
+                <table class="table table-hover table-dark table-striped-columns" id="tableEmployee">
+
+                    <thead class="table-secondary">
+
+                    <tr class="fw-bold">
+                        <th class="text-center">#</th>
+                        <th style="font-size: 13px">EMP NO & CALLING NAME</th>
+                        <th class="text-center" style="font-size: 13px">FULLNAME</th>
+                        <th class="text-center" style="font-size: 13px">NIC</th>
+                        <th class="text-center" style="font-size: 13px">MOBILE</th>
+                        <th class="text-center" style="font-size: 13px">E-MAIL</th>
+                        <th class="text-center" style="font-size: 13px">STATUS</th>
+                        <th class="text-center modify" style="column-width: 400px;font-size: 13px">MODIFY</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+
+            <!----EMPLOYEE FORM CONTAINER-->
+            <div class="form-container sign-up-container">
+
+                <!--  EMPLOYEE FORM -->
+                <form onsubmit="return false">
+
+                    <!--- EMPLOYEE FORM HEADING -->
+                    <div class="row">
+                        <h2 class="fw-bold"><i class="fa fa-user"></i> EMPLOYEE FORM</h2>
+                    </div>
+
+                    <!--- REQUIRED STAR MARK  -->
+                    <div class="row text-end">
+                        <span class="fw-bold" style="font-size: 18px;"><span id="star">*</span> Required
+                        </span>
+                    </div><br>
+
+                    <!--EMPLOYEE FULL NAME /EMPLOYEE CALLING NAME / EMPLOYEE NIC-->
+                    <div class="row">
+
+                        <!--EMPLOYEE FULLNAME-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="empfullname"
+                                   onkeyup="textFeildValidtor(empfullname,'^(([A-Z][a-z]{3,20}[\\s]){1,5}([A-Z][a-z]{3,16}))$','employee','fullname','oldemployee')"
+                                   required>
+
+                            <label for="empfullname" class="fw-bold">Employee Fullname (Ex:-Jxxx Dxxx): <span
+                                    id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--EMPLOYEE CALLING NAME-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="empCallingname"
+                                   onkeyup="textFeildValidtor(empCallingname,'^[A-Z][a-z]{3,10}$','employee','callingname','oldemployee')"
+                                   required>
+
+                            <label for="empCallingname" class="fw-bold">Employee Calling Name (Ex:-Jxxxx): <span
+                                    id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--EMPLOYEE NIC-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="empNic"
+                                   onkeyup="textFeildValidtor(empNic,'^(([0-9]{9}[VvXx])|([0-9]){12})$','employee','nic','oldemployee')"
+                                   required>
+
+                            <label for="empNic" class="fw-bold">Employee NIC NUMBER: <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--EMPLOYEE EMAIL /EMPLOYEE PHONE NUMBER / EMPLOYEE LAND NUMBER-->
+                    <div class="row">
+
+                        <!--EMPLOYEE EMAIL-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="empEmail" onkeyup="textFeildValidtor(empEmail,'^[A-Za-z0-9]{5,20}[@][a-z]{4,10}[.][a-z]{2,5}$','employee','email','oldemployee')"
+                                   required>
+
+                            <label for="empEmail" class="fw-bold">E-mail Address :  <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--EMPLOYEE MOBILE NUMBER-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="empMobile" onkeyup="textFeildValidtor(empMobile,'^[0][7][01245678][0-9]{7}$','employee','mobile','oldemployee')"
+                                   required>
+
+                            <label for="empMobile" class="fw-bold">Mobile Number : <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--EMPLOYEE LAND NUMBER-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="empLand" onkeyup="textFeildValidtor(empLand,'^[0][1-9][0-9]{8}$','employee','land','oldemployee')">
+
+                            <label for="empLand" class="fw-bold">LAND NUMBER: </label>
+
+                            <i></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--EMPLOYEE GENDER /EMPLOYEE DOB / EMPLOYEE ADDRESS-->
+                    <div class="row">
+
+                        <!--EMPLOYEE GENDER-->
+                        <div class="col-4">
+
+                            <div class="fw-bold">
+                                <label style="color: #2196f3; bottom: 2px;" id="empGender"
+                                       class="fw-bold form-check-lable">GENDER : <span id="star">*</span></label>
+                            </div>
+
+                            <div class="form-check fw-bold form-check-inline">
+                                <label for="male" class="form-check-lable fw-bold" id="lblmale">Male</label>
+                                <input type="radio" name="gender" id="male" class="form-check-input" value="options" onchange="redioFeildValidator(male,'','employee','gender',lblmale,lblfemale)"
+                                       required>
+                            </div>
+
+                            <div class="form-check fw-bold form-check-inline">
+                                <label for="female" class="form-check-lable fw-bold" id="lblfemale">Female</label>
+                                <input type="radio" name="gender" id="female" class="form-check-input" value="options" onchange="redioFeildValidator(female,'','employee','gender',lblfemale,lblmale)"
+                                       required>
+                            </div>
+
+                        </div>
+
+                        <!--EMPLOYEE DOB-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="empDOB" name="date" onfocus="(this.type='date')"
+                                   onblur="if(!this.value) this.type='text'" onchange="dateFeildValidtor(empDOB,'', 'employee', 'dob', 'oldemployee')" required>
+
+                            <label for="empDOB" class="fw-bold">Employee DOB : <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--EMPLOYEE ADDRESS-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="empAddress" onkeyup="textFeildValidtor(empAddress,'^[A-Za-z0-9\\/\\.\\,\\s]{1,250}$','employee','address','oldemployee')" required>
+
+                            <label for="empAddress" class="fw-bold" >ADDRESS : <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                    </div><br><br>
+
+                    <!--EMPLOYEE CIVILSTATUS /EMPLOYEE DESIGNATION / EMPLOYEE STATUS-->
+                    <div class="row">
+
+                        <!--EMPLOYEE CIVILSTATUS-->
+                        <div class="col-4 selectStyle">
+
+                            <label for="empCivilStatus" class="fw-bold">EMPLOYEE
+                                CIVILSTATUS : <span id="star">*</span></label>
+
+                            <select id="empCivilStatus" class="fw-bold" onchange="selectValidator(empCivilStatus, '','employee', 'civilstatus_id','oldemployee')" required>
+                                <option selected disabled>Select Employee Status</option>
+                            </select>
+
+                            <i style="top: 402px;width: 31%" ></i>
+
+                        </div>
+
+                        <!--EMPLOYEE DESIGNATION-->
+                        <div class="col-4 selectStyle">
+
+                            <label for="empDesignation" class="fw-bold">EMPLOYEE
+                                DESIGNATION : <span id="star">*</span></label>
+
+                            <select id="empDesignation" class="fw-bold" onchange="selectValidator(empDesignation, '','employee', 'designation_id','oldemployee')" required>
+                                <option selected disabled>Select Employee Status</option>
+                            </select>
+
+                            <i style="top: 402px;width: 31%; left: 35%;" ></i>
+
+                        </div>
+
+                        <!--EMPLOYEE STATUS-->
+                        <div class="col-4 selectStyle">
+
+                            <label for="empStatus" class="fw-bold">EMPLOYEE STATUS :
+                                <span id="star">*</span></label>
+
+                            <select id="empStatus" class="fw-bold" onchange="selectValidator(empStatus, '','employee', 'employeestatus_id','oldemployee')" required>
+                                <option selected disabled>Select Employee Status</option>
+                            </select>
+
+                            <i style="top: 402px;width: 31%; left: 67%;" ></i>
+
+                        </div>
+
+                    </div><br><br>
+
+                    <!--EMPLOYEE DESCRIPTION-->
+                    <div class="row">
+
+                        <!--EMPLOYEE DESCRIPTION-->
+                        <div class="col-12">
+
+                            <label for="empDescription" class="fw-bold empDescriptionLabel"> Employee Description :
+                            </label>
+
+                            <textarea class="textArea fw-bold" id="empDescription" cols="100" rows="5" onkeyup="textFeildValidtor(empDescription,'^[A-Za-z0-9\\/\\.\\,\\s]{1,250}$','employee','description','oldemployee')" ></textarea>
+
+                        </div>
+
+                    </div><br><br>
+
+                    <!-- ADD, UPDATE & CLEAR BUTTON -->
+                    <div class="row text-center">
+
+                        <!--ADD BUTTON-->
+                        <div class="col-4">
+
+                            <button class="addBtn"  id="btnAdd" onclick="submitBtnFunction()" > ADD EMPLOYEE    </button>
+
+                        </div>
+
+                        <!--UPDATE BUTTON-->
+                        <div class="col-4">
+
+                            <button class="updateBtn" id="btnUpdate"  onclick="updateBTN()" > UPDATE EMPLOYEE </button>
+
+                        </div>
+
+                        <!--CLEAR BUTTON-->
+                        <div class="col-4">
+
+                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR EMPLOYEE  </button>
+
+                        </div>
+
+                    </div><br>
+
+                </form>
+
+            </div>
+
+            <!--OVERLAY SLIDE-->
+            <div class="overlay-container">
+
+                <div class="overlay">
+
+                    <div class="overlay-panel overlay-left">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Employee Table!</h1>
+                        <p id="p" class="fw-bold">Please click the below button to display the Employee Table...</p>
+                        <button class="press" id="empTableBtn">Employee Table</button>
+
+                    </div>
+
+                    <div class="overlay-panel overlay-right">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Employee Form!</h1>
+                        <p class="fw-bold">Please click the below button to display the Employee Form...</p>
+                        <button class="press" id="empFormBtn">Employee Form</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="empModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                   <div class="row">
+
+                       <div class="col-5" style="background-image: url(Assets/images/allmobiles.jpg); background-size: cover" >
+
+                       </div>
+
+                       <div class="col-7">
+
+                           <div class="row">
+
+                               <div class="col-10">
+                                   <h4 class="modal-title" id="exampleModalLabel"> <i class="fa fa-user"></i> Employee Details</h4>
+
+                               </div>
+
+                               <div class="col-2">
+
+                                   <button type="button" class="btn-close btn-outline-danger text-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                               </div>
+
+                           </div> <br>
+
+                           <div class="row">
+
+                               <div class="col-12">
+
+                                   <table id="viewTable" class="table  table-striped table-hover shadow rounded">
+                                       <tr>
+
+                                       <tr>
+                                           <th>
+                                               Employee Number :
+                                           </th>
+
+                                           <td id="modEmpNumber">
+
+                                           </td>
+                                       </tr>
+
+                                           <th>
+                                               Employee Name :
+                                           </th>
+
+                                           <td id="modEmpName">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Calling Name :
+                                           </th>
+
+                                           <td id="modEmpCallName">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               NIC :
+                                           </th>
+
+                                           <td id="modEmpNic">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Mobile Number :
+                                           </th>
+
+                                           <td id="modEmpMobileNo">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Email :
+                                           </th>
+
+                                           <td id="modEmpEmail">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                                Status :
+                                           </th>
+
+                                           <td id="modEmpStatus">
+
+                                           </td>
+                                       </tr>
+
+                                   </table>
+
+                               </div>
+
+                           </div>
+
+                           <div class="row">
+
+                               <div class="col text-end">
+
+                                   <button type="button" class="btn btn-outline-primary" onclick="printView()">PRINT</button>
+
+                               </div>
+
+                           </div>
+
+                       </div>
+
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+
