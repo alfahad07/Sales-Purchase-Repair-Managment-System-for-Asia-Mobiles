@@ -343,7 +343,6 @@ const formRefill = (ob) => {
 
     divRoles.innerHTML = "";
 
-
     for (let index in roles) {
 
         let divCheck = document.createElement("div")

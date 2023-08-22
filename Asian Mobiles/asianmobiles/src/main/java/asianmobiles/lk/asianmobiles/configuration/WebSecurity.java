@@ -20,10 +20,10 @@ public class WebSecurity {
                 antMatchers("/Assets/**").permitAll(). //Giving permission to the Assets File resource --> static file
                 antMatchers("/createadmin").permitAll().
                 antMatchers("/login").permitAll().
-                antMatchers("/dashboard").hasAnyAuthority("Admin","Manager","Owner","Cashier","Ass_Manager","Technician").
-                antMatchers("/employee/**").hasAnyAuthority("Admin","Manager","Owner").
-                antMatchers("/user/**").hasAnyAuthority("Admin","Manager","Owner").
-                antMatchers("/privilage/**").hasAnyAuthority("Admin","Manager").
+                antMatchers("/dashboard").hasAnyAuthority("Admin","Owner","Manager","Cashier","Ass_Manager","Technician","Sales_Person").
+                antMatchers("/employee/**").hasAnyAuthority("Admin","Owner","Manager").
+                antMatchers("/user/**").hasAnyAuthority("Admin","Owner","Manager").
+                antMatchers("/privilage/**").hasAnyAuthority("Admin","Owner","Manager").
                 anyRequest().authenticated().and().csrf().disable().
 
                 formLogin().

@@ -492,6 +492,7 @@ const clearTableStyle = (tableid) => {
 }
 
 function printView() {
+
     let win = window.open(); //opens a new tab or window
     win.document.write("<link rel='stylesheet' href='Assets/bootstrap/css/bootstrap.min.css'>" + viewTable.outerHTML );
 
