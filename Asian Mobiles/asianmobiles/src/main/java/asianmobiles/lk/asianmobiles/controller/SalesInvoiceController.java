@@ -1,11 +1,10 @@
 package asianmobiles.lk.asianmobiles.controller;
 
-import asianmobiles.lk.asianmobiles.entity.Items;
 import asianmobiles.lk.asianmobiles.entity.Model;
+import asianmobiles.lk.asianmobiles.entity.PhoneModel;
+import asianmobiles.lk.asianmobiles.entity.SalesInvoice;
 import asianmobiles.lk.asianmobiles.entity.User;
-import asianmobiles.lk.asianmobiles.repository.ModelRepository;
-import asianmobiles.lk.asianmobiles.repository.ModelStatusRepository;
-import asianmobiles.lk.asianmobiles.repository.UserRepository;
+import asianmobiles.lk.asianmobiles.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -20,11 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/model")
-public class ModelController {
+@RequestMapping(value = "/salesinvoice")
+public class SalesInvoiceController {
 
     @Autowired // USED TO CREATE A COPY OF AN OBJECT AND INTERFACE
-    private ModelRepository modelDao;
+    private SalesInvoiceRepository salesInvoiceDao;
 
     @Autowired
     private UserRepository userDao;
@@ -33,31 +32,31 @@ public class ModelController {
     private PrivilegeController privilegeController;
 
     @Autowired
-    private ModelStatusRepository modelStatusDao;
+    private SalesInvoiceStatusRepository salesInvoiceStatusDao;
 
 
     @GetMapping(value = "/getbyid/{id}", produces = "application/json")
-    public Model getModelByPVId (@PathVariable("id") int id){
+    public SalesInvoice getSalesInvoiceByPVId (@PathVariable("id") int id){
 
-        return modelDao.getReferenceById(id);
+        return salesInvoiceDao.getReferenceById(id);
 
     }
 
 
     @GetMapping
-    public ModelAndView modelUi(){
+    public ModelAndView salesInvoiceUi(){
 
-        ModelAndView modelui = new ModelAndView();
+        ModelAndView salesInvoiceui = new ModelAndView();
 
-        modelui.setViewName("Model_Management.html");
+        salesInvoiceui.setViewName("salesInvoice_Management.html");
 
-        return modelui;
+        return salesInvoiceui;
 
     }
 
 
     @GetMapping(value = "/findall", produces = "application/json")
-    public List<Model> findAll (){
+    public List<SalesInvoice> findAll (){
 
         //NEED TO CHECK PRIVILAGE FOR LOGGED USER --> This is done below...
 
@@ -65,16 +64,16 @@ public class ModelController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         //Created a HashMap instance or copy
-        HashMap<String, Boolean> loggedUserPrivilege = privilegeController.getPrivilage(authentication.getName(), "MODEL");
+        HashMap<String, Boolean> loggedUserPrivilege = privilegeController.getPrivilage(authentication.getName(), "SALES-INVOICE");
 
         if (loggedUserPrivilege != null && loggedUserPrivilege.get("sel")) {
 
-            return modelDao.findAll(Sort.by(Sort.Direction.DESC, "id"));
+            return salesInvoiceDao.findAll(Sort.by(Sort.Direction.DESC, "id"));
 
         }else {
 
-            List<Model> modelList = new ArrayList<>();
-            return  modelList;
+            List<SalesInvoice> salesInvoiceList = new ArrayList<>();
+            return  salesInvoiceList;
 
         }
 
@@ -82,15 +81,8 @@ public class ModelController {
 
 
 
-    @GetMapping(value = "/list", produces = "application/json")
-    public List<Model> modelList () {
-
-        return modelDao.list();
-
-    }
-
     //Create delete mapping to delete User by using DeleteMapping Annotation
-    @DeleteMapping
+   /* @DeleteMapping
     public String deleteModel( @RequestBody Model model ){
 
         //NEED TO CHECK PRIVILAGE FOR LOGGED USER --> This is done below...
@@ -149,7 +141,7 @@ public class ModelController {
 
     //CREATE POST MAPPING FUNCTION TO ADD MODEL [/Model - POST]
     @PostMapping
-    public String addModel( @RequestBody Model model){
+    public String addItem( @RequestBody Model model){
 
         //NEED TO CHECK PRIVILAGE FOR LOGGED USER --> This is done below...
 
@@ -210,7 +202,7 @@ public class ModelController {
 
     //CREATE POST MAPPING FUNCTION TO UPDATE MODEL [/Model - PUT]
     @PutMapping
-    public String updateModel( @RequestBody Model model ){
+    public String updateItem( @RequestBody Model model ){
 
         //NEED TO CHECK PRIVILAGE FOR LOGGED USER --> This is done below...
 
@@ -267,7 +259,7 @@ public class ModelController {
 
         }
 
-    }
+    }*/
 
 
 }

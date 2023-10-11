@@ -281,11 +281,12 @@ const fillSelectFeild = (feildid, displayMessage, dataList, displayProperty, sel
         feildid.disabled = false;
 }
 
-const fillSelectFeild2 = (feildid, displayMessage, dataList, displayProperty, displayProperty2, visibility = false) => {
+const fillSelectFeild2 = (feildid, displayMessage, dataList, displayProperty, displayProperty2, selectedValue, visibility = false) => {
+    feildid.innerHTML = "";
     optionPlaceholder = document.createElement('option');
-    optionPlaceholder.value = "";
-    optionPlaceholder.selected = true;
-    optionPlaceholder.disabled = true;
+    optionPlaceholder.value     = "";
+    optionPlaceholder.selected  = true;
+    optionPlaceholder.disabled  = true;
     optionPlaceholder.innerText = displayMessage;
     feildid.appendChild(optionPlaceholder);
 
@@ -294,6 +295,12 @@ const fillSelectFeild2 = (feildid, displayMessage, dataList, displayProperty, di
         optionValues.value = JSON.stringify(dataList[index]);
         //  optionValues.innerText = getDataFromObject(dataList[index], displayPropertyList)
         optionValues.innerText = dataList[index][displayProperty] + " -> " + dataList[index][displayProperty2];
+
+        if (dataList[index][displayProperty] == selectedValue) {
+            optionValues.selected = true;
+            feildid.style.color = "green"
+        }
+
         feildid.appendChild(optionValues);
     }
 

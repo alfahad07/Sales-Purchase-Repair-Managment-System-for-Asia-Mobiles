@@ -4,7 +4,7 @@ window.addEventListener('load', loadUserInterface);
 //create function for browser on load event
 function loadUserInterface() {
 
-    loggedUserPrivilage = getServiceRequest("/userprivilage/bymodule?modulename=PRE-ORDER")
+    loggedUserPrivilage = getServiceRequest("/userprivilage/bymodule?modulename=SALES-INVOICE")
 
     //CALLED USER FORM AND TABLE BOX OR CONTAINER 3D ROTATE
     formAndTableContainer3DRotate();
@@ -30,24 +30,24 @@ const refreshTable = () => {
     PreOrders = getServiceRequest("/preorder/findall");
 
     //create display property list
-    let DisplayPropertyList = ['pre_order_code','customer_id.fullname','model','total_amount','required_date','pre_order_status_id.name'];
+    let DisplayPropertyList = ['pre_order_code','bill_number','customer_name','model','total_amount','net_amount','Sales_invoice_status_id.name'];
 
     //create display property list type
-    let DisplayPropertyListType = ['text','object',getModelName,getTotalAmount,'text','object'];
+    let DisplayPropertyListType = ['text','text','text',getModelName,getTotalAmount,getNetAmount,'object'];
 
     // calling filldataintotable function to fill data
-    fillDataIntoTable(tablePreOrder, PreOrders, DisplayPropertyList, DisplayPropertyListType, formRefill, rowDelete, rowView, true,loggedUserPrivilage);
+    fillDataIntoTable(tableSalesInvoice, PreOrders, DisplayPropertyList, DisplayPropertyListType, formRefill, rowDelete, rowView, true,loggedUserPrivilage);
 
     //Invisibling the Delete Button in the table when the Status is deleted (Once Deleted the Details or row, the Delete Btn will Disappear)
     for (let index in PreOrders){
 
         if(PreOrders[index].pre_order_status_id.name == "Deleted")
-            tablePreOrder.children[1].children[index].children[7].children[1].style.display = "none";
+            tableSalesInvoice.children[1].children[index].children[7].children[1].style.display = "none";
 
     }
 
     //need to add jquery table
-    $('#tablePreOrder').dataTable();
+    $('#tableSalesInvoice').dataTable();
 
 
 }
@@ -75,10 +75,16 @@ const getTotalAmount = (ob) => {
 
 }
 
+const getNetAmount = (ob) => {
+
+    return "Rs." + parseFloat(ob.net_amount).toFixed(2);
+
+}
+
 const refreshForm = () => {
 
 
-    preOrder = new Object();
+    salesInvoice = new Object();
     oldPreOrder = null;
 
     preOrder.preOrderHasModelList = new Array();
