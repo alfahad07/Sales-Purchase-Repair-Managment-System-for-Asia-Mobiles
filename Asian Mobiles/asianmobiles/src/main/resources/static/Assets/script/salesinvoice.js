@@ -25,23 +25,23 @@ function loadUserInterface() {
 const refreshTable = () => {
 
     //create Array for employees
-    PreOrders = new Array();
+    salesInvoice = new Array();
 
-    PreOrders = getServiceRequest("/preorder/findall");
+    salesInvoice = getServiceRequest("/salesinvoice/findall");
 
     //create display property list
-    let DisplayPropertyList = ['pre_order_code','bill_number','customer_name','model','total_amount','net_amount','Sales_invoice_status_id.name'];
+    let DisplayPropertyList = ['pre_order_code','bill_number','customer_name','model','net_amount','sales_invoice_status_id.name'];
 
     //create display property list type
-    let DisplayPropertyListType = ['text','text','text',getModelName,getTotalAmount,getNetAmount,'object'];
+    let DisplayPropertyListType = ['text','text','text',getModelName,getNetAmount,'object'];
 
     // calling filldataintotable function to fill data
-    fillDataIntoTable(tableSalesInvoice, PreOrders, DisplayPropertyList, DisplayPropertyListType, formRefill, rowDelete, rowView, true,loggedUserPrivilage);
+    fillDataIntoTable(tableSalesInvoice, salesInvoice, DisplayPropertyList, DisplayPropertyListType, formRefill, rowDelete, rowView, true,loggedUserPrivilage);
 
     //Invisibling the Delete Button in the table when the Status is deleted (Once Deleted the Details or row, the Delete Btn will Disappear)
-    for (let index in PreOrders){
+    for (let index in salesInvoice){
 
-        if(PreOrders[index].pre_order_status_id.name == "Deleted")
+        if(salesInvoice[index].sales_invoice_status_id.name == "Deleted")
             tableSalesInvoice.children[1].children[index].children[7].children[1].style.display = "none";
 
     }
@@ -56,12 +56,12 @@ const getModelName = (ob) => {
 
     let orderModelName = "";
 
-    for (let index in ob.preOrderHasModelList){
+    for (let index in ob.salesInvoiceHasItemsList){
 
-        if(ob.preOrderHasModelList.length-1 == index )
-            orderModelName = orderModelName + ob.preOrderHasModelList[index].model_id.model_name;
+        if(ob.salesInvoiceHasItemsList.length-1 == index )
+            orderModelName = orderModelName + ob.salesInvoiceHasItemsList[index].items_id.model_id.model_name;
         else
-            orderModelName = orderModelName + ob.preOrderHasModelList[index].model_id.model_name + ", ";
+            orderModelName = orderModelName + ob.salesInvoiceHasItemsList[index].items_id.model_id.model_name + ", ";
 
     }
 
@@ -69,11 +69,11 @@ const getModelName = (ob) => {
 
 }
 
-const getTotalAmount = (ob) => {
+/*const getTotalAmount = (ob) => {
 
     return "Rs." + parseFloat(ob.total_amount).toFixed(2);
 
-}
+}*/
 
 const getNetAmount = (ob) => {
 
@@ -85,11 +85,11 @@ const refreshForm = () => {
 
 
     salesInvoice = new Object();
-    oldPreOrder = null;
+    oldSalesInvoice = null;
 
-    preOrder.preOrderHasModelList = new Array();
+    salesInvoice.salesInvoiceHasItemsList = new Array();
 
-    Customers = getServiceRequest("/customer/list");
+    /*Customers = getServiceRequest("/customer/list");
     fillSelectFeild(preOrderCustomer, "Select Pre-Order Customer", Customers, "fullname")
 
     Statuses = getServiceRequest("/preorderstatus/list")
@@ -124,7 +124,7 @@ const refreshForm = () => {
 
     preOrderRequiredDate.max = currentDateForMax.getFullYear() + getMontahDate(currentDateForMax);
 
-    refreshInnerFormAndTable();
+    refreshInnerFormAndTable();*/
 
     disableAddUpdateBtn(true, false);
 

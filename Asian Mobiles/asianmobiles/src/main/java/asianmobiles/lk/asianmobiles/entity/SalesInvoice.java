@@ -65,8 +65,8 @@ public class SalesInvoice {
     @Column(name = "added_datetime")
     private LocalDateTime added_datetime;
 
-    @Column(name = "updated_datetime")
-    private LocalDateTime updated_datetime;
+    @Column(name = "last_updated_datetime")
+    private LocalDateTime last_updated_datetime;
 
     @Column(name = "deleted_datetime")
     private LocalDateTime deleted_datetime;
@@ -81,8 +81,8 @@ public class SalesInvoice {
     private Customer customer_id;
 
     @ManyToOne
-    @JoinColumn(name = "Sales_invoice_status_id",referencedColumnName = "id")
-    private SalesInvoiceStatus Sales_invoice_status_id;
+    @JoinColumn(name = "sales_invoice_status_id",referencedColumnName = "id")
+    private SalesInvoiceStatus sales_invoice_status_id;
 
     @ManyToOne
     @JoinColumn(name = "pre_order_id",referencedColumnName = "id")
