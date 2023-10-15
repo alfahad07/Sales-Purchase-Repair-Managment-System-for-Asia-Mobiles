@@ -25,9 +25,9 @@ function loadUserInterface() {
 const refreshTable = () => {
 
     //create Array for employees
-    salesInvoice = new Array();
+    salesInvoices = new Array();
 
-    salesInvoice = getServiceRequest("/salesinvoice/findall");
+    salesInvoices = getServiceRequest("/salesinvoice/findall");
 
     //create display property list
     let DisplayPropertyList = ['pre_order_code','bill_number','customer_name','model','net_amount','sales_invoice_status_id.name'];
@@ -36,12 +36,12 @@ const refreshTable = () => {
     let DisplayPropertyListType = ['text','text','text',getModelName,getNetAmount,'object'];
 
     // calling filldataintotable function to fill data
-    fillDataIntoTable(tableSalesInvoice, salesInvoice, DisplayPropertyList, DisplayPropertyListType, formRefill, rowDelete, rowView, true,loggedUserPrivilage);
+    fillDataIntoTable(tableSalesInvoice, salesInvoices, DisplayPropertyList, DisplayPropertyListType, formRefill, rowDelete, rowView, true,loggedUserPrivilage);
 
     //Invisibling the Delete Button in the table when the Status is deleted (Once Deleted the Details or row, the Delete Btn will Disappear)
-    for (let index in salesInvoice){
+    for (let index in salesInvoices){
 
-        if(salesInvoice[index].sales_invoice_status_id.name == "Deleted")
+        if(salesInvoices[index].sales_invoice_status_id.name == "Deleted")
             tableSalesInvoice.children[1].children[index].children[7].children[1].style.display = "none";
 
     }
@@ -89,42 +89,41 @@ const refreshForm = () => {
 
     salesInvoice.salesInvoiceHasItemsList = new Array();
 
-    /*Customers = getServiceRequest("/customer/list");
-    fillSelectFeild(preOrderCustomer, "Select Pre-Order Customer", Customers, "fullname")
+    customers = getServiceRequest("/customer/list");
+    fillSelectFeild(registeredCustomer, "Select Registered Customer", customers, "fullname");
 
-    Statuses = getServiceRequest("/preorderstatus/list")
-    fillSelectFeild(preOrderStatus, "Select Pre-Order Status", Statuses, "name")
+    salesPreOrders = getServiceRequest("/preorder/list")
+    fillSelectFeild(salesPreOrder, "Select Pre-Order", salesPreOrders, "pre_order_code");
 
-
-    //CLEARING THE MODEL DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE MODELS
-
-    preOrderCustomer.style.color        = "grey";
-    preOrderCustomer.style.borderBottom = "none";
-
-    preOrderStatus.style.color        = "grey";
-    preOrderStatus.style.borderBottom = "none";
-
-    preOrderRequiredDate.value = "";
-
-    preOrderTotalAmount.value  = "";
-    $('#preOrderTotalAmount').css("pointer-events", "none");
-    $('#preOrderTotalAmount').css("cursor", "pointer");
+    statuses = getServiceRequest("/salesinvoicestatus/list");
+    fillSelectFeild(salesInvoiceStatus, "Select Sales Invoice Status", statuses, "name")
 
 
-    // SETTING THE DATE FOR PRE-ORDER
+    //CLEARING THE DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING A SALES INVOICE...
+    registeredCustomer.style.color        = "grey";
+    registeredCustomer.style.borderBottom = "none";
 
-    let currentDateForMin = new Date();
-    currentDateForMin.setDate(currentDateForMin.getDate() + 2);
+    salesPreOrder.style.color        = "grey";
+    salesPreOrder.style.borderBottom = "none";
 
-    preOrderRequiredDate.min = currentDateForMin.getFullYear() + getMontahDate(currentDateForMin);
+    salesInvoiceStatus.style.color        = "grey";
+    salesInvoiceStatus.style.borderBottom = "none";
 
+    salesCustomerName.value    = "";
+    salesCustomerAddress.value = "";
+    salesContactNumber.value   = "";
+    salesCustomerNic.value     = "";
+    salesCustomerEmail.value   = "";
+    salesTotalAmount.value     = "";
+    salesTax.value             = "";
+    salesDiscount.value        = "";
 
-    let currentDateForMax = new Date();
-    currentDateForMax.setDate(currentDateForMax.getDate() + 30);
+    salesNetAmount.value  = "";
+    $('#salesNetAmount').css("pointer-events", "none");
+    $('#salesNetAmount').css("cursor", "pointer");
 
-    preOrderRequiredDate.max = currentDateForMax.getFullYear() + getMontahDate(currentDateForMax);
+    salesNote.value            = "";
 
-    refreshInnerFormAndTable();*/
 
     disableAddUpdateBtn(true, false);
 
@@ -416,7 +415,7 @@ const innerFormRefill = (innerOb, innerRowNo) => {
 
 const innerRowDelete = (innerOb, innerRowIndex) => {
 
-    let deleteMsg = "Would you like to Delete this Pre-Order Model?\n"
+    let deleteMsg = "Would you like to Delete this Sales Invoice Model?\n"
         +"Model Name : "+ innerOb.model_id.model_name ;
 
     let deleteUserResponse = window.confirm(deleteMsg);
@@ -441,31 +440,67 @@ function checkErrors() {
     let error = "";
 
 
-    if (preOrder.customer_id == null){
+    if (salesInvoice.customer_name == ""){
 
-        error = error + "Pre-Order Customer Field Incomplete \n";
-
-    }
-
-    if (preOrder.required_date == null){
-
-        error = error + "Pre-Order Required Date Field Incomplete \n";
+        error = error + "Customer Name Field Incomplete \n";
 
     }
 
-    if (preOrder.total_amount == null){
+    if (salesInvoice.customer_address == ""){
 
-        error = error + "Pre-Order Total Amount Field Incomplete \n";
-
-    }
-
-    if (preOrder.pre_order_status_id == null){
-
-        error = error + "Pre-Order Status Field Incomplete \n";
+        error = error + "Customer Address Field Incomplete \n";
 
     }
 
-    if (preOrder.preOrderHasModelList.length == "0"){
+    if (salesInvoice.contact_number == ""){
+
+        error = error + "Contact Number Field Incomplete \n";
+
+    }
+
+    if (salesInvoice.customer_nic == ""){
+
+        error = error + "Customer NIC Field Incomplete \n";
+
+    }
+
+    if (salesInvoice.customer_email == ""){
+
+        error = error + "Customer E-Mail Field Incomplete \n";
+
+    }
+
+    if (salesInvoice.total_amount == ""){
+
+        error = error + "Total Amount Field Incomplete \n";
+
+    }
+
+    if (salesInvoice.discount == ""){
+
+        error = error + "Discount Field Incomplete \n";
+
+    }
+
+    if (salesInvoice.tax == ""){
+
+        error = error + "Tax Field Incomplete \n";
+
+    }
+
+    if (salesInvoice.net_amount == ""){
+
+        error = error + "Net Amount Field Incomplete \n";
+
+    }
+
+    if (salesInvoice.sales_invoice_status_id == null){
+
+        error = error + "Sales Invoice Status Field Incomplete \n";
+
+    }
+
+    if (salesInvoice.preOrderHasModelList.length == "0"){
 
         error = error + "Pre-Order Models Not Added \n";
 
@@ -485,22 +520,24 @@ const submitBtnFunction = () => {
 
     if ( errors == ""){
 
-        let submitConfigMsg = "Are you willing to add this Pre-Order?\n" +
-            "\n Customer Name : " + preOrder.customer_id.fullname +
-            "\n Pre-Order Required Date : " + preOrder.required_date +
-            "\n Total Amount : Rs. " + preOrder.total_amount;
+        let submitConfigMsg = "Are you willing to add this Sales Invoice?\n" +
+            "\n Bill Number : " + salesInvoice.bill_number +
+            "\n Customer Name : " + salesInvoice.customer_id.fullname +
+            "\n Model Name : " + salesInvoice.model_id.model_name +
+            "\n Total Amount : Rs. " + salesInvoice.total_amount +
+            "\n Net Amount : Rs. " + salesInvoice.total_amount;
 
         let userResponse    = window.confirm(submitConfigMsg)
 
 
         if (userResponse) {
 
-            let postServiceResponse = getAjexServiceRequest("/preorder", "POST", preOrder);
+            let postServiceResponse = getAjexServiceRequest("/preorder", "POST", salesInvoice);
 
 
             if (postServiceResponse == "0") {
 
-                alert("Pre-Order Added Successfully as you wish!!!");
+                alert("Sales Invoice Added Successfully as you wish!!!");
                 refreshTable();
                 refreshForm();
                 empMancontainer.classList.remove("right-panel-active")
@@ -525,20 +562,42 @@ const formRefill = (ob) => {
 
     empMancontainer.classList.add("right-panel-active");
 
-    preOrder    = getAjexServiceRequest("/preorder/getbyid/"+ob.id);
-    oldPreOrder = getAjexServiceRequest("/preorder/getbyid/"+ob.id);
+    salesInvoice    = getAjexServiceRequest("/salesinvoice/getbyid/"+ob.id);
+    oldSalesInvoice = getAjexServiceRequest("/salesinvoice/getbyid/"+ob.id);
 
 
     //SET VALUE
-    preOrderRequiredDate.value = preOrder.required_date;
-    preOrderTotalAmount.value  = preOrder.total_amount;
+    salesCustomerName.value    = salesInvoice.customer_name;
+    salesCustomerAddress.value = salesInvoice.customer_address;
+    salesContactNumber.value   = salesInvoice.contact_number;
+    salesCustomerNic.value     = salesInvoice.customer_nic;
+    salesCustomerEmail.value   = salesInvoice.customer_email;
+    salesTotalAmount.value     = salesInvoice.total_amount;
+    salesTax.value             = salesInvoice.tax;
+    salesDiscount.value        = salesInvoice.discount;
+    salesNetAmount.value       = salesInvoice.net_amount;
+    salesNote.value            = salesInvoice.note;
 
+    console.log(salesInvoice)
+    console.log(customers)
 
-    fillSelectFeild(preOrderCustomer, "Select Pre-Order Customer", Customers, "fullname", preOrder.customer_id.fullname);
-    preOrderCustomer.style.borderBottom   = "solid";
+    //CHECKING SALES INVOICE CUSTOMER ID IS NULL COZ NULL VALUES CANNOT SET IN COMBO BOX OR SELECT
+    if (salesInvoice.customer_id =! null){
 
-    fillSelectFeild(preOrderStatus, "Select Pre-Order Status", Statuses, "name", preOrder.pre_order_status_id.name);
-    preOrderStatus.style.borderBottom   = "solid";
+        fillSelectFeild(registeredCustomer, "Select Registered Customer", customers, "fullname", salesInvoice.customer_id.fullname);
+        registeredCustomer.style.borderBottom   = "solid";
+
+    }
+    //CHECKING SALES INVOICE PRE-ORDER ID IS NULL COZ NULL VALUES CANNOT SET IN COMBO BOX OR SELECT
+    if (salesInvoice.pre_order_id =! null) {
+
+        fillSelectFeild(salesPreOrder, "Select Pre-Order Code", salesPreOrders, "pre_order_code", salesInvoice.pre_order_id.pre_order_code);
+        salesPreOrder.style.borderBottom = "solid";
+
+    }
+
+    fillSelectFeild(salesInvoiceStatus, "Select Sales Invoice Status", statuses, "name", salesInvoice.sales_invoice_status_id.name);
+    salesInvoiceStatus.style.borderBottom   = "solid";
 
     refreshInnerFormAndTable();
 
@@ -668,8 +727,11 @@ const updateBTN = () => {
 
 const rowDelete = (ob) => {
 
-    let deleteMsg = "Would you like to Delete the following Pre-Order?\n"
-        +"Pre-Order Code : "+ ob.pre_order_code ;
+    let deleteMsg = "Would you like to Delete the following Sales Invoice?\n \n"
+        +"Bill Number : "+ ob.bill_number + "\n"
+        +"Customer Name : "+ ob.customer_name + "\n"
+        +"Model : "+ ob.model + "\n"
+        +"Net Amount : "+ ob.net_amount + "\n";
 
     let deleteUserResponse = window.confirm(deleteMsg);
 
@@ -680,7 +742,7 @@ const rowDelete = (ob) => {
 
         if(deleteSeverResponse == "0"){
 
-            alert("As you wish, Deleted the Pre-Order Successfully !!!");
+            alert("As you wish, Deleted the Sales Invoice Successfully !!!");
             refreshTable();
 
         }else {
