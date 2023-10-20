@@ -118,7 +118,7 @@ const refreshForm = () => {
     salesTax.value             = "";
     salesDiscount.value        = "";
 
-    salesNetAmount.value  = "";
+    salesNetAmount.value       = "";
     $('#salesNetAmount').css("pointer-events", "none");
     $('#salesNetAmount').css("cursor", "pointer");
 
@@ -502,7 +502,7 @@ function checkErrors() {
 
     if (salesInvoice.preOrderHasModelList.length == "0"){
 
-        error = error + "Pre-Order Models Not Added \n";
+        error = error + "Sales Invoice Models Not Added \n";
 
     }
 
@@ -544,7 +544,7 @@ const submitBtnFunction = () => {
 
             } else {
 
-                window.confirm("You have these following error\n" + postServiceResponse)
+                window.confirm("You have these following error \n" + postServiceResponse)
 
             }
         }
@@ -578,8 +578,7 @@ const formRefill = (ob) => {
     salesNetAmount.value       = salesInvoice.net_amount;
     salesNote.value            = salesInvoice.note;
 
-    console.log(salesInvoice)
-    console.log(customers)
+
 
     //CHECKING SALES INVOICE CUSTOMER ID IS NULL COZ NULL VALUES CANNOT SET IN COMBO BOX OR SELECT
     if (salesInvoice.customer_id =! null){
@@ -587,19 +586,22 @@ const formRefill = (ob) => {
         fillSelectFeild(registeredCustomer, "Select Registered Customer", customers, "fullname", salesInvoice.customer_id.fullname);
         registeredCustomer.style.borderBottom   = "solid";
 
-    }
+    }else {  registeredCustomer.style.borderBottom = "none"; }
+
+
     //CHECKING SALES INVOICE PRE-ORDER ID IS NULL COZ NULL VALUES CANNOT SET IN COMBO BOX OR SELECT
     if (salesInvoice.pre_order_id =! null) {
 
         fillSelectFeild(salesPreOrder, "Select Pre-Order Code", salesPreOrders, "pre_order_code", salesInvoice.pre_order_id.pre_order_code);
         salesPreOrder.style.borderBottom = "solid";
 
-    }
+    }else{  salesPreOrder.style.borderBottom = "none"; }
+
 
     fillSelectFeild(salesInvoiceStatus, "Select Sales Invoice Status", statuses, "name", salesInvoice.sales_invoice_status_id.name);
     salesInvoiceStatus.style.borderBottom   = "solid";
 
-    refreshInnerFormAndTable();
+    /*refreshInnerFormAndTable();*/
 
     disableAddUpdateBtn(false, true);
 
@@ -609,42 +611,71 @@ const checkUpdate = () => {
 
     let update = "";
 
-    if (preOrder != null && oldPreOrder != null) {
+    if (salesInvoice != null && oldSalesInvoice != null) {
 
-
-        if (preOrder.customer_id.id != oldPreOrder.customer_id.id) {
-            update = update + "Pre-Order Customer updated \n";
+        if (salesInvoice.customer_id.id != oldSalesInvoice.customer_id.id) {
+            update = update + "Registered Customer updated \n";
         }
 
-        if ( preOrder.required_date != oldPreOrder.required_date) {
-            update = update + "Pre-Order Required Date updated \n";
+        if (salesInvoice.pre_order_id.id != oldSalesInvoice.pre_order_id.id) {
+            update = update + "Sales Pre-Order updated \n";
         }
 
-        if (preOrder.total_amount != oldPreOrder.total_amount) {
-            update = update + "Pre-Order Total Amount updated \n";
+        if (salesInvoice.customer_name != oldSalesInvoice.customer_name) {
+            update = update + "Customer Name updated \n";
         }
 
-        if (preOrder.pre_order_status_id.id != oldPreOrder.pre_order_status_id.id) {
-
-            update = update + "Pre-Order Status updated \n";
-
+        if ( salesInvoice.customer_address != oldSalesInvoice.customer_address) {
+            update = update + "Customer Address updated \n";
         }
 
-        if (preOrder.preOrderHasModelList.length != oldPreOrder.preOrderHasModelList.length) {
+        if ( salesInvoice.contact_number != oldSalesInvoice.contact_number ) {
+            update = update + "Contact Number updated \n";
+        }
 
-            update = update + "Pre-Order Models updated" + "\n";
+        if (salesInvoice.customer_nic != oldSalesInvoice.customer_nic) {
+            update = update + "Customer NIC updated \n";
+        }
+
+        if (salesInvoice.customer_email != oldSalesInvoice.customer_email) {
+            update = update + "Customer Email updated \n";
+        }
+
+        if (salesInvoice.total_amount != oldSalesInvoice.total_amount) {
+            update = update + "Total Amount updated \n";
+        }
+
+        if (salesInvoice.discount != oldSalesInvoice.discount) {
+            update = update + "Discount updated \n";
+        }
+
+        if (salesInvoice.tax != oldSalesInvoice.tax) {
+            update = update + "Tax updated \n";
+        }
+
+        if (salesInvoice.net_amount != oldSalesInvoice.net_amount) {
+            update = update + "Net Amount updated \n";
+        }
+
+        if (salesInvoice.sales_invoice_status_id.id != oldSalesInvoice.sales_invoice_status_id.id) {
+            update = update + "Sales Invoice Status updated \n";
+        }
+
+        if (salesInvoice.preOrderHasModelList.length != oldSalesInvoice.preOrderHasModelList.length) {
+
+            update = update + "Sales Invoice Models updated \n" ;
 
         }else {
 
            let existUpdate = false;
 
-            for (let i = 0; i < preOrder.preOrderHasModelList.length; i++){
+            for (let i = 0; i < salesInvoice.salesInvoiceHasItemsList.length; i++){
 
-                for (let l = 0; l < oldPreOrder.preOrderHasModelList.length; l++){
+                for (let l = 0; l < salesInvoice.salesInvoiceHasItemsList.length; l++){
 
-                    if (preOrder.preOrderHasModelList[i].model_id.model_number == oldPreOrder.preOrderHasModelList[i].model_id.model_number){
+                    if (salesInvoice.salesInvoiceHasItemsList[i].model_id.model_number == oldSalesInvoice.salesInvoiceHasItemsList[i].model_id.model_number){
 
-                        if (preOrder.preOrderHasModelList[i].quantity == oldPreOrder.preOrderHasModelList[i].quantity){
+                        if (salesInvoice.salesInvoiceHasItemsList[i].quantity == oldSalesInvoice.salesInvoiceHasItemsList[i].quantity){
 
                             existUpdate = true;
                             break;
@@ -659,7 +690,7 @@ const checkUpdate = () => {
 
             if (existUpdate){
 
-                update = update + "Pre-Order Model quantity updated \n";
+                update = update + "Sales Invoice Model quantity updated \n";
 
             }
 
@@ -688,17 +719,17 @@ const updateBTN = () => {
         }else {
 
             // get confirmation from user for updated value if available...
-            let updateResponce = window.confirm("Are you willing to update following Pre-Order Details? \n" + update);
+            let updateResponce = window.confirm("Are you willing to update following Sales Invoice Details? \n" + update);
 
             if (updateResponce) {
 
                 //IF USER CLICK OK BTN FOR UPDATE CONFIRMATION.
-                let putResponce = getAjexServiceRequest("/preorder","PUT",preOrder);;
+                let putResponce = getAjexServiceRequest("/preorder","PUT",salesInvoice);;
 
                 if (putResponce == "0") {
 
                     //IF THE DATA UPDATED AND STORED SUCCESSFULLY
-                    window.alert("Updated the Pre-Order Details successfully as you wish...!");
+                    window.alert("Updated the Sales Invoice Details successfully as you wish...!");
                     refreshTable();
                     refreshForm();
                     refreshInnerFormAndTable();
@@ -707,7 +738,7 @@ const updateBTN = () => {
                 }else {
 
                     //IF THE DATA UPDATED AND STORED IS UNSUCCESSFUL
-                    window.alert("Failed to update the Pre-Order Details, Please try Again...!\n" + putResponce);
+                    window.alert("Failed to update the Sales Invoice Details, Please try Again...!\n" + putResponce);
 
                 }
 
