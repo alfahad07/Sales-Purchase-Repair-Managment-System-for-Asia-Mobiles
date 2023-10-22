@@ -439,6 +439,17 @@ function checkErrors() {
 
     let error = "";
 
+    if (salesInvoice.customer_id == null){
+
+        error = error + "Registered Customer Field Incomplete \n";
+
+    }
+
+    if (salesInvoice.pre_order_id == null){
+
+        error = error + "Pre-Order Code Field Incomplete \n";
+
+    }
 
     if (salesInvoice.customer_name == ""){
 
@@ -470,7 +481,7 @@ function checkErrors() {
 
     }
 
-    if (salesInvoice.total_amount == ""){
+    if (salesInvoice.total_amount == null){
 
         error = error + "Total Amount Field Incomplete \n";
 
@@ -488,7 +499,7 @@ function checkErrors() {
 
     }
 
-    if (salesInvoice.net_amount == ""){
+    if (salesInvoice.net_amount == null){
 
         error = error + "Net Amount Field Incomplete \n";
 
@@ -500,7 +511,7 @@ function checkErrors() {
 
     }
 
-    if (salesInvoice.preOrderHasModelList.length == "0"){
+    if (salesInvoice.salesInvoiceHasItemsList.length == "0"){
 
         error = error + "Sales Invoice Models Not Added \n";
 
@@ -529,10 +540,9 @@ const submitBtnFunction = () => {
 
         let userResponse    = window.confirm(submitConfigMsg)
 
-
         if (userResponse) {
 
-            let postServiceResponse = getAjexServiceRequest("/preorder", "POST", salesInvoice);
+            let postServiceResponse = getAjexServiceRequest("/salesinvoice", "POST", salesInvoice);
 
 
             if (postServiceResponse == "0") {
@@ -601,9 +611,9 @@ const formRefill = (ob) => {
     fillSelectFeild(salesInvoiceStatus, "Select Sales Invoice Status", statuses, "name", salesInvoice.sales_invoice_status_id.name);
     salesInvoiceStatus.style.borderBottom   = "solid";
 
-    /*refreshInnerFormAndTable();*/
-
     disableAddUpdateBtn(false, true);
+
+    refreshInnerFormAndTable();
 
 }
 
@@ -768,7 +778,7 @@ const rowDelete = (ob) => {
 
     if (deleteUserResponse) {
 
-        let deleteSeverResponse = getAjexServiceRequest("/preorder","DELETE", ob);
+        let deleteSeverResponse = getAjexServiceRequest("/salesinvoice","DELETE", ob);
 
 
         if(deleteSeverResponse == "0"){

@@ -1,9 +1,6 @@
 package asianmobiles.lk.asianmobiles.controller;
 
-import asianmobiles.lk.asianmobiles.entity.Model;
-import asianmobiles.lk.asianmobiles.entity.PhoneModel;
-import asianmobiles.lk.asianmobiles.entity.SalesInvoice;
-import asianmobiles.lk.asianmobiles.entity.User;
+import asianmobiles.lk.asianmobiles.entity.*;
 import asianmobiles.lk.asianmobiles.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -13,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +22,9 @@ public class SalesInvoiceController {
 
     @Autowired // USED TO CREATE A COPY OF AN OBJECT AND INTERFACE
     private SalesInvoiceRepository salesInvoiceDao;
+
+    @Autowired
+    private  SalesInvoiceHasItemsRepository salesInvoiceHasItemsDao;
 
     @Autowired
     private UserRepository userDao;
@@ -82,8 +83,8 @@ public class SalesInvoiceController {
 
 
     //Create delete mapping to delete User by using DeleteMapping Annotation
-   /* @DeleteMapping
-    public String deleteModel( @RequestBody Model model ){
+    @DeleteMapping
+    public String deleteSalesInvoice( @RequestBody SalesInvoice salesInvoice ){
 
         //NEED TO CHECK PRIVILAGE FOR LOGGED USER --> This is done below...
 
@@ -96,24 +97,24 @@ public class SalesInvoiceController {
 
 
         //Created a HashMap instance or copy
-        HashMap<String, Boolean> loggedUserPrivillage = privilegeController.getPrivilage(loggedUser.getUsername(), "MODEL");
+        HashMap<String, Boolean> loggedUserPrivillage = privilegeController.getPrivilage(loggedUser.getUsername(), "SALES-INVOICE");
 
         if(!(authentication instanceof AnonymousAuthenticationToken) && loggedUser != null && loggedUserPrivillage.get("del")){
 
 
             //NEED TO CHECK DUPLICATION OF THE COLUMNS VALUE
             //checking function to check weather the Model exist in the database
-            Model existModel = modelDao.getReferenceById(model.getId());
+            SalesInvoice existSalesInvoice = salesInvoiceDao.getReferenceById(salesInvoice.getId());
 
             // Creating a function to delete the Model from the database after checking the Model's existance.
-            if(existModel != null){
+            if(existSalesInvoice != null){
                 try{
 
                     //set auto insert Values
-                    existModel.setDeleted_datetime(LocalDateTime.now()); // Setting the delete time of the user
-                    existModel.setModel_status_id(modelStatusDao.getReferenceById(3)); // Setting userStatus to deleted once the delete is done
+                    existSalesInvoice.setDeleted_datetime(LocalDateTime.now()); // Setting the delete time of the user
+                    existSalesInvoice.setSales_invoice_status_id(salesInvoiceStatusDao.getReferenceById(3)); // Setting userStatus to deleted once the delete is done
 
-                    modelDao.save(existModel);
+                    salesInvoiceDao.save(existSalesInvoice);
 
                     return "0";
 
@@ -125,23 +126,23 @@ public class SalesInvoiceController {
                 }
             }else{
 
-                return "Delete Not Completed : Model Not Available";
+                return "Delete Not Completed : Sales Invoice Not Available";
 
             }
 
 
         }else {
 
-            return "Model Delete not completed : You don't have access";
+            return "Sales Invoice Delete not completed : You don't have access";
 
         }
 
     }
 
 
-    //CREATE POST MAPPING FUNCTION TO ADD MODEL [/Model - POST]
+    //CREATE POST MAPPING FUNCTION TO ADD MODEL [/salesinvoice - POST]
     @PostMapping
-    public String addItem( @RequestBody Model model){
+    public String addSalesInvoice( @RequestBody SalesInvoice salesInvoice){
 
         //NEED TO CHECK PRIVILAGE FOR LOGGED USER --> This is done below...
 
@@ -154,53 +155,81 @@ public class SalesInvoiceController {
 
 
         //Created a HashMap instance or copy
-        HashMap<String, Boolean> loggedUserPrivillage = privilegeController.getPrivilage(loggedUser.getUsername(), "MODEL");
+        HashMap<String, Boolean> loggedUserPrivillage = privilegeController.getPrivilage(loggedUser.getUsername(), "SALES-INVOICE");
 
         if (!(authentication instanceof AnonymousAuthenticationToken) && loggedUser != null && loggedUserPrivillage.get("ins")){
 
-            //NEED TO CHECK DUPLICATION OF THE COLUMNS VALUE
-            Model extModelName = modelDao.getByModelName(model.getModel_name());
-            if ( extModelName != null ){
-
-                return "Model insert not completed : Model Name Duplicated (Model Name already Exist)";
-
-            }
-
-            //CHECKING THE Item IEMI Number 02 EXIST OR NOT IN THE DATABASE.
-            Model extModelNumber = modelDao.getByModelNumber(model.getModel_number());
-            if ( extModelNumber != null ){
-
-                return "Model insert not completed : Model NUmber Duplicated (Model Number already Exist)";
-
-            }
+            //NO NEED TO CHECK DUPLICATION OF THE VALUES OF THE COLUMNS IN SALES INVOICE BECOZ THERE IS NO ANY UNIQUE DATA TO CHECK...
 
             try {
 
-                //SET AUTO INSERT VALUE
-                model.setAdded_datetime(LocalDateTime.now());
-                model.setAdded_user_id(loggedUser);
+                String lastSalesInvoiceBillNo = salesInvoiceDao.getLastSalesInvoiceBillNumber();
+                String nextSalesInvoiceBillNo = "";
+                LocalDate currentDate         = LocalDate.now();
+
+                int currentMonth          = currentDate.getMonth().getValue();
+                String currentYearString  = String.valueOf(currentDate.getYear());
+                String currentMonthString = "";
+                if (currentMonth < 10)
+                    currentMonthString = "0" + currentMonth;
 
 
-                //SAVE THE CHANGES
-                modelDao.save(model);
+                if (lastSalesInvoiceBillNo != null){
+
+                    if (lastSalesInvoiceBillNo.substring(2,6).equals(currentYearString)){
+
+                        if (lastSalesInvoiceBillNo.substring(6,8).equals(currentMonthString)){
+
+                            nextSalesInvoiceBillNo = "SI" + currentDate.getYear() + currentMonthString + String.format("%03d" ,Integer.valueOf(lastSalesInvoiceBillNo.substring(8)) + 1);
+
+                        }else {
+
+                            nextSalesInvoiceBillNo = "SI" + currentDate.getYear() + currentMonthString + "001";
+
+                        }
+
+                    }else {
+
+                        nextSalesInvoiceBillNo = "SI" + currentDate.getYear() + currentMonthString + "001";
+
+                    }
+
+                }else {
+
+                    nextSalesInvoiceBillNo = "SI" + currentDate.getYear() + currentMonthString + "001";
+
+                }
+
+                salesInvoice.setBill_number(nextSalesInvoiceBillNo);
+
+
+                SalesInvoice newSalesInvoice = salesInvoiceDao.saveAndFlush(salesInvoice);
+
+                for (SalesInvoiceHasItems salesInvoiceHasItems : salesInvoice.getSalesInvoiceHasItemsList()){
+
+                    salesInvoiceHasItems.setSales_invoice_id(newSalesInvoice);
+                    salesInvoiceHasItemsDao.save(salesInvoiceHasItems);
+
+                }
+
                 return "0";
 
             }catch (Exception ex){
 
-                return "Model Insert is incomplete : " + ex.getMessage();
+                return "Sales Invoice Insert is incomplete : " + ex.getMessage();
 
             }
 
         }else {
 
-            return "Model insert not completed : You dont have access";
+            return "Sales Invoice insert not completed : You dont have access";
 
         }
 
     }
 
 
-    //CREATE POST MAPPING FUNCTION TO UPDATE MODEL [/Model - PUT]
+    /*//CREATE POST MAPPING FUNCTION TO UPDATE MODEL [/Model - PUT]
     @PutMapping
     public String updateItem( @RequestBody Model model ){
 
