@@ -535,7 +535,7 @@ const moveRightAndLeftOverlayPanel = () => {
 // EMPLOYE FORM AND TABLE BOX OR CONTAINER 3D ROTATE
 const formAndTableContainer3DRotate = () => {
 
-    const container = document.querySelector('.empMancontainer');
+    const container = document.querySelector('.moduleManagementContainer');
 
     container.addEventListener("mousemove", (e) => {
         let horizontal = (window.innerWidth / 2 - e.pageX) / 200;

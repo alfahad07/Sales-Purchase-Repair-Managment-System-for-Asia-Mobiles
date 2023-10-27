@@ -22,6 +22,8 @@
     <script src="Assets/script/common.js"></script>
     <script src="Assets/script/login.js"></script>
 
+    <!--COMMON CSS-->
+    <link rel="stylesheet" href="Assets/style/common.css">
 
 </head>
 
@@ -106,7 +108,26 @@
             </nav>
         </div>
 
-        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" style="height: 570px; width: 1300px; left: 2.5%; margin-top: 3%;">
+        <div class="row clockHero">
+
+            <div class="clockContainer">
+
+                <div class="clock">
+
+                    <span id="hrs">00</span>
+                    <span>:</span>
+                    <span id="min">00</span>
+                    <span>:</span>
+                    <span id="sec">00</span>
+                    <span id="ampm">ampm</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" style="height: 570px; width: 1300px; left: 2.5%; margin-top: 5%;">
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
               <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -151,6 +172,55 @@
           </div>
 
     </div>
+
+    <!--JAVASCRIPT CODING FOR THE CLOCK-->
+    <script>
+
+        //CREATING VARIABLE IN THE NAME OF HTML ELEMENTS ID
+        let hrs = document.getElementById("hrs");
+        let min = document.getElementById("min");
+        let sec = document.getElementById("sec");
+        let ampm = document.getElementById("ampm");
+
+        //CREATING A FUNCTION TO GET THE TIME IN 12HOURS
+        const timeBy12H = (date, f ) =>{
+
+            //GETING THE CURRENT HOURS, MINUTES, SECONDS & AM OR PM
+            let hrs = date.getHours();
+            let min = date.getMinutes();
+            let sec = date.getSeconds();
+            let ampm = hrs < 12 ? 'am':'pm';
+
+            //CHECKING THE TIME
+            hrs = hrs>12? hrs-12 : hrs; //checking the hour is greater than 12 and then substract 12 to get the 12hours clock time
+            hrs = hrs<10? "0"+hrs : hrs;//Checking hours is lesser than 10 to add zero 0
+            min = min<10? "0"+min : min;//Checking minutes is lesser than 10 to add zero 0
+            sec = sec<10? "0"+sec : sec;//Checking second is lesser than 10 to add zero 0
+
+            //CHECKING THE f AND RETURNING THE VALUE IF MATCHED WITH FOLLOWING CASE
+            switch (f){
+
+                case 'hh' : return hrs;
+                case 'mm' : return min;
+                case 'ss' : return sec;
+                case 'ampm' : return ampm;
+
+            }
+        }
+
+        //CREATED THIS FUNCTION TO UPDATE THE REALTIME TIME
+        setInterval(()=>{
+
+            let currentTime = new Date();
+
+            hrs.innerHTML = timeBy12H(currentTime, 'hh');
+            min.innerHTML = timeBy12H(currentTime, 'mm');
+            sec.innerHTML = timeBy12H(currentTime, 'ss');
+            ampm.innerHTML = timeBy12H(currentTime, 'ampm');
+
+        },1000)
+
+</script>
 
 </body>
 

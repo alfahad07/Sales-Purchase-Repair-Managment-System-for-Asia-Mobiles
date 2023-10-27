@@ -60,7 +60,7 @@
 }
 
 /* STYLES EMPLOYEE FORM & EMPLOYEE TABLE BOX */
-.empMancontainer {
+.moduleManagementContainer {
 
     margin-top: -20px;
     z-index: 1500;
@@ -81,7 +81,7 @@
 }
 
 /* STYLES FOR BACKGROUND BORDER ANIMATION */
-.empMancontainer::before {
+.moduleManagementContainer::before {
 
     content: '';
     position: absolute;
@@ -104,7 +104,7 @@
     }
 }
 
-.empMancontainer::after {
+.moduleManagementContainer::after {
 
     content: '';
     position: absolute;
@@ -257,13 +257,13 @@ p {
 
 }
 
-.empMancontainer.right-panel-active .moduleTable-container {
+.moduleManagementContainer.right-panel-active .moduleTable-container {
 
     transform: translateX(200%);
 
 }
 
-.empMancontainer.right-panel-active .moduleForm-container {
+.moduleManagementContainer.right-panel-active .moduleForm-container {
 
     transform: translateX(17%);
     opacity: 1;
@@ -292,25 +292,25 @@ p {
 
 }
 
-.empMancontainer.right-panel-active .overlay-container {
+.moduleManagementContainer.right-panel-active .overlay-container {
 
     transform: translateX(-567%);
 
 }
 
-.empMancontainer.right-panel-active .overlay {
+.moduleManagementContainer.right-panel-active .overlay {
 
     transform: translateX(50%);
 
 }
 
-.empMancontainer.right-panel-active .overlay-left {
+.moduleManagementContainer.right-panel-active .overlay-left {
 
     transform: translateX(0);
 
 }
 
-.empMancontainer.right-panel-active .overlay-right {
+.moduleManagementContainer.right-panel-active .overlay-right {
 
     transform: translateX(20%);
 
@@ -701,5 +701,78 @@ p {
     background: rgb(255, 184, 51);
     color: white;
     box-shadow: 0 0 50px rgb(255, 184, 51), 0 0 21px rgb(255, 184, 51);
+
+}
+
+
+.clockHero{
+
+    position: relative;
+
+}
+
+.clockContainer{
+
+    width: 400px;
+    height: 58px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 42px;
+    left: 49%;
+
+}
+
+.clock{
+
+    width: 100%;
+    height: 70%;
+    background: transparent;
+    border-radius: 20px;
+    border: gold 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+
+}
+
+.clock span{
+
+    font-size: 25px;
+    color: white;
+    width: 61px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    top: -6px;
+
+}
+
+.clock span::after{
+
+    font-size: 10px;
+    color: white;
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translate(-50%);
+
+}
+
+#hrs::after{
+
+    content: 'Hours';
+
+}
+
+#min::after{
+
+    content: 'Minutes';
+
+}
+
+#sec::after{
+
+    content: 'Seconds';
 
 }
