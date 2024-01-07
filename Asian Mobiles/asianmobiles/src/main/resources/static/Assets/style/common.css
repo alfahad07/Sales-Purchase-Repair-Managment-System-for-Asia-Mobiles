@@ -87,7 +87,11 @@
     position: absolute;
     width: 300px;
     height: 300%;
+    /*
     background: linear-gradient(to right, rgb(80, 80, 252), rgb(255, 89, 89));
+    */
+
+    background: linear-gradient(to right, green, );
     animation: animateBackgroundBorderLight 4s linear infinite;
 
 }
@@ -389,7 +393,8 @@ p {
     width: 100%;
     height: 100%;
     left: 0%;
-    background: linear-gradient(90deg, #ff1b69, #ff0, #2196f3, #9c27b0, #ff1b69);
+    /*background: linear-gradient(90deg, #ff1b69, #ff0, #2196f3, #9c27b0, #ff1b69);*/
+    background: linear-gradient(90deg, lightslategrey, lightslategrey);
 
     animation: animateInputUnderline 3s linear infinite;
 
@@ -464,7 +469,7 @@ p {
     width: 100%;
     height: 100%;
     left: 0%;
-    background: linear-gradient(90deg, #ff1b69, #ff0, #2196f3, #9c27b0, #ff1b69);
+    background: linear-gradient(90deg, lightslategrey, lightslategrey);
 
     animation: animateUnderline 2s linear infinite;
 

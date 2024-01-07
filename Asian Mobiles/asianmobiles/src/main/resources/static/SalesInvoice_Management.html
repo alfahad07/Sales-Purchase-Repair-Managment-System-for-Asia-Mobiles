@@ -21,10 +21,6 @@
     <script src="Assets/script/salesinvoice.js"></script>
     <script src="Assets/script/login.js"></script>
 
-    <!--SWEET ALERT 2 LINK-->
-    <link rel="stylesheet" href="Assets/sweetalert2/package/dist/sweetalert2.min.css">
-    <script src="Assets/sweetalert2/package/dist/sweetalert2.min.js"></script>
-
     <title>SalesInvoice_Management-Asian_Mobiles</title>
 
 </head>
@@ -77,6 +73,7 @@
                                 <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
                                 <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
                                 <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+                                <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Supplier-Invoice Management System</a></li>
 
                             </ul>
                         </li>
@@ -220,11 +217,9 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="salesCustomerName"
-                                   onkeyup="textFeildValidtor(salesCustomerName,'^(([A-Z][a-z]{3,20}[\\s])+([A-Z][a-z]{1,16}))$','salesInvoice','customer_name','oldSalesInvoice')"
-                                   required>
+                                   onkeyup="textFeildValidtor(salesCustomerName,'^(([A-Z][a-z]{3,20}[\\s])+([A-Z][a-z]{1,16}))$','salesInvoice','customer_name','oldSalesInvoice')">
 
-                            <label for="salesCustomerName" id="labelSalesCustomerName" class="fw-bold">Customer Name (Ex: AXXX FXXX): <span
-                                    id="star">*</span></label>
+                            <label for="salesCustomerName" id="labelSalesCustomerName" class="fw-bold">Customer Name (Ex: AXXX FXXX): </label>
 
                             <i style="width: 96%"></i>
 
@@ -234,11 +229,9 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="salesCustomerEmail"
-                                   onkeyup="textFeildValidtor(salesCustomerEmail,'^[0-9]{1,2}[.][0-9]{1,2}$','salesInvoice','customer_email','oldSalesInvoice')"
-                                   required>
+                                   onkeyup="textFeildValidtor(salesCustomerEmail,'^[0-9]{1,2}[.][0-9]{1,2}$','salesInvoice','customer_email','oldSalesInvoice')">
 
-                            <label for="salesCustomerEmail" id="labelSalesCustomerEmail" class="fw-bold">Customer E-Mail : <span
-                                    id="star">*</span></label>
+                            <label for="salesCustomerEmail" id="labelSalesCustomerEmail" class="fw-bold">Customer E-Mail : </label>
 
                             <i style="width: 96%"></i>
 
@@ -248,11 +241,9 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="salesContactNumber"
-                                   onkeyup="textFeildValidtor(salesContactNumber,'^[0][7][01245678][0-9]{7}$','salesInvoice','contact_number','oldSalesInvoice')"
-                                   required>
+                                   onkeyup="textFeildValidtor(salesContactNumber,'^[0][7][01245678][0-9]{7}$','salesInvoice','contact_number','oldSalesInvoice')">
 
-                            <label for="salesContactNumber" id="labelSalesContactNumber" class="fw-bold">Contact Number: <span
-                                    id="star">*</span></label>
+                            <label for="salesContactNumber" id="labelSalesContactNumber" class="fw-bold">Contact Number: </label>
 
                             <i style="width: 96%"></i>
 
@@ -267,11 +258,9 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="salesCustomerNic"
-                                   onkeyup="textFeildValidtor(salesCustomerNic,'^[0-9]{1,3}[.][0-9]{1,2}$','salesInvoice','customer_nic','oldSalesInvoice')"
-                                   required>
+                                   onkeyup="textFeildValidtor(salesCustomerNic,'^[0-9]{1,3}[.][0-9]{1,2}$','salesInvoice','customer_nic','oldSalesInvoice')">
 
-                            <label for="salesCustomerNic" id="labelSalesCustomerNic" class="fw-bold">Customer NIC : <span
-                                    id="star">*</span></label>
+                            <label for="salesCustomerNic" id="labelSalesCustomerNic" class="fw-bold">Customer NIC : </label>
 
                             <i style="width: 96%"></i>
 
@@ -281,11 +270,9 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="salesCustomerAddress"
-                                   onkeyup="textFeildValidtor(salesCustomerAddress,'^[A-Za-z0-9\\/\\.\\,]{1,250}$','salesInvoice','customer_address','oldSalesInvoice')"
-                                   required>
+                                   onkeyup="textFeildValidtor(salesCustomerAddress,'^[A-Za-z0-9\\/\\.\\,]{1,250}$','salesInvoice','customer_address','oldSalesInvoice')">
 
-                            <label for="salesCustomerAddress" id="labelSalesCustomerAddress" class="fw-bold">Customer Address : <span
-                                    id="star">*</span></label>
+                            <label for="salesCustomerAddress" id="labelSalesCustomerAddress" class="fw-bold">Customer Address : </label>
 
                             <i style="width: 96%"></i>
 
@@ -295,8 +282,7 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="salesTotalAmount"
-                                   onkeyup="textFeildValidtor(salesTotalAmount,'^[0-9]{3,10}$','salesInvoice','total_amount','oldSalesInvoice')"
-                                   required>
+                                   onkeyup="textFeildValidtor(salesTotalAmount,'^[0-9]{3,10}$','salesInvoice','total_amount','oldSalesInvoice')" required>
 
                             <label for="salesTotalAmount" id="labelSalesTotalAmount" class="fw-bold">Total Amount : <span
                                     id="star">*</span></label>
@@ -342,7 +328,7 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="salesNetAmount"
-                                   onkeyup="textFeildValidtor(salesNetAmount,'^^[0-9]{3,10}$','salesInvoice','total_amount','oldSalesInvoice')"
+                                   onkeyup="textFeildValidtor(salesNetAmount,'^^[0-9]{3,10}$','salesInvoice','net_amount','oldSalesInvoice')"
                                    required>
 
                             <label for="salesNetAmount" id="labelSalesNetAmount" class="fw-bold">Sales Net Amount : <span
@@ -362,7 +348,7 @@
 
                             <label for="salesInvoiceStatus" id="labelSalesInvoiceStatus" class="fw-bold">Sales Invoice Status : <span id="star">*</span></label>
 
-                            <select id="salesInvoiceStatus" class="fw-bold" onchange="selectValidator(salesInvoiceStatus, '','salesInvoice', 'Sales_invoice_status_id','oldSalesInvoice')" required>
+                            <select id="salesInvoiceStatus" class="fw-bold" onchange="selectValidator(salesInvoiceStatus, '','salesInvoice', 'sales_invoice_status_id','oldSalesInvoice')" required>
 
                             </select>
 
@@ -371,6 +357,171 @@
                         </div>
 
                     </div><br><br><br>
+
+                    <!--SALES INVOICE INNER FORM & TABLE-->
+                    <div class="row" style="overflow-x: hidden">
+
+                        <!--SALES INVOICE INNER FORM-->
+                        <div class="col-3">
+
+                            <!--SALES INVOICE ITEM-->
+                            <div class="row">
+
+                                <!--SALES INVOICE ITEM-->
+                                <div class="selectStyle">
+
+                                    <label style="width: 100px" for="salesInvoiceItem" id="labelSalesInvoiceItem" class="fw-bold">Item : <span id="star">*</span></label>
+
+                                    <select style="width: 104%;" id="salesInvoiceItem" class="fw-bold" onchange="selectValidator(salesInvoiceItem,'','salesInvoiceHasItems','items_id','oldSalesInvoiceHasItems'), selectModelToGetUnitPrice()" required>
+
+                                    </select>
+
+                                    <i style="top: 545px; width: 23%"></i>
+
+                                </div>
+
+                            </div><br>
+
+                            <!--SALES INVOICE UNIT PRICE-->
+                            <div class="row">
+
+                                <!--SALES INVOICE UNIT PRICE-->
+                                <div class="col-12 inputBox">
+
+                                    <input type="text" class="fw-bold inputSelect" id="salesInvoiceUnitPrice" style="width: 345%;" onkeyup="textFeildValidtor(salesInvoiceUnitPrice,'^[0-9]{3,6}[.][0-9]{2}$', 'salesInvoiceHasItems','unit_price', 'oldSalesInvoiceHasItems')" required>
+
+                                    <label style="width: 100px" for="salesInvoiceUnitPrice" class="fw-bold">Unit Price : <span id="star">*</span></label>
+
+                                    <i style="width: 289%"></i>
+
+                                </div>
+
+                            </div><br>
+
+                            <!--SALES INVOICE DISCOUNT RATE-->
+                            <div class="row">
+
+                                <!--SALES INVOICE DISCOUNT RATE-->
+                                <div class="col-12 inputBox">
+
+                                    <input type="text" class="fw-bold inputSelect" id="salesInvoiceDiscountRate" style="width: 345%;" onkeyup="textFeildValidtor(salesInvoiceDiscountRate,'^[0-9]{1,2}[.][0-9]{2}$', 'salesInvoiceHasItems','discount_rate', 'oldSalesInvoiceHasItems'), deductDiscountRateWithUnitPrice()" required>
+
+                                    <label style="width: 200px" for="salesInvoiceDiscountRate" class="fw-bold">Discount Rate : <span id="star">*</span></label>
+
+                                    <i style="width: 289%"></i>
+
+                                </div>
+
+                            </div><br>
+
+                            <!--SALES INVOICE DISCOUNTED PRICE-->
+                            <div class="row">
+
+                                <!--SALES INVOICE DISCOUNTED PRICE-->
+                                <div class="col-12 inputBox">
+
+                                    <input type="text" class="fw-bold inputSelect" id="salesInvoiceDiscountedPrice" style="width: 345%;" onkeyup="textFeildValidtor(salesInvoiceDiscountedPrice,'^[0-9]{3,7}[.][0-9]{2}$', 'salesInvoiceHasItems','discounted_price', 'oldSalesInvoiceHasItems')" required>
+
+                                    <label style="width: 200px" style="width: 100px" for="salesInvoiceDiscountedPrice" class="fw-bold">Discounted Price : <span id="star">*</span></label>
+
+                                    <i style="width: 289%"></i>
+
+                                </div>
+
+                            </div><br>
+
+                            <!--SALES INVOICE QUANTITY-->
+                            <div class="row">
+
+                                <!--PRE-ORDER QUANTITY-->
+                                <div class="col-12 inputBox">
+
+                                    <input type="text" class="fw-bold" id="salesInvoiceQuantity" style="width: 345%;"  onkeyup="textFeildValidtor(salesInvoiceQuantity,'^[0-9]{1,5}$', 'salesInvoiceHasItems','quantity', 'oldSalesInvoiceHasItems'), multiplyQuantityWithDiscountedPrice()" required>
+
+                                    <label style="width: 100px" style="width: 100px" for="salesInvoiceQuantity" class="fw-bold">Quantity : <span id="star">*</span></label>
+
+                                    <i style="width: 289%"></i>
+
+                                </div>
+
+                            </div><br>
+
+                            <!--SALES INVOICE LINE TOTAL-->
+                            <div class="row">
+
+                                <!--PRE-ORDER LINE TOTAL-->
+                                <div class="col-12 inputBox">
+
+                                    <input type="text" class="fw-bold inputSelect" id="salesInvoiceLineTotal" style="width: 345%;"  onkeyup="textFeildValidtor(salesInvoiceLineTotal,'^[0-9]{3,7}[.][0-9]{2}$', 'salesInvoiceHasItems','line_amount', 'oldSalesInvoiceHasItems')" required>
+
+                                    <label style="width: 102px"  for="salesInvoiceLineTotal" class="fw-bold">Line Total : <span id="star">*</span></label>
+
+                                    <i style="width: 289%"></i>
+
+                                </div>
+
+                            </div><br>
+
+
+                            <!-- INNER FORM ADD, UPDATE & CLEAR BUTTON -->
+                            <div class="row text-center">
+
+                                <!--ADD BUTTON-->
+                                <div class="col-3">
+
+                                    <button class="btn btn-outline-success" id="innerFormBtnAdd" style="border-radius: 20px; width: 134%" onclick="innerAddMC()" > ADD </button>
+
+                                </div>
+
+                                <!--UPDATE BUTTON-->
+                                <div class="col-5">
+
+                                    <button class="btn btn-outline-warning" id="innerFormBtnUpdate" style="border-radius: 20px; width: 117%" onclick="innerUpdateMC()" > UPDATE </button>
+
+                                </div>
+
+                                <!--CLEAR BUTTON-->
+                                <div class="col-4">
+
+                                    <button class="btn btn-outline-primary" id="innerFormBtnClear" style="border-radius: 20px; width: 120%" onclick="innerClearMC()" > CLEAR </button>
+
+                                </div>
+
+                            </div><br>
+
+                        </div>
+
+                        <!--PRE-ORDER INNER TABLE-->
+                        <div class="col-9">
+
+                            <table class="table table-hover table-dark table-striped-columns" id="tableSalesInvoiceInnerTable">
+
+                                <thead class="table-secondary border" style="text-transform: uppercase">
+
+                                <tr class="fw-bold">
+                                    <th class="text-center" style="font-size: 13px">Index</th>
+                                    <th class="text-center" style="font-size: 13px">Item Name</th>
+                                    <th class="text-center" style="font-size: 13px">Unit Price</th>
+                                    <th class="text-center" style="font-size: 13px">Discounted Rate</th>
+                                    <th class="text-center" style="font-size: 13px">Discounted Price</th>
+                                    <th class="text-center" style="font-size: 13px;">Quantity</th>
+                                    <th class="text-center" style="font-size: 13px;">Line Total Amount</th>
+                                    <th class="text-center" style="column-width: 400px;font-size: 13px">MODIFY</th>
+                                </tr>
+
+                                </thead>
+
+                                <tbody>
+
+
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div> <br>
 
                     <!--SALES INVOICE NOTE-->
                     <div class="row">

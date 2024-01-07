@@ -29,7 +29,7 @@ public class PreOrder {
     @Id //persistance API require Primary key so ID annnotation is used to indicate the primaryKey
     @GeneratedValue(strategy = GenerationType.IDENTITY) // GeneratedValue annotation is used to map or to tell the type, ID is an Auto Increament so we need to notify that it is an Auto Increament type.
 
-    @Column(name = "id") // Column annotation is used to map or match database table colunm to the data.
+    @Column(name = "id") //Column annotation is used to map or match database table colunm to the data.
     private Integer id;
 
     @Column(name = "pre_order_code")
@@ -77,8 +77,17 @@ public class PreOrder {
     @JoinColumn(name = "deleted_user_id",referencedColumnName = "id")
     private User deleted_user_id;
 
+
     @OneToMany(mappedBy = "pre_order_id", orphanRemoval = true , cascade = CascadeType.ALL)
     List<PreOrderHasModel> preOrderHasModelList ;
 
+
+    public PreOrder( Integer id, String pre_order_code ){
+
+        //CLASS ID            = PARAMETER ID
+        this.id               = id;
+        this.pre_order_code = pre_order_code;
+
+    }
 
 }

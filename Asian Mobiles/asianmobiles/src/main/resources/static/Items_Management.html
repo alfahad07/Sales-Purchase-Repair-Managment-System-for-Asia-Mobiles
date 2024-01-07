@@ -21,10 +21,6 @@
     <script src="Assets/script/items.js"></script>
     <script src="Assets/script/login.js"></script>
 
-    <!--SWEET ALERT 2 LINK-->
-    <link rel="stylesheet" href="Assets/sweetalert2/package/dist/sweetalert2.min.css">
-    <script src="Assets/sweetalert2/package/dist/sweetalert2.min.js"></script>
-
     <title>Items_Management-Asian_Mobiles</title>
 
 </head>
@@ -77,6 +73,7 @@
                                 <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
                                 <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
                                 <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+                                <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Supplier-Invoice Management System</a></li>
 
                             </ul>
                         </li>
@@ -300,8 +297,7 @@
                         <!--ITEM NOTE-->
                         <div class="col-12">
 
-                            <label for="itemNote" class="fw-bold empDescriptionLabel"> Customer Note :
-                            </label>
+                            <label for="itemNote" class="fw-bold empDescriptionLabel"> Items Note : </label>
 
                             <textarea class="textArea fw-bold" id="itemNote" cols="100" rows="5" onkeyup="textFeildValidtor(itemNote,'^[A-Za-z0-9\\/\\.\\,\\s]{1,250}$','item','note','oldItem')"></textarea>
 

@@ -75,7 +75,7 @@ const refreshForm = () => {
     fillSelectFeild(empDesignation, "Select Designation", designations, "name", "")
 
     employeeStatuses = getAjexServiceRequest("/employeestatus/list")
-    fillSelectFeild(empStatus, "Select Employee Status", employeeStatuses, "name", "")
+    fillSelectFeild(empStatus, "Select Employee Status", employeeStatuses, "name", "Working")
 
     //CLEARING THE EMPLOYEE DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE EMPLOYEE
     empfullname.value = "";
@@ -88,13 +88,17 @@ const refreshForm = () => {
     female.value = "";
     empDOB.value = "";
     empAddress.value = "";
-    empCivilStatus.value = "";
-    empDesignation.value = "";
-    empStatus.value = "";
     empDescription.value = "";
 
+    //DISABLING THE GENDER FIELD COZ IT IS GENERATED AUTOMATICALLY...
     male.checked = false;
     female.checked = false;
+    female.disabled = true;
+    male.disabled = true;
+
+    //DISABLING THE DOB FIELD COZ IT IS GENERATED AUTOMATICALLY...
+    $('#empDOB').css("pointer-events", "none");
+    $('#empDOB').css("cursor", "not-allowed");
 
     empCivilStatus.style.color = "grey";
     empCivilStatus.style.borderBottom = "none"
@@ -102,8 +106,10 @@ const refreshForm = () => {
     empDesignation.style.color = "grey";
     empDesignation.style.borderBottom = "none"
 
-    empStatus.style.color = "grey";
-    empStatus.style.borderBottom = "none"
+    empStatus.style.borderBottom = "solid"
+
+    lblmale.style.color = "#6C7293";
+    lblfemale.style.color = "#6C7293";
 
 
     let mindate = new Date();
@@ -516,7 +522,7 @@ const checkDOB = () => {
         let currentTime = currentdate.getTime();
         let dobGapTime;
 
-        if(empDob.getFullYear()>1970)
+        if(empDob.getFullYear() > 1970)
             dobGapTime = currentTime - dobTime;
         else
             dobGapTime = currentTime + (-1*dobTime); //
@@ -541,6 +547,134 @@ const checkDOB = () => {
 
 }
 
+const visiblefiredReasonAndDateFields = () => {
+
+    let firedReasonAndDateDiv = document.getElementById("firedReasonAndDateDivBox");
+    let empStatusInput = document.getElementById("empStatus");
+
+    if (JSON.parse(empStatusInput.value).name == "Fired"){
+
+        firedReason.style.display = "block";
+        firedDate.style.display = "block";
+
+    }else {
+
+        firedReason.style.display = "none";
+        firedDate.style.display = "none";
+    }
+
+}
+
+function nicFieldValidator(){
+    let nicpattern  = new RegExp('^(([0-9]{9}[VvXx])|([2,1][9,0][0,7,8,9][0-9]{9}))$');
+
+    if(empNic.value != ""){
+        if(nicpattern.test(empNic.value)){
+
+            if (empNic.value.length == 10) {
+
+                nic = "19" + empNic.value.substring(0,5) + "0" +  empNic.value.substring(5,9);
+
+            } else {
+
+                nic = empNic.value;
+
+            }
+
+            //,lblFemale,lblMale)
+            let empBirthYear = nic.substring(0,4);
+
+
+            let empNoofBirthDays = nic.substring(4,7);
+            //console.log(empNoofBirthDays);
+
+            //
+            if(empNoofBirthDays > 500){
+                female.checked = true;
+                empNoofBirthDays = empNoofBirthDays - 500;
+                employee.gender = "female";
+                lblfemale.style.color = "green";
+                lblmale.style.color = "#6C7293";
+            }
+
+            else{
+                male.checked = true;
+                employee.gender = "male";
+                lblmale.style.color = "green";
+                lblfemale.style.color = "#6C7293";
+            }
+
+            let dob = new Date(empBirthYear);
+
+
+            if(empBirthYear%4 == 0){
+                //adika awuruddak nm
+                dob.setDate(empNoofBirthDays);
+                empDOB.value = getCurrentDate("date",dob);
+            }else {
+                if(empNoofBirthDays <= 59){
+                    dob.setDate(empNoofBirthDays);
+                    empDOB.value = getCurrentDate("date",dob);
+                }else if(empNoofBirthDays == 60){
+                    empDOB.value = empBirthYear+"-02-29";
+                }else {
+                    dob.setDate( parseInt(empNoofBirthDays)-1);
+                    empDOB.value = getCurrentDate("date",dob);
+                }
+            }
+
+
+            console.log(empBirthYear);
+
+            employee.nic  = empNic.value;
+            employee.dob = empDOB.value;
+
+            if(oldemployee != null && employee.nic != oldemployee.nic){
+                empNic.style.color = "orange";
+                empDOB.style.color = "orange";
+
+            }
+            else{
+
+                empNic.style.color = "green";
+                // empNIC.disabled = true;
+                empDOB.style.color = "green";
+               /* empDOB.style.backgroundColor = "green";
+                empDOB.style.color = "#6C7293";*/
+
+            }
+        }
+        else{
+            employee.nic  = null;
+            employee.dob = null;
+
+            empDOB.value = "";
+
+            female.checked = false;
+            male.checked = false;
+
+            lblmale.style.color = "#6C7293";
+            lblfemale.style.color = "#6C7293";
+
+            /*defaultFeild(empDOB);
+            invalidFeild(empNic);*/
+        }
+    }
+    else{
+
+        employee.nic  = null;
+        employee.dob = null;
+        empDOB.value = "";
+        female.checked = false;
+        male.checked = false;
+        lblmale.style.color = "#6C7293";
+        lblfemale.style.color = "#6C7293";
+
+        /*defaultFeild(empDOB);
+        invalidFeild(empNic);*/
+
+    }
+}
 
 
 

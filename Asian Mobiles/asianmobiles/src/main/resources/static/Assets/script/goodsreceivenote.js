@@ -531,7 +531,6 @@ const submitBtnFunction = () => {
 
 }
 
-
 const formRefill = (ob) => {
 
     empMancontainer.classList.add("right-panel-active");

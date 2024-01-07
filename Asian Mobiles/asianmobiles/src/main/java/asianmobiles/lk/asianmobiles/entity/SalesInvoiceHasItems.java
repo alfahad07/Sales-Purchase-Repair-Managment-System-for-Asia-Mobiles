@@ -55,8 +55,8 @@ public class SalesInvoiceHasItems implements Serializable {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "total_amount")
-    private BigDecimal total_amount;
+    @Column(name = "line_amount")
+    private BigDecimal line_amount;
 
 
 }

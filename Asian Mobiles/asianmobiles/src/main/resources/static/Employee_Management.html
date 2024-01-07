@@ -21,10 +21,6 @@
     <script src="Assets/script/employee.js"></script>
     <script src="Assets/script/login.js"></script>
 
-    <!--SWEET ALERT 2 LINK-->
-    <link rel="stylesheet" href="Assets/sweetalert2/package/dist/sweetalert2.min.css">
-    <script src="Assets/sweetalert2/package/dist/sweetalert2.min.js"></script>
-
     <title>Employee_Management-Asian_Mobiles</title>
 
 </head>
@@ -77,6 +73,7 @@
                                 <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
                                 <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
                                 <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+                                <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Supplier-Invoice Management System</a></li>
 
                             </ul>
                         </li>
@@ -191,7 +188,7 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="empfullname"
-                                   onkeyup="textFeildValidtor(empfullname,'^(([A-Z][a-z]{3,20}[\\s]){1,5}([A-Z][a-z]{3,16}))$','employee','fullname','oldemployee')"
+                                   onkeyup="textFeildValidtor(empfullname,'^(([A-Z][a-z]{1,20}[\\s]){1,5}([A-Z][a-z]{1,16}))$','employee','fullname','oldemployee')"
                                    required>
 
                             <label for="empfullname" class="fw-bold">Employee Fullname (Ex:-Jxxx Dxxx): <span
@@ -205,7 +202,7 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="empCallingname"
-                                   onkeyup="textFeildValidtor(empCallingname,'^[A-Z][a-z]{3,10}$','employee','callingname','oldemployee')"
+                                   onkeyup="textFeildValidtor(empCallingname,'^[A-Z][a-z]{1,10}$','employee','callingname','oldemployee')"
                                    required>
 
                             <label for="empCallingname" class="fw-bold">Employee Calling Name (Ex:-Jxxxx): <span
@@ -219,7 +216,7 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="empNic"
-                                   onkeyup="textFeildValidtor(empNic,'^(([0-9]{9}[VvXx])|([0-9]){12})$','employee','nic','oldemployee')"
+                                   onkeyup="textFeildValidtor(empNic,'^(([0-9]{9}[VvXx])|([0-9]){12})$','employee','nic','oldemployee'), nicFieldValidator()"
                                    required>
 
                             <label for="empNic" class="fw-bold">Employee NIC NUMBER: <span id="star">*</span></label>
@@ -318,7 +315,7 @@
 
                         </div>
 
-                    </div><br><br>
+                    </div><br>
 
                     <!--EMPLOYEE CIVILSTATUS /EMPLOYEE DESIGNATION / EMPLOYEE STATUS-->
                     <div class="row">
@@ -333,7 +330,7 @@
                                 <option selected disabled>Select Employee Status</option>
                             </select>
 
-                            <i style="top: 402px;width: 30%" ></i>
+                            <i style="top: 372px;width: 30%" ></i>
 
                         </div>
 
@@ -347,7 +344,7 @@
                                 <option selected disabled>Select Employee Status</option>
                             </select>
 
-                            <i style="top: 402px;width: 30%; left: 35%;" ></i>
+                            <i style="top: 372px;width: 30%; left: 35%;" ></i>
 
                         </div>
 
@@ -357,11 +354,39 @@
                             <label for="empStatus" class="fw-bold">EMPLOYEE STATUS :
                                 <span id="star">*</span></label>
 
-                            <select id="empStatus" class="fw-bold" onchange="selectValidator(empStatus, '','employee', 'employeestatus_id','oldemployee')" required>
+                            <select id="empStatus" class="fw-bold" onchange="selectValidator(empStatus, '','employee', 'employeestatus_id','oldemployee'), visiblefiredReasonAndDateFields()" required>
                                 <option selected disabled>Select Employee Status</option>
                             </select>
 
-                            <i style="top: 402px;width: 30%; left: 67%;" ></i>
+                            <i style="top: 372px;width: 30%; left: 67%;" ></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--EMPLOYEE FIRED REASON /EMPLOYEE FIRED DATE -> ONLY VISIBLE IF THE EMPLOYEE STATUS IS FIRED-->
+                    <div class="row" id="firedReasonAndDateDivBox">
+
+                        <!--EMPLOYEE FIRED REASON-->
+                        <div class="col-6 inputBox" id="firedReason" style="display: none">
+
+                            <input type="text" class="fw-bold" id="empFiredReason" onkeyup="textFeildValidtor(empFiredReason,'^[A-Za-z0-9\\/\\.\\,\\s]$','employee','','oldemployee')" required>
+
+                            <label for="empFiredReason" class="fw-bold">Fired Reason: <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--EMPLOYEE FIRED DATE-->
+                        <div class="col-6 inputBox" id="firedDate" style="display: none">
+
+                            <input type="text" class="fw-bold" id="empFiredDate" name="date" onfocus="(this.type='date')"
+                                   onblur="if(!this.value) this.type='text'" onchange="dateFeildValidtor(empFiredDate,'', 'employee', '', 'oldemployee')" required>
+
+                            <label for="empFiredDate" class="fw-bold">Fired Date: <span id="star">*</span></label>
+
+                            <i></i>
 
                         </div>
 
@@ -388,7 +413,7 @@
                         <!--ADD BUTTON-->
                         <div class="col-4">
 
-                            <button class="addBtn"  id="btnAdd" onclick="submitBtnFunction()" > ADD EMPLOYEE    </button>
+                            <button class="addBtn"  id="btnAdd" onclick="submitBtnFunction()" > ADD EMPLOYEE </button>
 
                         </div>
 
@@ -402,7 +427,7 @@
                         <!--CLEAR BUTTON-->
                         <div class="col-4">
 
-                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR EMPLOYEE  </button>
+                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR EMPLOYEE </button>
 
                         </div>
 

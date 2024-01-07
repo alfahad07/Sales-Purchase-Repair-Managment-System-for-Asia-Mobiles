@@ -229,9 +229,9 @@ public class SalesInvoiceController {
     }
 
 
-    /*//CREATE POST MAPPING FUNCTION TO UPDATE MODEL [/Model - PUT]
+    //CREATE PUT MAPPING FUNCTION TO UPDATE MODEL [/Model - PUT]
     @PutMapping
-    public String updateItem( @RequestBody Model model ){
+    public String updateItem( @RequestBody SalesInvoice salesInvoice ){
 
         //NEED TO CHECK PRIVILAGE FOR LOGGED USER --> This is done below...
 
@@ -244,13 +244,13 @@ public class SalesInvoiceController {
 
 
         //Created a HashMap instance or copy
-        HashMap<String, Boolean> loggedUserPrivillage = privilegeController.getPrivilage(loggedUser.getUsername(), "MODEL");
+        HashMap<String, Boolean> loggedUserPrivillage = privilegeController.getPrivilage(loggedUser.getUsername(), "SALES-INVOICE");
 
         if (!(authentication instanceof AnonymousAuthenticationToken) && loggedUser != null && loggedUserPrivillage.get("upd")){
 
-            //NEED TO CHECK DUPLICATION OF THE COLUMNS VALUE
-            Model extModelName = modelDao.getByModelName(model.getModel_name());
-            if (extModelName != null && model.getId() != extModelName.getId()) {
+            /*//NEED TO CHECK DUPLICATION OF THE COLUMNS VALUE
+            Model extModelName = modelDao.getByModelName(salesInvoice.getModel_name());
+            if (extModelName != null && salesInvoice.getId() != extModelName.getId()) {
 
                 return "Model update not completed : Model Name already Exist";
 
@@ -263,32 +263,32 @@ public class SalesInvoiceController {
 
                 return "Model update not completed : Model Number already Exist";
 
-            }
+            }*/
 
             try {
 
                 //SET AUTO INSERT VALUE OF THE LAST UPDATED TIME ONCE THE UPDATE IS DONE BY THE USER.
-                model.setUpdated_datetime(LocalDateTime.now());
-                model.setUpdated_user_id(loggedUser);
+                salesInvoice.setLast_updated_datetime(LocalDateTime.now());
+                salesInvoice.setUpdated_user_id(loggedUser);
 
                 //SAVE THE CHANGES
-                modelDao.save(model);
+                salesInvoiceDao.save(salesInvoice);
 
                 return "0";
 
             }catch (Exception ex){
 
-                return "Model update is incomplete : " + ex.getMessage();
+                return "Sales Invoice update is incomplete : " + ex.getMessage();
 
             }
 
         }else {
 
-            return "Model update not completed : You dont have access";
+            return "Sales Invoice update not completed : You dont have access";
 
         }
 
-    }*/
+    }
 
 
 }

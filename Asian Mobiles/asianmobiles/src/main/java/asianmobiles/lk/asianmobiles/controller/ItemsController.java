@@ -35,11 +35,18 @@ public class ItemsController {
     private UserRepository userDao;
 
 
-
     @GetMapping(value = "/getbyid/{id}", produces = "application/json")
     public Items getItemsByPVId (@PathVariable("id") int id){
 
         return itemsDao.getReferenceById(id);
+
+    }
+
+    //CREATED A LIST TO GET THE MAIN DETAILS OF THE ITEMS TO THE ITEM DROPDOWN(COMBO BOX) IN INNER FORM OF THE ITEM MODULE...
+    @GetMapping(value = "/list", produces = "application/json")
+    public List<Items> itemsList () {
+
+        return itemsDao.list();
 
     }
 
@@ -242,7 +249,7 @@ public class ItemsController {
 
             //NEED TO CHECK DUPLICATION OF THE COLUMNS VALUE
             Items extItemsIemiNo1 = itemsDao.getByIemiNumber01(items.getIemi_number_1());
-            if (extItemsIemiNo1 != null && items.getIemi_number_1() != extItemsIemiNo1.getIemi_number_1()) {
+            if (extItemsIemiNo1 != null && items.getIemi_number_1() == extItemsIemiNo1.getIemi_number_1()) {
 
                 return "Item update not completed : Item IEMI Number 01 already Exist";
 
@@ -251,7 +258,7 @@ public class ItemsController {
 
             //CHECKING THE EMAIL EXIST OR NOT IN THE DATABASE COZ IT IS UNIQUE.
             Items extItemsIemiNo2 = itemsDao.getByIemiNumber02(items.getIemi_number_2());
-            if (extItemsIemiNo2 != null && items.getIemi_number_2() != extItemsIemiNo2.getIemi_number_2()) {
+            if (extItemsIemiNo2 != null && items.getIemi_number_2() == extItemsIemiNo2.getIemi_number_2()) {
 
                 return "Item update not completed : Item IEMI Number 02 already Exist";
 
@@ -259,7 +266,7 @@ public class ItemsController {
 
             //CHECKING THE EMAIL EXIST OR NOT IN THE DATABASE COZ IT IS UNIQUE.
             Items extSerialNumber = itemsDao.getBySerialNumber(items.getSerial_number());
-            if (extSerialNumber != null && items.getSerial_number() != extSerialNumber.getSerial_number()) {
+            if (extSerialNumber != null && items.getSerial_number() == extSerialNumber.getSerial_number()) {
 
                 return "Item update not completed : Item Serial Number already Exist";
 
@@ -267,7 +274,7 @@ public class ItemsController {
 
             //CHECKING THE EMAIL EXIST OR NOT IN THE DATABASE COZ IT IS UNIQUE.
             Items extItemCode = itemsDao.getByItemCode(items.getItem_code_number());
-            if (extItemCode != null && items.getItem_code_number() != extItemCode.getItem_code_number()) {
+            if (extItemCode != null && items.getItem_code_number() == extItemCode.getItem_code_number()) {
 
                 return "Item update not completed : Item Code Number already Exist";
 

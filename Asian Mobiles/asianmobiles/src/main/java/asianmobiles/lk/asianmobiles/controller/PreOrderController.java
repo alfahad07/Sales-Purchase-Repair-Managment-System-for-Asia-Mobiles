@@ -45,6 +45,13 @@ public class PreOrderController {
     }
 
 
+    //CREATED A LIST TO GET THE MAIN DETAILS OF THE ITEMS TO THE ITEM DROPDOWN(COMBO BOX) IN INNER FORM OF THE ITEM MODULE...
+    @GetMapping(value = "/list", produces = "application/json")
+    public List<PreOrder> preOrderList () {
+
+        return preOrderDao.list();
+
+    }
 
     @GetMapping
     //creating a function to display the PREORDER UI.

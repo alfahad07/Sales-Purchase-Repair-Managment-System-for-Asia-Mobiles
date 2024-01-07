@@ -127,6 +127,9 @@ const refreshForm = () => {
 
     disableAddUpdateBtn(true, false);
 
+    refreshInnerFormAndTable();
+
+
 }
 
 
@@ -170,25 +173,33 @@ const disableAddUpdateBtn = (addBtn, updBtn) => {
 const refreshInnerFormAndTable = () => {
 
     //INNER FORM
-    preOrderHasModel = new Object();
-    oldPreOrderHasModel = null;
+    salesInvoiceHasItems = new Object();
+    oldSalesInvoiceHasItems = null;
 
 
-    innerModels = getServiceRequest("/model/list")
-    fillSelectFeild2(preOrderModel, "Select Model", innerModels,"model_number" ,"model_name",)
-    preOrderModel.style.color        = "grey";
-    preOrderModel.style.borderBottom = "none";
-    $('#preOrderModel').css("pointer-events", "all");
-    $('#preOrderModel').css("cursor", "pointer");
+    innerItems = getServiceRequest("/items/list")
+    fillSelectFeild2(salesInvoiceItem, "Select Item", innerItems,"item_code_number" ,"item_name",)
+    salesInvoiceItem.style.color        = "grey";
+    salesInvoiceItem.style.borderBottom = "none";
+    $('#salesInvoiceItem').css("pointer-events", "all");
+    $('#salesInvoiceItem').css("cursor", "pointer");
+    salesInvoiceItem.value   = "";
 
-    preOrderModel.value      = "";
-    preOrderUnitPrice.value  = "";
-    $('#preOrderUnitPrice').css("pointer-events", "none");
-    $('#preOrderUnitPrice').css("cursor", "not-allowed");
-    preOrderQuantity.value   = "";
-    preOrderLineTotal.value  = "";
-    $('#preOrderLineTotal').css("pointer-events", "none");
-    $('#preOrderLineTotal').css("cursor", "not-allowed");
+    salesInvoiceUnitPrice.value  = "";
+    $('#salesInvoiceUnitPrice').css("pointer-events", "none");
+    $('#salesInvoiceUnitPrice').css("cursor", "not-allowed");
+
+    salesInvoiceDiscountRate.value  = "";
+
+    salesInvoiceDiscountedPrice.value  = "";
+    $('#salesInvoiceDiscountedPrice').css("pointer-events", "none");
+    $('#salesInvoiceDiscountedPrice').css("cursor", "not-allowed");
+
+    salesInvoiceQuantity.value   = "";
+
+    salesInvoiceLineTotal.value  = "";
+    $('#salesInvoiceLineTotal').css("pointer-events", "none");
+    $('#salesInvoiceLineTotal').css("cursor", "not-allowed");
 
     //Disabling the inner Add Btn...
     innerFormBtnAdd.disabled = true;
@@ -206,22 +217,22 @@ const refreshInnerFormAndTable = () => {
     let totalAmount = 0.00;
 
     //create display property list
-    let DisplayPropertyList = ['model_id.model_name','unit_price','quantity','line_amount'];
+    let DisplayPropertyList = ['items_id.item_name','unit_price','discount_rate','discounted_price','quantity','line_amount'];
 
     //create display property list type
-    let DisplayPropertyListType = ['object','text','text','text'];
+    let DisplayPropertyListType = ['object','text','text','text','text','text'];
 
-    let innerLoggedUserPrivilage = getServiceRequest("/userprivilage/bymodule?modulename=PRE-ORDER");
+    let innerLoggedUserPrivilage = getServiceRequest("/userprivilage/bymodule?modulename=SALES-INVOICE");
     // calling filldataintotable function to fill data
-    fillDataIntoTable(tablePreOrderInnerTable,preOrder.preOrderHasModelList,DisplayPropertyList, DisplayPropertyListType, innerFormRefill, innerRowDelete, innerRowView,true,innerLoggedUserPrivilage);
+    fillDataIntoTable(tableSalesInvoiceInnerTable,salesInvoice.salesInvoiceHasItemsList,DisplayPropertyList, DisplayPropertyListType, innerFormRefill, innerRowDelete, innerRowView,true,innerLoggedUserPrivilage);
 
 
     // Created to invisible the Delete Btn in inner table  and sum all the line_total to total field.
-    for (let index in preOrder.preOrderHasModelList){
+    for (let index in salesInvoice.salesInvoiceHasItemsList){
 
-        tablePreOrderInnerTable.children[1].children[index].children[5].children[2].style.display = "none";
+        tableSalesInvoiceInnerTable.children[1].children[index].children[7].children[2].style.display = "none";
 
-        totalAmount = parseFloat(totalAmount) + parseFloat(preOrder.preOrderHasModelList[index].line_amount)
+        totalAmount = parseFloat(totalAmount) + parseFloat(salesInvoice.salesInvoiceHasItemsList[index].line_amount)
 
     }
 
@@ -229,19 +240,19 @@ const refreshInnerFormAndTable = () => {
     // To validate the total amount field with orange and green colour....
     if (totalAmount != 0.00){
 
-        preOrderTotalAmount.value = parseFloat(totalAmount).toFixed(2);
-        preOrder.total_amount     = preOrderTotalAmount.value;
+        salesTotalAmount.value = parseFloat(totalAmount).toFixed(2);
+        salesInvoice.total_amount  = salesTotalAmount.value;
 
-        if (oldPreOrder != null && preOrder.total_amount != oldPreOrder.total_amount){
+        if (oldSalesInvoice != null && salesInvoice.total_amount != oldSalesInvoice.total_amount){
 
             //update style
-            preOrderTotalAmount.style.color = 'orange';
+            salesTotalAmount.style.color = 'orange';
 
 
         }else {
 
             //valid style
-            preOrderTotalAmount.style.color = 'green';
+            salesTotalAmount.style.color = 'green';
 
         }
 
@@ -249,27 +260,28 @@ const refreshInnerFormAndTable = () => {
 
 }
 
+
 const selectModelToGetUnitPrice = () => {
 
-    preOrderUnitPrice.value = parseFloat(JSON.parse(preOrderModel.value).sales_price).toFixed(2)
-    preOrderHasModel.unit_price = preOrderUnitPrice.value;
-    preOrderUnitPrice.style.color = 'green';
+    salesInvoiceUnitPrice.value = parseFloat(JSON.parse(salesInvoiceItem.value).model_id.sales_price).toFixed(2)
+    salesInvoiceHasItems.unit_price = salesInvoiceUnitPrice.value;
+    salesInvoiceUnitPrice.style.color = 'green';
 
 }
 
-const multiplyQuantityWithUnitPrice = () => {
+const multiplyQuantityWithDiscountedPrice = () => {
 
-    if (preOrderQuantity.value != 0){
+    if (salesInvoiceQuantity.value != 0){
 
-        let regPattern = new RegExp("^[0-9]{1,5}$");
+        let regPattern = new RegExp("^[0-9]{1,4}$");
 
-        if (regPattern.test(preOrderQuantity.value)){
+        if (regPattern.test(salesInvoiceQuantity.value)){
 
-            preOrderLineTotal.value  = (parseFloat(preOrderUnitPrice.value)*parseFloat(preOrderQuantity.value)).toFixed(2)
-            preOrderLineTotal.style.color = 'green';
-            preOrderHasModel.line_amount = preOrderLineTotal.value;
+            salesInvoiceLineTotal.value  = (parseFloat(salesInvoiceDiscountedPrice.value)*parseFloat(salesInvoiceQuantity.value)).toFixed(2)
+            salesInvoiceLineTotal.style.color = 'green';
+            salesInvoiceHasItems.line_amount = salesInvoiceLineTotal.value;
 
-            if (oldPreOrderHasModel == null){
+            if (oldSalesInvoiceHasItems == null){
 
                 //Enabling the inner Add Btn...
                 innerFormBtnAdd.disabled = false;
@@ -285,28 +297,70 @@ const multiplyQuantityWithUnitPrice = () => {
 
         }else {
 
-            preOrderQuantity.style.color = 'red';
+            salesInvoiceQuantity.style.color = 'red';
 
         }
 
     }else {
 
-        preOrderQuantity.style.color = 'red';
-        preOrderLineTotal.value = "";
+        salesInvoiceQuantity.style.color = 'red';
+        salesInvoiceLineTotal.value = "";
 
     }
 
 }
 
+const deductDiscountRateWithUnitPrice = () => {
 
+    if (salesInvoiceDiscountRate.value != 0){
+
+        let regPattern = new RegExp("^[0-9]{1,2}[.][0-9]{2}$");
+
+        if (regPattern.test(salesInvoiceDiscountRate.value)){
+
+            let discountValue = parseFloat(salesInvoiceUnitPrice.value)*parseFloat(salesInvoiceDiscountRate.value) / 100;
+
+            salesInvoiceDiscountedPrice.value =  (parseFloat(salesInvoiceUnitPrice.value) - discountValue).toFixed(2);
+            salesInvoiceDiscountedPrice.style.color = 'green';
+            salesInvoiceHasItems.discounted_price = salesInvoiceDiscountedPrice.value;
+
+            if (oldSalesInvoiceHasItems == null){
+
+                //Enabling the inner Add Btn...
+                innerFormBtnAdd.disabled = false;
+                $('#innerFormBtnAdd').css("cursor", "pointer");
+
+            }else {
+
+                //Enabling the inner Update Btn...
+                innerFormBtnUpdate.disabled = false;
+                $('#innerFormBtnUpdate').css("cursor", "pointer");
+
+            }
+
+        }else {
+
+            salesInvoiceDiscountRate.style.color = 'red';
+
+        }
+
+    }else {
+
+        salesInvoiceDiscountRate.style.color = 'red';
+        salesInvoiceDiscountedPrice.value = "";
+
+    }
+
+
+}
 
 const innerAddMC = () => {
 
     let itemExt = false;
 
-    for (let index in preOrder.preOrderHasModelList){
+    for (let index in salesInvoice.salesInvoiceHasItemsList){
 
-        if (preOrder.preOrderHasModelList[index].model_id.model_name == preOrderHasModel.model_id.model_name){
+        if (salesInvoice.salesInvoiceHasItemsList[index].items_id.item_name == salesInvoiceHasItems.items_id.item_name){
 
             itemExt = true;
             break;
@@ -317,25 +371,27 @@ const innerAddMC = () => {
 
     if (!itemExt){
 
-        let submitConfigMsg = "Are you willing to add following Pre-Order Model?\n" +
-            "\n Model Name : " + preOrderHasModel.model_id.model_name +
-            "\n Unit Price : Rs. " + preOrderHasModel.unit_price +
-            "\n Quantity : "   + preOrderHasModel.quantity +
-            "\n Line Total : Rs. " + preOrderHasModel.line_amount;
+        let submitConfigMsg = "Are you willing to add following Sales Invoice Item?\n" +
+            "\n Item Name : " + salesInvoiceHasItems.items_id.item_name +
+            "\n Unit Price : Rs. " + salesInvoiceHasItems.unit_price +
+            "\n Discount Rate : " + salesInvoiceHasItems.discount_rate + "%" +
+            "\n Discounted Price : Rs. " + salesInvoiceHasItems.discounted_price +
+            "\n Quantity : "   + salesInvoiceHasItems.quantity +
+            "\n Line Total : Rs. " + salesInvoiceHasItems.line_amount;
 
         let userResponse    = window.confirm(submitConfigMsg)
 
         if (userResponse) {
 
-            preOrder.preOrderHasModelList.push(preOrderHasModel);
-            alert("Pre-Order Model Added Successfully as you wish!!!");
+            salesInvoice.salesInvoiceHasItemsList.push(salesInvoiceHasItems);
+            alert("Sales Invoice Item Added Successfully as you wish!!!");
             refreshInnerFormAndTable();
 
         }
 
     }else {
 
-        alert("Model Cannot be Added : It's already Exist!!!\n" + "\n Model Name : " + preOrderHasModel.model_id.model_name)
+        alert("Item Cannot be Added : It's already Exist!!!\n" + "\n Item Name : " + salesInvoiceHasItems.items_id.item_name)
 
     }
 
@@ -344,20 +400,22 @@ const innerAddMC = () => {
 
 const innerUpdateMC = () => {
 
-    if (preOrderHasModel.quantity != oldPreOrderHasModel.quantity){
+    if (salesInvoiceHasItems.quantity != oldSalesInvoiceHasItems.quantity){
 
-        let submitConfigMsg = "Are you willing to update the following Pre-Order Model?\n" +
-            "\n Model Name : " + preOrderHasModel.model_id.model_name +
-            "\n Unit Price : Rs. " + preOrderHasModel.unit_price +
-            "\n Quantity : "   + preOrderHasModel.quantity +
-            "\n Line Total : Rs. " + preOrderHasModel.line_amount;
+        let submitConfigMsg = "Are you willing to update the following Sales Invoice Model?\n" +
+            "\n Model Name : " + salesInvoiceHasItems.items_id.item_name +
+            "\n Unit Price : Rs. " + salesInvoiceHasItems.unit_price +
+            "\n Discount Rate : " + salesInvoiceHasItems.discount_rate + "%" +
+            "\n Discounted Price : Rs. " + salesInvoiceHasItems.discounted_price +
+            "\n Quantity : "   + salesInvoiceHasItems.quantity +
+            "\n Line Total : Rs. " + salesInvoiceHasItems.line_amount;
 
         let userResponse    = window.confirm(submitConfigMsg)
 
         if (userResponse) {
 
-            preOrder.preOrderHasModelList[selectedInnerRow] = preOrderHasModel;
-            alert("Pre-Order Model Updated Successfully as you wish!!!");
+            salesInvoice.salesInvoiceHasItemsList[selectedInnerRow] = salesInvoiceHasItems;
+            alert("Sales Invoice Items Updated Successfully as you wish!!!");
             refreshInnerFormAndTable();
 
         }
@@ -380,31 +438,38 @@ const innerClearMC = () => {
 const innerFormRefill = (innerOb, innerRowNo) => {
 
     selectedInnerRow = innerRowNo;
-    preOrderHasModel = JSON.parse(JSON.stringify(innerOb));
-    oldPreOrderHasModel = JSON.parse(JSON.stringify(innerOb));
+    salesInvoiceHasItems = JSON.parse(JSON.stringify(innerOb));
+    oldSalesInvoiceHasItems = JSON.parse(JSON.stringify(innerOb));
 
-    innerModels = getServiceRequest("/model/list")
-    fillSelectFeild2(preOrderModel, "Select Model", innerModels,"model_number" ,"model_name", preOrderHasModel.model_id.model_number)
-    preOrderModel.style.color        = "green";
-    preOrderModel.style.borderBottom = "solid";
-    $('#preOrderModel').css("pointer-events", "none");
-    $('#preOrderModel').css("cursor", "not-allowed");
+    innerItems = getServiceRequest("/items/list")
+    fillSelectFeild2(salesInvoiceItem, "Select Item", innerItems,"item_code_number" ,"item_name", salesInvoiceHasItems.items_id.item_code_number);
 
-
-    preOrderUnitPrice.value       = preOrderHasModel.unit_price;
-    preOrderUnitPrice.style.color = "green";
-    $('#preOrderUnitPrice').css("pointer-events", "none");
-    $('#preOrderUnitPrice').css("cursor", "not-allowed");
+    salesInvoiceItem.style.color        = "green";
+    salesInvoiceItem.style.borderBottom = "solid";
+    $('#salesInvoiceItem').css("pointer-events", "none");
+    $('#salesInvoiceItem').css("cursor", "not-allowed");
 
 
-    preOrderQuantity.value   = preOrderHasModel.quantity;
-    preOrderQuantity.style.color = "green";
+    salesInvoiceUnitPrice.value       = salesInvoiceHasItems.unit_price;
+    salesInvoiceUnitPrice.style.color = "green";
+    $('#salesInvoiceUnitPrice').css("pointer-events", "none");
+    $('#salesInvoiceUnitPrice').css("cursor", "not-allowed");
 
 
-    preOrderLineTotal.value  = preOrderHasModel.line_amount;
-    preOrderLineTotal.style.color = "green";
-    $('#preOrderLineTotal').css("pointer-events", "none");
-    $('#preOrderLineTotal').css("cursor", "not-allowed");
+    salesInvoiceDiscountRate.value  = salesInvoiceHasItems.discount_rate;
+
+    salesInvoiceDiscountedPrice.value  = salesInvoiceHasItems.discounted_price;
+    $('#salesInvoiceDiscountedPrice').css("pointer-events", "none");
+    $('#salesInvoiceDiscountedPrice').css("cursor", "not-allowed");
+
+    salesInvoiceQuantity.value   = salesInvoiceHasItems.quantity;
+    salesInvoiceQuantity.style.color = "green";
+
+
+    salesInvoiceLineTotal.value  = salesInvoiceHasItems.line_amount;
+    salesInvoiceLineTotal.style.color = "green";
+    $('#salesInvoiceLineTotal').css("pointer-events", "none");
+    $('#salesInvoiceLineTotal').css("cursor", "not-allowed");
 
 
     //Disabling the inner Add Btn...
@@ -416,14 +481,14 @@ const innerFormRefill = (innerOb, innerRowNo) => {
 const innerRowDelete = (innerOb, innerRowIndex) => {
 
     let deleteMsg = "Would you like to Delete this Sales Invoice Model?\n"
-        +"Model Name : "+ innerOb.model_id.model_name ;
+        +"Item Name : "+ innerOb.items_id.item_name;
 
     let deleteUserResponse = window.confirm(deleteMsg);
 
     if (deleteUserResponse) {
 
-         preOrder.preOrderHasModelList.splice(innerRowIndex, 1);
-         alert("As you wish, Deleted the Pre-Order Successfully !!!");
+         salesInvoice.salesInvoiceHasItemsList.splice(innerRowIndex, 1); // deleteCount means how many rows should be deleted from the selected row by the index number of the object,Ex :- If it is 1 that mean only the selected row or if it is 2 that mean only the selected row and the next row.
+         alert("As you wish, Deleted the Sales Invoice Model Successfully !!!");
          refreshInnerFormAndTable();
 
     }
@@ -434,52 +499,10 @@ const innerRowView = () => {
 
 }
 
-
 function checkErrors() {
 
     let error = "";
 
-    if (salesInvoice.customer_id == null){
-
-        error = error + "Registered Customer Field Incomplete \n";
-
-    }
-
-    if (salesInvoice.pre_order_id == null){
-
-        error = error + "Pre-Order Code Field Incomplete \n";
-
-    }
-
-    if (salesInvoice.customer_name == ""){
-
-        error = error + "Customer Name Field Incomplete \n";
-
-    }
-
-    if (salesInvoice.customer_address == ""){
-
-        error = error + "Customer Address Field Incomplete \n";
-
-    }
-
-    if (salesInvoice.contact_number == ""){
-
-        error = error + "Contact Number Field Incomplete \n";
-
-    }
-
-    if (salesInvoice.customer_nic == ""){
-
-        error = error + "Customer NIC Field Incomplete \n";
-
-    }
-
-    if (salesInvoice.customer_email == ""){
-
-        error = error + "Customer E-Mail Field Incomplete \n";
-
-    }
 
     if (salesInvoice.total_amount == null){
 
@@ -513,7 +536,7 @@ function checkErrors() {
 
     if (salesInvoice.salesInvoiceHasItemsList.length == "0"){
 
-        error = error + "Sales Invoice Models Not Added \n";
+        error = error + "Sales Invoice Items Not Added \n";
 
     }
 
@@ -533,10 +556,8 @@ const submitBtnFunction = () => {
 
         let submitConfigMsg = "Are you willing to add this Sales Invoice?\n" +
             "\n Bill Number : " + salesInvoice.bill_number +
-            "\n Customer Name : " + salesInvoice.customer_id.fullname +
-            "\n Model Name : " + salesInvoice.model_id.model_name +
             "\n Total Amount : Rs. " + salesInvoice.total_amount +
-            "\n Net Amount : Rs. " + salesInvoice.total_amount;
+            "\n Net Amount : Rs. " + salesInvoice.net_amount;
 
         let userResponse    = window.confirm(submitConfigMsg)
 
@@ -567,7 +588,6 @@ const submitBtnFunction = () => {
 
 }
 
-
 const formRefill = (ob) => {
 
     empMancontainer.classList.add("right-panel-active");
@@ -590,26 +610,31 @@ const formRefill = (ob) => {
 
 
 
-    //CHECKING SALES INVOICE CUSTOMER ID IS NULL COZ NULL VALUES CANNOT SET IN COMBO BOX OR SELECT
-    if (salesInvoice.customer_id =! null){
+    //CHECKING SALES INVOICE CUSTOMER ID IS NULL COZ NULL VALUES CANNOT SET IN COMBO BOX OR DROPDOWN, IF THE CUSTOMER IS NOT REGISTERED THEN THE COBO BOX IS NULL...
+    if (salesInvoice.customer_id != null){
 
         fillSelectFeild(registeredCustomer, "Select Registered Customer", customers, "fullname", salesInvoice.customer_id.fullname);
         registeredCustomer.style.borderBottom   = "solid";
+        registeredCustomer.style.color = "green";
+
 
     }else {  registeredCustomer.style.borderBottom = "none"; }
 
 
     //CHECKING SALES INVOICE PRE-ORDER ID IS NULL COZ NULL VALUES CANNOT SET IN COMBO BOX OR SELECT
-    if (salesInvoice.pre_order_id =! null) {
+    if (salesInvoice.pre_order_id != null) {
 
         fillSelectFeild(salesPreOrder, "Select Pre-Order Code", salesPreOrders, "pre_order_code", salesInvoice.pre_order_id.pre_order_code);
         salesPreOrder.style.borderBottom = "solid";
+        salesPreOrder.style.color = "green";
 
     }else{  salesPreOrder.style.borderBottom = "none"; }
 
 
     fillSelectFeild(salesInvoiceStatus, "Select Sales Invoice Status", statuses, "name", salesInvoice.sales_invoice_status_id.name);
     salesInvoiceStatus.style.borderBottom   = "solid";
+    salesInvoiceStatus.style.color = "green";
+
 
     disableAddUpdateBtn(false, true);
 
@@ -623,13 +648,23 @@ const checkUpdate = () => {
 
     if (salesInvoice != null && oldSalesInvoice != null) {
 
-        if (salesInvoice.customer_id.id != oldSalesInvoice.customer_id.id) {
-            update = update + "Registered Customer updated \n";
+        if (salesInvoice.customer_id != null) {
+
+            if (salesInvoice.customer_id.id != oldSalesInvoice.customer_id.id) {
+                update = update + "Registered Customer updated \n";
+            }
+
         }
 
-        if (salesInvoice.pre_order_id.id != oldSalesInvoice.pre_order_id.id) {
-            update = update + "Sales Pre-Order updated \n";
+
+        if (salesInvoice.pre_order_id != null) {
+
+            if (salesInvoice.pre_order_id.id != oldSalesInvoice.pre_order_id.id) {
+                update = update + "Sales Pre-Order updated \n";
+            }
+
         }
+
 
         if (salesInvoice.customer_name != oldSalesInvoice.customer_name) {
             update = update + "Customer Name updated \n";
@@ -671,7 +706,7 @@ const checkUpdate = () => {
             update = update + "Sales Invoice Status updated \n";
         }
 
-        if (salesInvoice.preOrderHasModelList.length != oldSalesInvoice.preOrderHasModelList.length) {
+        if (salesInvoice.salesInvoiceHasItemsList.length != oldSalesInvoice.salesInvoiceHasItemsList.length) {
 
             update = update + "Sales Invoice Models updated \n" ;
 
@@ -683,7 +718,7 @@ const checkUpdate = () => {
 
                 for (let l = 0; l < salesInvoice.salesInvoiceHasItemsList.length; l++){
 
-                    if (salesInvoice.salesInvoiceHasItemsList[i].model_id.model_number == oldSalesInvoice.salesInvoiceHasItemsList[i].model_id.model_number){
+                    if (salesInvoice.salesInvoiceHasItemsList[i].items_id.item_code_number == oldSalesInvoice.salesInvoiceHasItemsList[i].items_id.item_code_number){
 
                         if (salesInvoice.salesInvoiceHasItemsList[i].quantity == oldSalesInvoice.salesInvoiceHasItemsList[i].quantity){
 
@@ -700,7 +735,7 @@ const checkUpdate = () => {
 
             if (existUpdate){
 
-                update = update + "Sales Invoice Model quantity updated \n";
+                update = update + "Sales Invoice Item quantity updated \n";
 
             }
 
@@ -734,7 +769,7 @@ const updateBTN = () => {
             if (updateResponce) {
 
                 //IF USER CLICK OK BTN FOR UPDATE CONFIRMATION.
-                let putResponce = getAjexServiceRequest("/preorder","PUT",salesInvoice);;
+                let putResponce = getAjexServiceRequest("/salesinvoice","PUT",salesInvoice);
 
                 if (putResponce == "0") {
 
@@ -758,7 +793,7 @@ const updateBTN = () => {
 
     }else{
 
-        // if any errors occurred in the form this line will execute...
+        //If any errors occurred in the form this line will execute...
         window.alert("You have the following errors in your form...! \n" + errors)
 
     }
@@ -768,7 +803,7 @@ const updateBTN = () => {
 
 const rowDelete = (ob) => {
 
-    let deleteMsg = "Would you like to Delete the following Sales Invoice?\n \n"
+    let deleteMsg = "Would you like to Delete the following Sales Invoice?\n"
         +"Bill Number : "+ ob.bill_number + "\n"
         +"Customer Name : "+ ob.customer_name + "\n"
         +"Model : "+ ob.model + "\n"
@@ -813,7 +848,6 @@ const rowView = (ob) => {
     modMaxDiscountRate.innerHTML   = modelPrint.max_discount_rate + "%";
     modModelStatus.innerHTML       = modelPrint.model_status_id.name;
     modNote.innerHTML              = modelPrint.note;
-
 
 
 }
