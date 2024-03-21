@@ -131,9 +131,9 @@ const refreshForm = () => {
     userName.value               = "";
     userPassword.value           = "";
     userEmail.value              = "";
-    switchUserStatus.checked     = false;
-    labelUserStatus.innerText    = "Select User Status"
-    labelUserStatus.style.color  = "grey";
+    switchUserStatus.checked     = true;
+    labelUserStatus.innerText    = "User Account Active"
+    labelUserStatus.style.color  = "green";
 
     disableAddUpdateBtn(true, false);
 

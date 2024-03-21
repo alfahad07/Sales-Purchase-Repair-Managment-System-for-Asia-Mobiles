@@ -217,7 +217,7 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="supCompanyName"
-                                   onkeyup="textFeildValidtor(supCompanyName,'^[A-Za-z\\s]{3,40}$','supplier','supplier_company_name','oldSupplier')"
+                                   onkeyup="nameCapitalLetterCheckValidtor(supCompanyName,'^[A-Za-z\\s]{3,40}$','supplier','supplier_company_name','oldSupplier')"
                                    required>
 
                             <label for="supCompanyName" class="fw-bold">Company name : <span id="star">*</span></label>
@@ -228,7 +228,7 @@
 
                     </div><br>
 
-                    <!--SUPPLIER CONTACT NUMBER /SUPPLIER E-MAIL  /SUPPLIER ADDRESS -->
+                    <!--SUPPLIER CONTACT NUMBER /SUPPLIER E-MAIL /SUPPLIER ADDRESS -->
                     <div class="row">
 
                         <!--SUPPLIER CONTACT NUMBER-->
@@ -279,7 +279,7 @@
 
                             <label for="supCompanyStaffName" class="fw-bold">Company Staff Name : <span id="star">*</span></label>
 
-                            <i style="width: 100%;"></i>
+                            <i style="width: 94%;"></i>
 
                         </div>
 
@@ -290,7 +290,7 @@
 
                             <label for="supCompanyStaffMobileNo" class="fw-bold" >Company Staff Mobile Number : <span id="star">*</span></label>
 
-                            <i style="width: 100%;"></i>
+                            <i style="width: 94%;"></i>
 
                         </div>
 
@@ -310,12 +310,12 @@
                                 <option selected disabled>Select Employee Status</option>
                             </select>
 
-                            <i style="top: 387px;width: 31%" ></i>
+                            <i style="top: 387px;width: 30%" ></i>
 
                         </div>
 
                         <!--SUPPLIER BRANCH NAME -->
-                        <div class="col-4 inputBox">
+                        <div class="col-4 inputBox" style="top: 4px";>
 
                             <input type="text" class="fw-bold" id="supBankBranchName"
                                    onkeyup="textFeildValidtor(supBankBranchName,'^[A-Za-z\\s]{3,20}$','supplier','bank_branch_name','oldSupplier')"
@@ -328,7 +328,7 @@
                         </div>
 
                         <!--SUPPLIER ACCOUNT NUMBER -->
-                        <div class="col-4 inputBox">
+                        <div class="col-4 inputBox" style="top: 4px";>
 
                             <input type="text" class="fw-bold" id="supBankAccountNumber"
                                    onkeyup="textFeildValidtor(supBankAccountNumber,'^[0-9]{8,15}$','supplier','bank_account_number','oldSupplier')"

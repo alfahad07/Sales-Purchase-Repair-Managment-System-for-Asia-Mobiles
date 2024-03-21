@@ -188,7 +188,7 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="empfullname"
-                                   onkeyup="textFeildValidtor(empfullname,'^(([A-Z][a-z]{1,20}[\\s]){1,5}([A-Z][a-z]{1,16}))$','employee','fullname','oldemployee')"
+                                   onkeyup="empNameCapitalLetterCheckValidtor(empfullname,'^(([a-zA-Z]{3,20}[\\s]){1,5}([a-zA-Z]{1,16}))$','employee','fullname','oldemployee') "
                                    required>
 
                             <label for="empfullname" class="fw-bold">Employee Fullname (Ex:-Jxxx Dxxx): <span
@@ -201,18 +201,20 @@
                         <!--EMPLOYEE CALLING NAME-->
                         <div class="col-4 inputBox">
 
-                            <input type="text" class="fw-bold" id="empCallingname"
-                                   onkeyup="textFeildValidtor(empCallingname,'^[A-Z][a-z]{1,10}$','employee','callingname','oldemployee')"
-                                   required>
+                              <input type="text" class="fw-bold" id="empCallingname"
+                                     onchange="textCallingNameValidator(empCallingname)"
+                                     required list="dataListFullNameParts"/>
 
-                            <label for="empCallingname" class="fw-bold">Employee Calling Name (Ex:-Jxxxx): <span
-                                    id="star">*</span></label>
+                              <datalist id="dataListFullNameParts"> </datalist>
 
-                            <i></i>
+                              <label for="empCallingname" class="fw-bold">Employee Calling Name (Ex:-Jxxxx): <span
+                                      id="star">*</span></label>
 
-                        </div>
+                              <i></i>
 
-                        <!--EMPLOYEE NIC-->
+                          </div>
+
+                          <!--EMPLOYEE NIC-->
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="empNic"
@@ -317,7 +319,7 @@
 
                     </div><br>
 
-                    <!--EMPLOYEE CIVILSTATUS /EMPLOYEE DESIGNATION / EMPLOYEE STATUS-->
+                    <!--EMPLOYEE CIVILSTATUS /EMPLOYEE DESIGNATION /EMPLOYEE STATUS-->
                     <div class="row">
 
                         <!--EMPLOYEE CIVILSTATUS-->
@@ -327,7 +329,7 @@
                                 CIVILSTATUS : <span id="star">*</span></label>
 
                             <select id="empCivilStatus" class="fw-bold" onchange="selectValidator(empCivilStatus, '','employee', 'civilstatus_id','oldemployee')" required>
-                                <option selected disabled>Select Employee Status</option>
+
                             </select>
 
                             <i style="top: 372px;width: 30%" ></i>
@@ -341,7 +343,7 @@
                                 DESIGNATION : <span id="star">*</span></label>
 
                             <select id="empDesignation" class="fw-bold" onchange="selectValidator(empDesignation, '','employee', 'designation_id','oldemployee')" required>
-                                <option selected disabled>Select Employee Status</option>
+
                             </select>
 
                             <i style="top: 372px;width: 30%; left: 35%;" ></i>
@@ -413,21 +415,21 @@
                         <!--ADD BUTTON-->
                         <div class="col-4">
 
-                            <button class="addBtn"  id="btnAdd" onclick="submitBtnFunction()" > ADD EMPLOYEE </button>
+                            <button class="addBtn"  id="btnAdd" onclick="submitBtnFunction()" > ADD </button>
 
                         </div>
 
                         <!--UPDATE BUTTON-->
                         <div class="col-4">
 
-                            <button class="updateBtn" id="btnUpdate"  onclick="updateBTN()" > UPDATE EMPLOYEE </button>
+                            <button class="updateBtn" id="btnUpdate"  onclick="updateBTN()" > UPDATE </button>
 
                         </div>
 
                         <!--CLEAR BUTTON-->
                         <div class="col-4">
 
-                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR EMPLOYEE </button>
+                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR </button>
 
                         </div>
 

@@ -155,7 +155,7 @@ public class EmployeeController {
             //NEED TO CHECK DUPLICATION OF THE COLUMNS VALUE | | |
             //                                               V V V
 
-            //checking function to check wether the employee.js exist in the database
+            //checking function to check weather the employee.js exist in the database
             Employee existEmployee = employeeDao.getReferenceById(employee.getId());
 
             // Creating a function to delete the employee.js from the database after checking the employee.js's existance.
@@ -189,7 +189,7 @@ public class EmployeeController {
                 }
             }else{
 
-                return "Delete Not Completed : employee Not Available";
+                return "Delete Not Completed : Employee Not Available";
 
             }
 

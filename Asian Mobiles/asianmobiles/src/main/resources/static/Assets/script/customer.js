@@ -56,12 +56,12 @@ const refreshForm = () => {
     oldCustomer = null;
 
     custStatus = getServiceRequest("/customerstatus/list")
-    fillSelectFeild(customerStatus, "Select Customer Status", custStatus, "name", "")
+    fillSelectFeild(customerStatus, "Select Customer Status", custStatus, "name", "Registered")
 
     //CLEARING THE EMPLOYEE DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE CUSTOMER
 
-    customerStatus.style.color        = "grey";
-    customerStatus.style.borderBottom = "none";
+    customerStatus.style.color        = "green";
+    customerStatus.style.borderBottom = "solid";
 
     customerFullname.value = "";
     customerNic.value      = "";
@@ -69,7 +69,6 @@ const refreshForm = () => {
     customerEmail.value    = "";
     customerAddress.value  = "";
     customerNote.value     = "";
-
 
 
     disableAddUpdateBtn(true, false);

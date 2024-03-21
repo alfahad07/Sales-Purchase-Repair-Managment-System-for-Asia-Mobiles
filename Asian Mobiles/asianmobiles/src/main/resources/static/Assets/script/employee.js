@@ -259,6 +259,7 @@ const submitBtnFunction = () => {
                 alert("Employee Added Successfuly as you wish!!!");
                 refreshTable();
                 refreshForm();
+                empMancontainer.classList.remove("right-panel-active")
 
             } else {
 
@@ -272,8 +273,6 @@ const submitBtnFunction = () => {
         alert("form has following errors \n" + errors)
 
     }
-
-    empMancontainer.classList.remove("right-panel-active")
 
 }
 
@@ -306,7 +305,7 @@ const formRefill = (ob) => {
     empCivilStatus.value = employee.civilstatus_id.name;
     empDesignation.value = employee.designation_id.name;
     empStatus.value      = employee.employeestatus_id.name;
-    empDescription.value         = employee.description;
+    empDescription.value = employee.description;
 
 
 
@@ -421,6 +420,7 @@ const updateBTN = () => {
                     window.alert("Updated the Employee successfully as you wish...!");
                     refreshTable();
                     refreshForm();
+                    empMancontainer.classList.remove("right-panel-active")
 
                 }else {
 
@@ -442,8 +442,6 @@ const updateBTN = () => {
         window.alert("you have the following errors in your form...! \n" + errors)
 
     }
-
-    empMancontainer.classList.remove("right-panel-active")
 
 }
 
@@ -673,6 +671,93 @@ function nicFieldValidator(){
         /*defaultFeild(empDOB);
         invalidFeild(empNic);*/
 
+    }
+
+
+}
+
+//CREATED TO VALIDATE THE FULLNAME BY CHECKING THE THE FIRST LETTER IS CAPTITAL
+const empNameCapitalLetterCheckValidtor =   (feildid, pattern, object, property, oldobject) => {
+
+    let ob = window[object];
+    let oldob = window[oldobject];
+
+    if (feildid.value != "") {
+
+        const namepattern = new RegExp(pattern);
+
+        if (namepattern.test(feildid.value)) {
+
+            fullname = feildid.value.split(" ");
+            console.log(fullname);
+
+            let fullNameWithUpperCase = "";
+
+            for (let ind in fullname) {
+
+                fullNameWithUpperCase = fullNameWithUpperCase + fullname[ind].charAt(0).toUpperCase() + fullname[ind].substring(1) + " ";
+                console.log(fullNameWithUpperCase)
+
+            }
+
+            dataListFullNameParts.innerHTML = "";
+            fullname.forEach(element => {
+                const fullNamePartOption = document.createElement('option');
+                fullNamePartOption.value = element;
+                dataListFullNameParts.appendChild(fullNamePartOption);
+
+            })
+
+            ob[property] = fullNameWithUpperCase;
+
+            if (oldob != null && ob[property] != oldob[property]) {
+
+                // updated
+                feildid.style.color = 'orange'
+            } else {
+
+                // valid
+                feildid.style.color = 'green'
+            }
+
+        } else {
+            ob[property] = null;
+
+            feildid.style.color = 'red';
+        }
+
+    } else {
+
+        ob[property] = null;
+
+        if (feildid.required) {
+            feildid.style.color = 'red';
+        } else {
+            feildid.style.color = 'rgb(118, 118, 118)';
+        }
+
+    }
+
+}
+
+//define function for validate calling name
+const textCallingNameValidator = (fieldId) => {
+    const fieldValue = fieldId.value;
+    const extIndex = name.map(element => element).indexOf(fieldValue);
+
+    if (extIndex != -1) {
+        //valid
+
+        fieldId.style.color = 'green';
+        fieldId.style.borderBottom = '2px solid green';
+        employee.callingname = fieldId.value;
+    }
+    else {
+        //invalid
+
+        fieldId.style.color = 'red';
+        fieldId.style.borderBottom = '2px solid red';
+        employee.callingname = null;
     }
 }
 

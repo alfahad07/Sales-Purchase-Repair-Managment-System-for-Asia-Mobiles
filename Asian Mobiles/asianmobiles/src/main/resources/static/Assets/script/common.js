@@ -553,3 +553,62 @@ const formAndTableContainer3DRotate = () => {
     })
 
 }
+
+const nameCapitalLetterCheckValidtor =   (feildid, pattern, object, property, oldobject) => {
+
+    let ob = window[object];
+    let oldob = window[oldobject];
+
+    if (feildid.value != "") {
+
+        const namepattern = new RegExp(pattern);
+
+        if (namepattern.test(feildid.value)) {
+
+            name = feildid.value.split(" ");
+            console.log(name);
+
+            let fullNameWithUpperCase = "";
+
+            for (let ind in name) {
+
+                fullNameWithUpperCase = fullNameWithUpperCase + name[ind].charAt(0).toUpperCase() + name[ind].substring(1) + " ";
+                console.log(fullNameWithUpperCase)
+
+            }
+
+            ob[property] = fullNameWithUpperCase;
+
+            if (oldob != null && ob[property] != oldob[property]) {
+
+                // updated
+                feildid.style.color = 'orange'
+            } else {
+
+                // valid
+                feildid.style.color = 'green'
+            }
+
+        } else {
+            ob[property] = null;
+
+            feildid.style.color = 'red';
+        }
+
+    } else {
+
+        ob[property] = null;
+
+        if (feildid.required) {
+
+            feildid.style.color = 'red';
+
+        } else {
+
+            feildid.style.color = 'rgb(118, 118, 118)';
+
+        }
+
+    }
+
+}

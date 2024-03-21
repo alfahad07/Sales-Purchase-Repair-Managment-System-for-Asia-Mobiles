@@ -186,7 +186,7 @@
                         <!--CUSTOMER NAME-->
                         <div class="col-6 inputBox" style="width: 50%;">
 
-                            <input type="text" class="fw-bold" id="customerFullname" onkeyup="textFeildValidtor(customerFullname,'^(([A-Z][a-z]{3,20}[\\s])+([A-Z][a-z]{1,16}))$','customer','fullname','oldCustomer')"  required>
+                            <input type="text" class="fw-bold" id="customerFullname" onkeyup="nameCapitalLetterCheckValidtor(customerFullname,'^(([A-Za-z]{3,20}[\\s])+([A-Za-z]{3,16}))$','customer','fullname','oldCustomer')"  required>
 
                             <label for="customerFullname" id="labelCustomerFullname" class="fw-bold">Customer Fullname : <span
                                     id="star">*</span></label>
@@ -228,7 +228,7 @@
 
                             <input type="text" class="fw-bold" id="customerEmail" onkeyup="textFeildValidtor(customerEmail,'^[A-Za-z0-9]{5,20}[@][a-z]{4,10}[.][a-z]{2,5}$','customer','email','oldCustomer')" required>
 
-                            <label for="customerEmail" id="labelCustomerEmail" class="fw-bold">User Email :  <span id="star">*</span></label>
+                            <label for="customerEmail" id="labelCustomerEmail" class="fw-bold">Customer Email :  <span id="star">*</span></label>
 
                             <i></i>
 

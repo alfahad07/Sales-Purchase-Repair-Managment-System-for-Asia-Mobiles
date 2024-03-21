@@ -87,7 +87,7 @@ const refreshForm = () => {
     fillSelectFeild(preOrderCustomer, "Select Pre-Order Customer", Customers, "fullname")
 
     Statuses = getServiceRequest("/preorderstatus/list")
-    fillSelectFeild(preOrderStatus, "Select Pre-Order Status", Statuses, "name")
+    fillSelectFeild(preOrderStatus, "Select Pre-Order Status", Statuses, "name", "Initial")
 
 
     //CLEARING THE MODEL DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE MODELS
@@ -95,8 +95,8 @@ const refreshForm = () => {
     preOrderCustomer.style.color        = "grey";
     preOrderCustomer.style.borderBottom = "none";
 
-    preOrderStatus.style.color        = "grey";
-    preOrderStatus.style.borderBottom = "none";
+    preOrderStatus.style.color          = "green";
+    preOrderStatus.style.borderBottom   = "solid";
 
     preOrderRequiredDate.value = "";
 
