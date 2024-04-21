@@ -67,6 +67,13 @@ const refreshForm = () => {
     supStatuses = getServiceRequest("/supplierstatus/list")
     fillSelectFeild(supStatus, "Select Supplier Status", supStatuses, "name")
 
+    supplier.selectedModels = new Array();
+    fillSelectFeild(selectedModelsSelectionField, "", supplier.selectedModels, "model_name")
+
+
+    supAllModels = getServiceRequest("/model/list")
+    fillSelectFeild(allModelsSelectionField, "Select the models that the supplier sells", supAllModels, "model_name")
+
 
     //CLEARING THE MODEL DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE MODELS
 
@@ -244,6 +251,7 @@ const submitBtnFunction = () => {
                 alert("Supplier Added Successfully as you wish!!!");
                 refreshTable();
                 refreshForm();
+                empMancontainer.classList.remove("right-panel-active");
 
             } else {
 
@@ -257,8 +265,6 @@ const submitBtnFunction = () => {
         alert("Form has these following errors \n" + errors)
 
     }
-
-    empMancontainer.classList.remove("right-panel-active");
 
 }
 
@@ -401,6 +407,7 @@ const updateBTN = () => {
                     window.alert("Updated the Supplier Details successfully as you wish...!");
                     refreshTable();
                     refreshForm();
+                    empMancontainer.classList.remove("right-panel-active");
 
                 }else {
 
@@ -419,8 +426,6 @@ const updateBTN = () => {
         window.alert("You have the following errors in your form...! \n" + errors)
 
     }
-
-    empMancontainer.classList.remove("right-panel-active");
 
 }
 
@@ -484,5 +489,67 @@ const clearBtn = () => {
 
 }
 
+const btnAddOneModel = () => {
+
+    if(allModelsSelectionField.value != ""){
+    //SELECT MODELS FROM ALL-MODELS LIST AND ADD TO THE SELECTED MODELS LIST
+    let selectedModels = JSON.parse(allModelsSelectionField.value) // JSON.parse() is used to convert json string values to javascript object.
+
+    supplier.selectedModels.push(selectedModels);
+    fillSelectFeild(selectedModelsSelectionField, "", supplier.selectedModels, "model_name");
+
+    let extIndex = supAllModels.map(model => model.id).indexOf(selectedModels.id)
+    if (extIndex != -1) {
+
+        supAllModels.splice(extIndex, 1); //remove Selected model from the all-models list
+        fillSelectFeild(allModelsSelectionField, "", supAllModels, "model_name");
+
+    }
+}else {
+
+        window.alert("Please select a model to add...");
+
+    }
 
 
+}
+
+
+const btnAddAllModel = () => {
+
+    for (const model of supAllModels){
+
+        supplier.selectedModels.push(model);
+
+    }
+
+    fillSelectFeild(selectedModelsSelectionField, "", supplier.selectedModels, "model_name");
+
+    supAllModels = []; // Emptying all-model list
+    fillSelectFeild(allModelsSelectionField, "", supAllModels, "model_name");
+
+
+}
+
+
+const btnRemoveOneModel = () => {
+
+
+
+}
+
+
+const btnRemoveAllModel = () => {
+
+    for (const model of supplier.selectedModels){
+
+        supAllModels.push(model);
+
+    }
+
+    fillSelectFeild(allModelsSelectionField, "", supAllModels, "model_name");
+
+    supplier.selectedModels = []; // Emptying all-model list
+    fillSelectFeild(selectedModelsSelectionField, "", supplier.selectedModels, "model_name");
+
+}

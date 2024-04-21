@@ -89,6 +89,7 @@ const refreshForm = () => {
     empDOB.value = "";
     empAddress.value = "";
     empDescription.value = "";
+    empAppointDate.value = "";
 
     //DISABLING THE GENDER FIELD COZ IT IS GENERATED AUTOMATICALLY...
     male.checked = false;
@@ -111,7 +112,7 @@ const refreshForm = () => {
     lblmale.style.color = "#6C7293";
     lblfemale.style.color = "#6C7293";
 
-
+    //SETTING MAX DATE & MIN DATE FOR EMPLOYEE DOB (18 TO 60 YEARS OF AGE EMPLOYEES ARE ONLY ALLOWED)
     let mindate = new Date();
     let maxdate = new Date();
 
@@ -120,6 +121,17 @@ const refreshForm = () => {
 
     mindate.setFullYear(mindate.getFullYear()-60);
     empDOB.min = getCurrentDate("date", mindate);
+
+
+    //SETTING MAX DATE & MIN DATE FOR EMPLOYEE APPOINTMENT DATE
+    let minAppointdate = new Date();
+    let maxAppointdate = new Date();
+
+    maxAppointdate.setDate(maxAppointdate.getDate()+30)
+    empAppointDate.max = getCurrentDate("date", maxAppointdate);
+
+    minAppointdate.setDate(minAppointdate .getDate()-7)
+    empAppointDate.min = getCurrentDate("date", minAppointdate);
 
 
 
@@ -233,6 +245,12 @@ function checkErrors() {
 
     }
 
+    if (employee.appointment_date == null){
+
+        error = error + "Employee Appointment Date Field Incomplete \n";
+
+    }
+
 
     return error;
 
@@ -306,7 +324,7 @@ const formRefill = (ob) => {
     empDesignation.value = employee.designation_id.name;
     empStatus.value      = employee.employeestatus_id.name;
     empDescription.value = employee.description;
-
+    empAppointDate.value = employee.appointment_date;
 
 
     if(employee.gender == "male"){
@@ -382,6 +400,10 @@ const checkUpdate = () => {
 
         if (employee.description != oldemployee.description) {
             update = update + "Employee Description updated \n";
+        }
+
+        if (employee.appointment_date != oldemployee.appointment_date) {
+            update = update + "Employee Appointment Date updated \n";
         }
 
     }
@@ -544,6 +566,7 @@ const checkDOB = () => {
 
 
 }
+
 
 const visiblefiredReasonAndDateFields = () => {
 

@@ -179,6 +179,7 @@ const submitBtnFunction = () => {
                 alert("Customer Added Successfully as you wish!!!");
                 refreshTable();
                 refreshForm();
+                empMancontainer.classList.remove("right-panel-active");
 
             } else {
 
@@ -193,11 +194,7 @@ const submitBtnFunction = () => {
 
     }
 
-    empMancontainer.classList.remove("right-panel-active");
-
 }
-
-
 
 const formRefill = (ob) => {
 
@@ -292,6 +289,7 @@ const updateBTN = () => {
                     window.alert("Updated the Customer successfully as you wish...!");
                     refreshTable();
                     refreshForm();
+                    empMancontainer.classList.remove("right-panel-active");
 
                 }else {
 
@@ -310,8 +308,6 @@ const updateBTN = () => {
         window.alert("You have the following errors in your form...! \n" + errors)
 
     }
-
-    empMancontainer.classList.remove("right-panel-active");
 
 }
 

@@ -254,6 +254,8 @@ const dateFeildValidtor = (feildid, pattern, object, property, oldobject) => {
 const fillSelectFeild = (feildid, displayMessage, dataList, displayProperty, selectedValue, visibility = false) => {
 
     feildid.innerHTML = "";
+
+    if(displayMessage != "")
     optionPlaceholder = document.createElement('option');
     optionPlaceholder.value = "";
     optionPlaceholder.selected = true;

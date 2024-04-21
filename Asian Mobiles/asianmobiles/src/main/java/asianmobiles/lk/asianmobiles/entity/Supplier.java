@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 // Entity annotation is used to convert as persistance API coz to map the classes to the table in the database.
 @Entity
@@ -90,7 +91,6 @@ public class Supplier {
     private SupplierStatus supplier_status_id;
 
 
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "added_user_id",referencedColumnName = "id")
     private User added_user_id;
@@ -102,6 +102,9 @@ public class Supplier {
     @ManyToOne
     @JoinColumn(name = "deleted_user_id",referencedColumnName = "id")
     private User deleted_user_id;
+
+    @OneToMany(mappedBy = "supplier_id", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<SupplierHasModel> supplierHasModelList ;
 
 
     public Supplier( Integer id, String supplier_company_name, SupplierStatus supplier_status_id){

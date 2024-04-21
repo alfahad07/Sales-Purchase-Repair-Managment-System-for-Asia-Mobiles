@@ -37,7 +37,7 @@ public class EmployeeController {
     //creating a function to display the employee.js ui
     public ModelAndView employeeUi() {
 
-        // create ModelAndView object called employeeui
+        //create ModelAndView object called employeeui
         ModelAndView employeeui = new ModelAndView();
 
         //set employee.js.html
@@ -77,8 +77,7 @@ public class EmployeeController {
     public String addEmployee( @RequestBody Employee employee ){
 
         //NEED TO CHECK PRIVILAGE FOR LOGGED USER --> This is done below...
-
-        //Checking the logged user is exixting in the  database. ( Authenticated user )
+        //Checking the logged user is existing in the  database. ( Authenticated user )
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 
@@ -99,7 +98,7 @@ public class EmployeeController {
 
             }
 
-            //CHECKING THE EMAIL EXIS OR NOT IN THE DATABASE.
+            //CHECKING THE EMAIL EXIST OR NOT IN THE DATABASE.
             Employee extEmployeeEmail = employeeDao.findEmployeeByEmail(employee.getEmail());
             if ( extEmployeeEmail != null ){
 
@@ -234,7 +233,7 @@ public class EmployeeController {
             Employee extEmpByEmail = employeeDao.findEmployeeByEmail(employee.getEmail());
             if (extEmpByEmail != null && employee.getId() != extEmpByEmail.getId()) {
 
-                return "Employee update not completed : E-Mail already Exist";
+                return "Employee update not completed: E-Mail already Exist";
 
             }
 

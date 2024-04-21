@@ -73,6 +73,10 @@ public class Employee {
     @Column(name = "delete_date_time")
     private LocalDateTime delete_date_time;
 
+    @Column(name = "appointment_date")
+    private LocalDate appointment_date;
+
+
     @ManyToOne // the relationship between Employee table and employee.js status table
     @JoinColumn(name = "employeestatus_id", referencedColumnName = "id") //
     private EmployeeStatus employeestatus_id;

@@ -34,7 +34,7 @@ public class PurchaseOrderHasModel implements Serializable {
 
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "pre_order_id",referencedColumnName = "id")
+    @JoinColumn(name = "purchase_order_id",referencedColumnName = "id")
     @JsonIgnore // USED TO BLOCK READING THE pre_order_id IN PreOrderHasModel TABLE TO BREAK OR STOP THE RECURSION WHILE READING THE INNER TABLE DETAILS.
     private PurchaseOrder purchase_order_id;
 

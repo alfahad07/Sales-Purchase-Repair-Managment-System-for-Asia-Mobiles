@@ -272,6 +272,7 @@ const submitBtnFunction = () => {
                 alert("User Added Successfuly as you wish!!!");
                 refreshTable();
                 refreshForm();
+                empMancontainer.classList.remove("right-panel-active")
 
             } else {
 
@@ -286,10 +287,7 @@ const submitBtnFunction = () => {
 
     }
 
-    empMancontainer.classList.remove("right-panel-active")
-
 }
-
 
 
 const formRefill = (ob) => {
@@ -460,10 +458,11 @@ const updateBTN = () => {
 
                 if (putResponce == "0") {
 
-                    //IF THE DATA UPDATED AND STORED SUCCESSFULLY
+                    //IF THE DATA UPDATED AND STORED SUCCESSFULLY.
                     window.alert("Updated the User successfully as you wish...!");
                     refreshTable();
                     refreshForm();
+                    empMancontainer.classList.remove("right-panel-active");
 
                 }else {
 
@@ -482,8 +481,6 @@ const updateBTN = () => {
         window.alert("You have the following errors in your form...! \n" + errors)
 
     }
-
-    empMancontainer.classList.remove("right-panel-active")
 
 }
 
@@ -528,6 +525,15 @@ userPrint = getServiceRequest("/user/getbyid/"+ob.id)
 const clearBtn = () => {
 
     refreshForm();
+
+}
+
+const selectedEmployeeEmailAutoGenerate = () => {
+
+    userEmail.value = JSON.parse(userEmpName.value).email;
+    user.email = userEmail.value;
+    userEmail.style.color = 'green';
+    userEmail.style.borderBottom = '2px solid green';
 
 }
 

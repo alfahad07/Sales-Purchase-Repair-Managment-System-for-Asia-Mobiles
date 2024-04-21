@@ -38,7 +38,7 @@ public class PurchaseOrderController {
 
 
     @GetMapping(value = "/getbyid/{id}", produces = "application/json")
-    public PurchaseOrder getPreOrderByPVId (@PathVariable("id") int id){
+    public PurchaseOrder getPurchaseOrderByPVId (@PathVariable("id") int id){
 
         return purchaseOrderDao.getReferenceById(id);
 
@@ -47,15 +47,15 @@ public class PurchaseOrderController {
 
     @GetMapping
     //creating a function to display the PREORDER UI.
-    public ModelAndView preOrderUi() {
+    public ModelAndView purchaseOrderUi() {
 
         // create ModelAndView object called employeeui
-        ModelAndView preOrderui = new ModelAndView();
+        ModelAndView purchseOrderui = new ModelAndView();
 
         //set employee.js.html
-        preOrderui.setViewName("PurchaseOrder_Management.html");
+        purchseOrderui.setViewName("PurchaseOrder_Management.html");
 
-        return preOrderui;
+        return purchseOrderui;
     }
 
 

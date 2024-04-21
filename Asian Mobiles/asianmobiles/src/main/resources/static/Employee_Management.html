@@ -181,7 +181,7 @@
                         </span>
                     </div><br>
 
-                    <!--EMPLOYEE FULL NAME /EMPLOYEE CALLING NAME / EMPLOYEE NIC-->
+                    <!--EMPLOYEE FULL NAME /EMPLOYEE CALLING NAME /EMPLOYEE NIC-->
                     <div class="row">
 
                         <!--EMPLOYEE FULLNAME-->
@@ -191,7 +191,7 @@
                                    onkeyup="empNameCapitalLetterCheckValidtor(empfullname,'^(([a-zA-Z]{3,20}[\\s]){1,5}([a-zA-Z]{1,16}))$','employee','fullname','oldemployee') "
                                    required>
 
-                            <label for="empfullname" class="fw-bold">Employee Fullname (Ex:-Jxxx Dxxx): <span
+                            <label for="empfullname" class="fw-bold">Employee Fullname: <span
                                     id="star">*</span></label>
 
                             <i></i>
@@ -207,7 +207,7 @@
 
                               <datalist id="dataListFullNameParts"> </datalist>
 
-                              <label for="empCallingname" class="fw-bold">Employee Calling Name (Ex:-Jxxxx): <span
+                              <label for="empCallingname" class="fw-bold">Employee Calling Name: <span
                                       id="star">*</span></label>
 
                               <i></i>
@@ -229,7 +229,7 @@
 
                     </div><br>
 
-                    <!--EMPLOYEE EMAIL /EMPLOYEE PHONE NUMBER / EMPLOYEE LAND NUMBER-->
+                    <!--EMPLOYEE EMAIL /EMPLOYEE PHONE NUMBER /EMPLOYEE LAND NUMBER-->
                     <div class="row">
 
                         <!--EMPLOYEE EMAIL-->
@@ -325,8 +325,7 @@
                         <!--EMPLOYEE CIVILSTATUS-->
                         <div class="col-4 selectStyle">
 
-                            <label for="empCivilStatus" class="fw-bold">EMPLOYEE
-                                CIVILSTATUS : <span id="star">*</span></label>
+                            <label for="empCivilStatus" class="fw-bold">EMPLOYEE CIVILSTATUS : <span id="star">*</span></label>
 
                             <select id="empCivilStatus" class="fw-bold" onchange="selectValidator(empCivilStatus, '','employee', 'civilstatus_id','oldemployee')" required>
 
@@ -387,6 +386,23 @@
                                    onblur="if(!this.value) this.type='text'" onchange="dateFeildValidtor(empFiredDate,'', 'employee', '', 'oldemployee')" required>
 
                             <label for="empFiredDate" class="fw-bold">Fired Date: <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--EMPLOYEE APPOINTED DATE-->
+                    <div class="row">
+
+                        <!--EMPLOYEE APPOINTED DATE-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="empAppointDate" name="date" onfocus="(this.type='date')"
+                                   onblur="if(!this.value) this.type='text'" onchange="dateFeildValidtor(empAppointDate,'', 'employee', 'dob', 'oldemployee')" required>
+
+                            <label for="empAppointDate" class="fw-bold">Employee Appointed Date: <span id="star">*</span></label>
 
                             <i></i>
 
