@@ -31,7 +31,7 @@ const refreshTable = () => {
     supplierDetails = getServiceRequest("/supplier/findall");
 
     //create display property list
-    let DisplayPropertyList = ['business_reg_no','supplier_company_reg_no','supplier_company_name','contact_number','supplier_company_email','supplier_status_id.name'];
+    let DisplayPropertyList = ['supplier_reg_no','supplier_company_reg_no','supplier_company_name','contact_number','supplier_company_email','supplier_status_id.name'];
 
     //create display property list type
     let DisplayPropertyListType = ['text','text','text','text','text','object'];
@@ -65,14 +65,14 @@ const refreshForm = () => {
     fillSelectFeild(supBank, "Select Bank", supBanks, "name")
 
     supStatuses = getServiceRequest("/supplierstatus/list")
-    fillSelectFeild(supStatus, "Select Supplier Status", supStatuses, "name")
+    fillSelectFeild(supStatus, "Select Supplier Status", supStatuses, "name","Active")
+    supplier.supplier_status_id = JSON.parse(supStatus.value);
 
-    supplier.selectedModels = new Array();
-    fillSelectFeild(selectedModelsSelectionField, "", supplier.selectedModels, "model_name")
-
+    supplier.supplierHasModelList = new Array();
+    fillSelectFeild(selectedModelsSelectionField, "", supplier.supplierHasModelList, "model_name")
 
     supAllModels = getServiceRequest("/model/list")
-    fillSelectFeild(allModelsSelectionField, "Select the models that the supplier sells", supAllModels, "model_name")
+    fillSelectFeild(allModelsSelectionField, "", supAllModels, "model_name")
 
 
     //CLEARING THE MODEL DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE MODELS
@@ -80,10 +80,9 @@ const refreshForm = () => {
     supBank.style.color        = "grey";
     supBank.style.borderBottom = "none";
 
-    supStatus.style.color          = "grey";
-    supStatus.style.borderBottom   = "none";
 
-    supBusinessRegNo.value         = "";
+    supStatus.style.borderBottom   = "solid";
+
     supCompanyRegNo.value          = "";
     supCompanyName.value           = "";
     supContactNo.value             = "";
@@ -94,8 +93,13 @@ const refreshForm = () => {
     supBankBranchName.value        = "";
     supBankAccountNumber.value     = "";
     supBankAccountHolderName.value = "";
-    supAreasAmount.value           = "";
+    supAreasAmount.value           = "0.00";
+    supplier.arreas_amount         = supAreasAmount.value
     supNote.value                  = "";
+
+    supAreasAmount.style.color  = "green"
+    $('#supAreasAmount').css("pointer-events", "none");
+    $('#supAreasAmount').css("cursor", "not-allowed");
 
     disableAddUpdateBtn(true, false);
 
@@ -144,13 +148,6 @@ const disableAddUpdateBtn = (addBtn, updBtn) => {
 function checkErrors() {
 
     let error = "";
-
-
-    if (supplier.business_reg_no == null){
-
-        error = error + "Business Registration Number Field Incomplete \n";
-
-    }
 
     if (supplier.supplier_company_reg_no == null){
 
@@ -218,6 +215,12 @@ function checkErrors() {
 
     }
 
+    if (supplier.supplierHasModelList.length == 0){
+
+        error = error + "Supplier Model List Incomplete \n";
+
+    }
+
     return error;
 
 
@@ -232,7 +235,6 @@ const submitBtnFunction = () => {
     if ( errors == ""){
 
         let submitConfigMsg = "Are you willing to add this Supplier?\n" +
-            "\n Business Reg No : " + supplier.business_reg_no +
             "\n Company Reg No  : " + supplier.supplier_company_reg_no +
             "\n Company Name    : " + supplier.supplier_company_name;
 
@@ -278,7 +280,6 @@ const formRefill = (ob) => {
 
 
     //SET VALUE
-    supBusinessRegNo.value         = supplier.business_reg_no;
     supCompanyRegNo.value          = supplier.supplier_company_reg_no;
     supCompanyName.value           = supplier.supplier_company_name;
     supContactNo.value             = supplier.contact_number;
@@ -299,6 +300,10 @@ const formRefill = (ob) => {
     fillSelectFeild(supStatus, "Select Supplier Status", supStatuses, "name", supplier.supplier_status_id.name);
     supStatus.style.borderBottom   = "solid";
 
+    fillSelectFeild(selectedModelsSelectionField, "", supplier.supplierHasModelList, "model_name")
+
+    supAllModels = getAjexServiceRequest("/model/listwithoutsupplier/" + supplier.id); //all list
+    fillSelectFeild(allModelsSelectionField, "", supAllModels, "model_name");
 
     disableAddUpdateBtn(false, true);
 
@@ -310,10 +315,6 @@ const checkUpdate = () => {
 
     if (supplier != null && oldSupplier != null) {
 
-
-        if (supplier.business_reg_no != oldSupplier.business_reg_no) {
-            update = update + "Business Registration Number updated \n";
-        }
 
         if ( supplier.supplier_company_reg_no != oldSupplier.supplier_company_reg_no) {
             update = update + "Company Registration Number updated \n";
@@ -369,6 +370,37 @@ const checkUpdate = () => {
 
         if (supplier.supplier_status_id.id != oldSupplier.supplier_status_id.id) {
             update = update + "Supplier Status updated \n";
+        }
+
+
+        if(supplier.supplierHasModelList.length != oldSupplier.supplierHasModelList.length){
+
+            update = update + "Supplier Model List updated \n";
+
+        }else {
+
+            let ext = 0;
+            for(let index in supplier.supplierHasModelList){
+
+                for(let ind in oldSupplier.supplierHasModelList){
+
+                    if(supplier.supplierHasModelList[index].id == oldSupplier.supplierHasModelList[ind].id){
+
+                        ext = ext +1;
+                        break;
+
+                    }
+
+                }
+
+            }
+
+            if (ext != user.role.length){
+
+                update = update + "Supplier Model List updated \n";
+
+            }
+
         }
 
     }
@@ -465,7 +497,7 @@ const rowView = (ob) => {
     $('#supplierModal').modal("show");
 
 
-    modSupBusRegNo.innerHTML              = supplierPrint.business_reg_no;
+    modSupBusRegNo.innerHTML              = supplierPrint.supplier_reg_no;
     modSupComRegNo.innerHTML              = supplierPrint.supplier_company_reg_no;
     modSupCompName.innerHTML              = supplierPrint.supplier_company_name;
     modSupContNo.innerHTML                = supplierPrint.contact_number;
@@ -491,23 +523,27 @@ const clearBtn = () => {
 
 const btnAddOneModel = () => {
 
+    console.log(supplier.supplierHasModelList.length);
+    console.log(supplier);
+
     if(allModelsSelectionField.value != ""){
     //SELECT MODELS FROM ALL-MODELS LIST AND ADD TO THE SELECTED MODELS LIST
-    let selectedModels = JSON.parse(allModelsSelectionField.value) // JSON.parse() is used to convert json string values to javascript object.
+        let selectedModels = JSON.parse(allModelsSelectionField.value) // JSON.parse() is used to convert json string values to javascript object.
 
-    supplier.selectedModels.push(selectedModels);
-    fillSelectFeild(selectedModelsSelectionField, "", supplier.selectedModels, "model_name");
+        supplier.supplierHasModelList.push(selectedModels);
+        fillSelectFeild(selectedModelsSelectionField, "", supplier.supplierHasModelList, "model_name");
 
-    let extIndex = supAllModels.map(model => model.id).indexOf(selectedModels.id)
-    if (extIndex != -1) {
+        let extIndex = supAllModels.map(model => model.id).indexOf(selectedModels.id)
+        if (extIndex != -1) {
 
-        supAllModels.splice(extIndex, 1); //remove Selected model from the all-models list
-        fillSelectFeild(allModelsSelectionField, "", supAllModels, "model_name");
+          supAllModels.splice(extIndex, 1); //remove Selected model from the all-models list
+          fillSelectFeild(allModelsSelectionField, "", supAllModels, "model_name");
 
-    }
-}else {
+        }
 
-        window.alert("Please select a model to add...");
+    }else {
+
+          window.alert("Please select a model to add...");
 
     }
 
@@ -519,11 +555,11 @@ const btnAddAllModel = () => {
 
     for (const model of supAllModels){
 
-        supplier.selectedModels.push(model);
+        supplier.supplierHasModelList.push(model);
 
     }
 
-    fillSelectFeild(selectedModelsSelectionField, "", supplier.selectedModels, "model_name");
+    fillSelectFeild(selectedModelsSelectionField, "", supplier.supplierHasModelList, "model_name");
 
     supAllModels = []; // Emptying all-model list
     fillSelectFeild(allModelsSelectionField, "", supAllModels, "model_name");
@@ -534,14 +570,32 @@ const btnAddAllModel = () => {
 
 const btnRemoveOneModel = () => {
 
+    if(selectedModelsSelectionField.value != ""){
+        //SELECT MODELS FROM ALL-MODELS LIST AND ADD TO THE SELECTED MODELS LIST
+        let selectedModelsToRemove = JSON.parse(selectedModelsSelectionField.value) // JSON.parse() is used to convert json string values to javascript object.
 
+        supAllModels.push(selectedModelsToRemove);
+        fillSelectFeild(allModelsSelectionField, "", supAllModels, "model_name");
+
+        let extIndex = supplier.supplierHasModelList.map(model => model.id).indexOf(selectedModelsToRemove.id)
+        if (extIndex != -1) {
+
+            supplier.supplierHasModelList.splice(extIndex, 1); //remove Selected model from the selected-models list
+            fillSelectFeild(selectedModelsSelectionField, "", supplier.supplierHasModelList, "model_name");
+
+        }
+    }else {
+
+        window.alert("Please select a model to remove...");
+
+    }
 
 }
 
 
 const btnRemoveAllModel = () => {
 
-    for (const model of supplier.selectedModels){
+    for (const model of supplier.supplierHasModelList){
 
         supAllModels.push(model);
 
@@ -549,7 +603,8 @@ const btnRemoveAllModel = () => {
 
     fillSelectFeild(allModelsSelectionField, "", supAllModels, "model_name");
 
-    supplier.selectedModels = []; // Emptying all-model list
-    fillSelectFeild(selectedModelsSelectionField, "", supplier.selectedModels, "model_name");
+    supplier.supplierHasModelList = []; // Emptying all-model list
+    fillSelectFeild(selectedModelsSelectionField, "", supplier.supplierHasModelList, "model_name");
 
 }
+

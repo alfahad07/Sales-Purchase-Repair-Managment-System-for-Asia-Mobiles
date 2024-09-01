@@ -1,4 +1,3 @@
-
 window.addEventListener('load', loadUserInterface);
 
 //create function for browser on load event
@@ -18,6 +17,65 @@ function loadUserInterface() {
     //CALLED REFRESH FORM FUNCTION
     refreshForm();
 
+    registeredCustomer.addEventListener('change', event => {
+
+        preOrderNoByRegisteredCustomer = getServiceRequest("/preorder/getpreorderbycustomer/" + JSON.parse(registeredCustomer.value).id)
+        fillSelectFeild(salesPreOrder, "Select Pre-Order No", preOrderNoByRegisteredCustomer, "pre_order_code", "")
+
+        if (oldSalesInvoice != null && JSON.parse(registeredCustomer.value).id != oldSalesInvoice.pre_order_id.customer_id.id) {
+
+            registeredCustomer.style.color = "orange"
+            registeredCustomer.style.borderBottom = "2px solid orange"
+
+        } else {
+
+            registeredCustomer.style.color = "green"
+            registeredCustomer.style.borderBottom = "2px solid green"
+
+        }
+
+        fillingCustomerFieldsByRegisteredCustomer = JSON.parse(registeredCustomer.value);
+        salesCustomerName.value = fillingCustomerFieldsByRegisteredCustomer.fullname;
+        salesCustomerAddress.value = fillingCustomerFieldsByRegisteredCustomer.address;
+        salesContactNumber.value = fillingCustomerFieldsByRegisteredCustomer.mobile;
+        salesCustomerNic.value = fillingCustomerFieldsByRegisteredCustomer.nic;
+        salesCustomerEmail.value = fillingCustomerFieldsByRegisteredCustomer.email;
+
+        //setting the values to the backend field
+        salesInvoice.customer_name = salesCustomerName.value
+        salesInvoice.customer_address = salesCustomerAddress.value
+        salesInvoice.contact_number = salesContactNumber.value
+        salesInvoice.customer_nic = salesCustomerNic.value
+        salesInvoice.customer_email = salesCustomerEmail.value
+
+        //validating the fileds to green colour
+        salesCustomerName.style.color = "green"
+        salesCustomerAddress.style.color = "green"
+        salesContactNumber.style.color = "green"
+        salesCustomerNic.style.color = "green"
+        salesCustomerEmail.style.color = "green"
+
+    })
+
+    salesPreOrder.addEventListener('change', event => {
+
+        itemsByPreOrder = getServiceRequest("/preorder/getpreorderbycustomer/" + JSON.parse(salesPreOrder.value).id)
+        fillSelectFeild(salesInvoiceItem, "Select Item", itemsByPreOrder, "item_name", "")
+
+        if (oldSalesInvoice != null && JSON.parse(salesPreOrder.value).id != oldSalesInvoice.pre_order_id.id) {
+
+            salesPreOrder.style.color = "orange"
+            salesPreOrder.style.borderBottom = "2px solid orange"
+
+        } else {
+
+            salesPreOrder.style.color = "green"
+            salesPreOrder.style.borderBottom = "2px solid green"
+
+        }
+
+    })
+
 }
 
 
@@ -30,19 +88,24 @@ const refreshTable = () => {
     salesInvoices = getServiceRequest("/salesinvoice/findall");
 
     //create display property list
-    let DisplayPropertyList = ['pre_order_code','bill_number','customer_name','model','net_amount','sales_invoice_status_id.name'];
+    let DisplayPropertyList = ['pre_order_code', 'bill_number', 'customer_name', 'model', 'net_amount', 'sales_invoice_status_id.name'];
 
     //create display property list type
-    let DisplayPropertyListType = ['text','text','text',getModelName,getNetAmount,'object'];
+    let DisplayPropertyListType = ['text', 'text', 'text', getModelName, getNetAmount, 'object'];
 
     // calling filldataintotable function to fill data
-    fillDataIntoTable(tableSalesInvoice, salesInvoices, DisplayPropertyList, DisplayPropertyListType, formRefill, rowDelete, rowView, true,loggedUserPrivilage);
+    fillDataIntoTable(tableSalesInvoice, salesInvoices, DisplayPropertyList, DisplayPropertyListType, formRefill, rowDelete, rowView, true, loggedUserPrivilage);
 
     //Invisibling the Delete Button in the table when the Status is deleted (Once Deleted the Details or row, the Delete Btn will Disappear)
-    for (let index in salesInvoices){
+    for (let index in salesInvoices) {
 
-        if(salesInvoices[index].sales_invoice_status_id.name == "Deleted")
+        if (salesInvoices[index].sales_invoice_status_id.name == "Deleted")
             tableSalesInvoice.children[1].children[index].children[7].children[1].style.display = "none";
+
+        if (salesInvoices[index].sales_invoice_status_id.name == "Paid")
+            tableSalesInvoice.children[1].children[index].children[7].children[1].style.display = "none";
+
+        tableSalesInvoice.children[1].children[index].children[7].children[0].style.display = "none";
 
     }
 
@@ -56,9 +119,9 @@ const getModelName = (ob) => {
 
     let orderModelName = "";
 
-    for (let index in ob.salesInvoiceHasItemsList){
+    for (let index in ob.salesInvoiceHasItemsList) {
 
-        if(ob.salesInvoiceHasItemsList.length-1 == index )
+        if (ob.salesInvoiceHasItemsList.length - 1 == index)
             orderModelName = orderModelName + ob.salesInvoiceHasItemsList[index].items_id.model_id.model_name;
         else
             orderModelName = orderModelName + ob.salesInvoiceHasItemsList[index].items_id.model_id.model_name + ", ";
@@ -90,39 +153,49 @@ const refreshForm = () => {
     salesInvoice.salesInvoiceHasItemsList = new Array();
 
     customers = getServiceRequest("/customer/list");
-    fillSelectFeild(registeredCustomer, "Select Registered Customer", customers, "fullname");
+    fillSelectFeild(registeredCustomer, "Select Registered Customer", customers, "nic");
 
     salesPreOrders = getServiceRequest("/preorder/list")
     fillSelectFeild(salesPreOrder, "Select Pre-Order", salesPreOrders, "pre_order_code");
 
     statuses = getServiceRequest("/salesinvoicestatus/list");
-    fillSelectFeild(salesInvoiceStatus, "Select Sales Invoice Status", statuses, "name")
+    fillSelectFeild(salesInvoiceStatus, "Select Sales Invoice Status", statuses, "name", "Not Paid")
+    salesInvoice.sales_invoice_status_id = JSON.parse(salesInvoiceStatus.value)
 
+    salesInvoice.discount = 0.00;
+    salesInvoice.tax = 15.00;
+    salesInvoice.total_amount = 0.00;
 
     //CLEARING THE DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING A SALES INVOICE...
-    registeredCustomer.style.color        = "grey";
+    registeredCustomer.style.color = "grey";
     registeredCustomer.style.borderBottom = "none";
 
-    salesPreOrder.style.color        = "grey";
+    salesPreOrder.style.color = "grey";
     salesPreOrder.style.borderBottom = "none";
 
-    salesInvoiceStatus.style.color        = "grey";
-    salesInvoiceStatus.style.borderBottom = "none";
+    salesInvoiceStatus.style.color = "green";
+    salesInvoiceStatus.style.borderBottom = "solid";
 
-    salesCustomerName.value    = "";
+    salesCustomerName.value = "";
     salesCustomerAddress.value = "";
-    salesContactNumber.value   = "";
-    salesCustomerNic.value     = "";
-    salesCustomerEmail.value   = "";
-    salesTotalAmount.value     = "";
-    salesTax.value             = "";
-    salesDiscount.value        = "";
+    salesContactNumber.value = "";
+    salesCustomerNic.value = "";
+    salesCustomerEmail.value = "";
+    salesTotalAmount.value = "";
 
-    salesNetAmount.value       = "";
+    salesTax.value = "15.00";
+    salesTax.style.color = "green";
+
+    salesDiscount.value = "0.00";
+    salesDiscount.style.color = "green";
+
+
+
+    salesNetAmount.value = "";
     $('#salesNetAmount').css("pointer-events", "none");
     $('#salesNetAmount').css("cursor", "pointer");
 
-    salesNote.value            = "";
+    salesNote.value = "";
 
 
     disableAddUpdateBtn(true, false);
@@ -132,18 +205,17 @@ const refreshForm = () => {
 
 }
 
+const disableAddUpdateBtn = (addBtn) => {
 
-const disableAddUpdateBtn = (addBtn, updBtn) => {
 
-
-    if( addBtn && loggedUserPrivilage.ins ){
+    if (addBtn && loggedUserPrivilage.ins) {
 
         btnAdd.disabled = false;
         $('#btnAdd').css("pointer-events", "all");
         $('#btnAdd').css("cursor", "pointer");
 
 
-    }else {
+    } else {
 
         btnAdd.disabled = true;
         $('#btnAdd').css("pointer-events", "all");
@@ -151,25 +223,10 @@ const disableAddUpdateBtn = (addBtn, updBtn) => {
 
     }
 
-
-    if( updBtn && loggedUserPrivilage.upd ){
-
-        btnUpdate.disabled = false;
-        $('#btnUpdate').css("pointer-events", "all");
-        $('#btnUpdate').css("cursor", "pointer");
-
-
-    }else {
-
-        btnUpdate.disabled = true;
-        $('#btnUpdate').css("pointer-events", "all");
-        $('#btnUpdate').css("cursor", "not-allowed");
-
-    }
-
-
 }
 
+
+//FUNCTIONS RELATED TO INNER TABLE AND FORM...
 const refreshInnerFormAndTable = () => {
 
     //INNER FORM
@@ -178,26 +235,28 @@ const refreshInnerFormAndTable = () => {
 
 
     innerItems = getServiceRequest("/items/list")
-    fillSelectFeild2(salesInvoiceItem, "Select Item", innerItems,"item_code_number" ,"item_name",)
-    salesInvoiceItem.style.color        = "grey";
+    fillSelectFeild(salesInvoiceItem, "Select Item", innerItems, "item_name");
+    salesInvoiceItem.style.color = "grey";
     salesInvoiceItem.style.borderBottom = "none";
     $('#salesInvoiceItem').css("pointer-events", "all");
     $('#salesInvoiceItem').css("cursor", "pointer");
-    salesInvoiceItem.value   = "";
+    salesInvoiceItem.value = "";
 
-    salesInvoiceUnitPrice.value  = "";
+    salesInvoiceUnitPrice.value = "";
     $('#salesInvoiceUnitPrice').css("pointer-events", "none");
     $('#salesInvoiceUnitPrice').css("cursor", "not-allowed");
 
-    salesInvoiceDiscountRate.value  = "";
+    salesInvoiceDiscountRate.value = "";
 
-    salesInvoiceDiscountedPrice.value  = "";
+    salesInvoiceDiscountedPrice.value = "";
     $('#salesInvoiceDiscountedPrice').css("pointer-events", "none");
     $('#salesInvoiceDiscountedPrice').css("cursor", "not-allowed");
 
-    salesInvoiceQuantity.value   = "";
+    salesInvoiceQuantity.value = "";
+    $('#salesInvoiceQuantity').css("pointer-events", "none");
+    $('#salesInvoiceQuantity').css("cursor", "not-allowed");
 
-    salesInvoiceLineTotal.value  = "";
+    salesInvoiceLineTotal.value = "";
     $('#salesInvoiceLineTotal').css("pointer-events", "none");
     $('#salesInvoiceLineTotal').css("cursor", "not-allowed");
 
@@ -210,25 +269,24 @@ const refreshInnerFormAndTable = () => {
     $('#innerFormBtnUpdate').css("cursor", "not-allowed");
 
 
-
     //INNER TABLE
 
     //SETTING DEFAULT VALUE TO THE TOTAL AMOUNT
     let totalAmount = 0.00;
 
     //create display property list
-    let DisplayPropertyList = ['items_id.item_name','unit_price','discount_rate','discounted_price','quantity','line_amount'];
+    let DisplayPropertyList = ['items_id.item_name', 'unit_price', 'discount_rate', 'discounted_price', 'quantity', 'line_amount'];
 
     //create display property list type
-    let DisplayPropertyListType = ['object','text','text','text','text','text'];
+    let DisplayPropertyListType = ['object', 'text', 'text', 'text', 'text', 'text'];
 
     let innerLoggedUserPrivilage = getServiceRequest("/userprivilage/bymodule?modulename=SALES-INVOICE");
     // calling filldataintotable function to fill data
-    fillDataIntoTable(tableSalesInvoiceInnerTable,salesInvoice.salesInvoiceHasItemsList,DisplayPropertyList, DisplayPropertyListType, innerFormRefill, innerRowDelete, innerRowView,true,innerLoggedUserPrivilage);
+    fillDataIntoTable(tableSalesInvoiceInnerTable, salesInvoice.salesInvoiceHasItemsList, DisplayPropertyList, DisplayPropertyListType, innerFormRefill, innerRowDelete, innerRowView, true, innerLoggedUserPrivilage);
 
 
     // Created to invisible the Delete Btn in inner table  and sum all the line_total to total field.
-    for (let index in salesInvoice.salesInvoiceHasItemsList){
+    for (let index in salesInvoice.salesInvoiceHasItemsList) {
 
         tableSalesInvoiceInnerTable.children[1].children[index].children[7].children[2].style.display = "none";
 
@@ -238,18 +296,18 @@ const refreshInnerFormAndTable = () => {
 
 
     // To validate the total amount field with orange and green colour....
-    if (totalAmount != 0.00){
+    if (totalAmount != 0.00) {
 
         salesTotalAmount.value = parseFloat(totalAmount).toFixed(2);
-        salesInvoice.total_amount  = salesTotalAmount.value;
+        salesInvoice.total_amount = salesTotalAmount.value;
 
-        if (oldSalesInvoice != null && salesInvoice.total_amount != oldSalesInvoice.total_amount){
+        if (oldSalesInvoice != null && salesInvoice.total_amount != oldSalesInvoice.total_amount) {
 
             //update style
             salesTotalAmount.style.color = 'orange';
 
 
-        }else {
+        } else {
 
             //valid style
             salesTotalAmount.style.color = 'green';
@@ -260,34 +318,36 @@ const refreshInnerFormAndTable = () => {
 
 }
 
-
 const selectModelToGetUnitPrice = () => {
 
-    salesInvoiceUnitPrice.value = parseFloat(JSON.parse(salesInvoiceItem.value).model_id.sales_price).toFixed(2)
+    salesInvoiceUnitPrice.value = parseFloat(JSON.parse(salesInvoiceItem.value).model_id.sales_price).toFixed(2);
     salesInvoiceHasItems.unit_price = salesInvoiceUnitPrice.value;
     salesInvoiceUnitPrice.style.color = 'green';
+    salesInvoiceQuantity.value ="1";
+    salesInvoiceHasItems.quantity = parseInt(salesInvoiceQuantity.value);
+    salesInvoiceQuantity.style.color = 'green';
 
 }
 
-const multiplyQuantityWithDiscountedPrice = () => {
+const innerMultiplyQuantityWithDiscountedPrice = () => {
 
-    if (salesInvoiceQuantity.value != 0){
+    if (salesInvoiceQuantity.value != 0) {
 
         let regPattern = new RegExp("^[0-9]{1,4}$");
 
-        if (regPattern.test(salesInvoiceQuantity.value)){
+        if (regPattern.test(salesInvoiceQuantity.value)) {
 
-            salesInvoiceLineTotal.value  = (parseFloat(salesInvoiceDiscountedPrice.value)*parseFloat(salesInvoiceQuantity.value)).toFixed(2)
+            salesInvoiceLineTotal.value = (parseFloat(salesInvoiceDiscountedPrice.value) * parseFloat(salesInvoiceQuantity.value)).toFixed(2)
             salesInvoiceLineTotal.style.color = 'green';
             salesInvoiceHasItems.line_amount = salesInvoiceLineTotal.value;
 
-            if (oldSalesInvoiceHasItems == null){
+            if (oldSalesInvoiceHasItems == null) {
 
                 //Enabling the inner Add Btn...
                 innerFormBtnAdd.disabled = false;
                 $('#innerFormBtnAdd').css("cursor", "pointer");
 
-            }else {
+            } else {
 
                 //Enabling the inner Update Btn...
                 innerFormBtnUpdate.disabled = false;
@@ -295,13 +355,13 @@ const multiplyQuantityWithDiscountedPrice = () => {
 
             }
 
-        }else {
+        } else {
 
             salesInvoiceQuantity.style.color = 'red';
 
         }
 
-    }else {
+    } else {
 
         salesInvoiceQuantity.style.color = 'red';
         salesInvoiceLineTotal.value = "";
@@ -310,27 +370,29 @@ const multiplyQuantityWithDiscountedPrice = () => {
 
 }
 
-const deductDiscountRateWithUnitPrice = () => {
+const innerDeductDiscountRateWithUnitPrice = () => {
 
-    if (salesInvoiceDiscountRate.value != 0){
+    let regPattern = new RegExp("^[0-9]{1,2}[.][0-9]{2}$");
 
-        let regPattern = new RegExp("^[0-9]{1,2}[.][0-9]{2}$");
+    if (regPattern.test(salesInvoiceDiscountRate.value)) {
 
-        if (regPattern.test(salesInvoiceDiscountRate.value)){
+        let discountValue = parseFloat(salesInvoiceUnitPrice.value) * parseFloat(salesInvoiceDiscountRate.value) / 100;
 
-            let discountValue = parseFloat(salesInvoiceUnitPrice.value)*parseFloat(salesInvoiceDiscountRate.value) / 100;
+        salesInvoiceDiscountedPrice.value = (parseFloat(salesInvoiceUnitPrice.value) - discountValue).toFixed(2);
 
-            salesInvoiceDiscountedPrice.value =  (parseFloat(salesInvoiceUnitPrice.value) - discountValue).toFixed(2);
+        let itemPurchasePrice = parseFloat(JSON.parse(salesInvoiceItem.value).model_id.purchase_price).toFixed(2)
+        if (parseFloat(itemPurchasePrice) <= parseFloat(salesInvoiceDiscountedPrice.value)) {
+
             salesInvoiceDiscountedPrice.style.color = 'green';
             salesInvoiceHasItems.discounted_price = salesInvoiceDiscountedPrice.value;
 
-            if (oldSalesInvoiceHasItems == null){
+            if (oldSalesInvoiceHasItems == null) {
 
                 //Enabling the inner Add Btn...
                 innerFormBtnAdd.disabled = false;
                 $('#innerFormBtnAdd').css("cursor", "pointer");
 
-            }else {
+            } else {
 
                 //Enabling the inner Update Btn...
                 innerFormBtnUpdate.disabled = false;
@@ -338,29 +400,45 @@ const deductDiscountRateWithUnitPrice = () => {
 
             }
 
-        }else {
+        } else {
+
+            if (oldSalesInvoiceHasItems == null) {
+
+                //Enabling the inner Add Btn...
+                innerFormBtnAdd.disabled = true;
+                $('#innerFormBtnAdd').css("cursor", "not-allowed");
+
+            } else {
+
+                //Enabling the inner Update Btn...
+                innerFormBtnUpdate.disabled = true;
+                $('#innerFormBtnUpdate').css("cursor", "not-allowed");
+
+            }
 
             salesInvoiceDiscountRate.style.color = 'red';
+            salesInvoiceDiscountedPrice.style.color = 'red';
+            window.alert("The discount rate is invalid, Because Discounted price is lesser than Purchase price")
 
         }
 
-    }else {
+    } else {
 
         salesInvoiceDiscountRate.style.color = 'red';
         salesInvoiceDiscountedPrice.value = "";
 
     }
 
-
 }
+
 
 const innerAddMC = () => {
 
     let itemExt = false;
 
-    for (let index in salesInvoice.salesInvoiceHasItemsList){
+    for (let index in salesInvoice.salesInvoiceHasItemsList) {
 
-        if (salesInvoice.salesInvoiceHasItemsList[index].items_id.item_name == salesInvoiceHasItems.items_id.item_name){
+        if (salesInvoice.salesInvoiceHasItemsList[index].items_id.item_name == salesInvoiceHasItems.items_id.item_name) {
 
             itemExt = true;
             break;
@@ -369,17 +447,17 @@ const innerAddMC = () => {
 
     }
 
-    if (!itemExt){
+    if (!itemExt) {
 
         let submitConfigMsg = "Are you willing to add following Sales Invoice Item?\n" +
             "\n Item Name : " + salesInvoiceHasItems.items_id.item_name +
             "\n Unit Price : Rs. " + salesInvoiceHasItems.unit_price +
             "\n Discount Rate : " + salesInvoiceHasItems.discount_rate + "%" +
             "\n Discounted Price : Rs. " + salesInvoiceHasItems.discounted_price +
-            "\n Quantity : "   + salesInvoiceHasItems.quantity +
+            "\n Quantity : " + salesInvoiceHasItems.quantity +
             "\n Line Total : Rs. " + salesInvoiceHasItems.line_amount;
 
-        let userResponse    = window.confirm(submitConfigMsg)
+        let userResponse = window.confirm(submitConfigMsg)
 
         if (userResponse) {
 
@@ -389,7 +467,7 @@ const innerAddMC = () => {
 
         }
 
-    }else {
+    } else {
 
         alert("Item Cannot be Added : It's already Exist!!!\n" + "\n Item Name : " + salesInvoiceHasItems.items_id.item_name)
 
@@ -400,17 +478,17 @@ const innerAddMC = () => {
 
 const innerUpdateMC = () => {
 
-    if (salesInvoiceHasItems.quantity != oldSalesInvoiceHasItems.quantity){
+    if (salesInvoiceHasItems.quantity != oldSalesInvoiceHasItems.quantity) {
 
         let submitConfigMsg = "Are you willing to update the following Sales Invoice Model?\n" +
             "\n Model Name : " + salesInvoiceHasItems.items_id.item_name +
             "\n Unit Price : Rs. " + salesInvoiceHasItems.unit_price +
             "\n Discount Rate : " + salesInvoiceHasItems.discount_rate + "%" +
             "\n Discounted Price : Rs. " + salesInvoiceHasItems.discounted_price +
-            "\n Quantity : "   + salesInvoiceHasItems.quantity +
+            "\n Quantity : " + salesInvoiceHasItems.quantity +
             "\n Line Total : Rs. " + salesInvoiceHasItems.line_amount;
 
-        let userResponse    = window.confirm(submitConfigMsg)
+        let userResponse = window.confirm(submitConfigMsg)
 
         if (userResponse) {
 
@@ -421,7 +499,7 @@ const innerUpdateMC = () => {
         }
 
 
-    }else {
+    } else {
 
         window.alert("Nothing Updated!!!")
 
@@ -442,31 +520,33 @@ const innerFormRefill = (innerOb, innerRowNo) => {
     oldSalesInvoiceHasItems = JSON.parse(JSON.stringify(innerOb));
 
     innerItems = getServiceRequest("/items/list")
-    fillSelectFeild2(salesInvoiceItem, "Select Item", innerItems,"item_code_number" ,"item_name", salesInvoiceHasItems.items_id.item_code_number);
+    fillSelectFeild(salesInvoiceItem, "Select Item", innerItems, "item_name", salesInvoiceHasItems.items_id.item_name);
 
-    salesInvoiceItem.style.color        = "green";
+    salesInvoiceItem.style.color = "green";
     salesInvoiceItem.style.borderBottom = "solid";
     $('#salesInvoiceItem').css("pointer-events", "none");
     $('#salesInvoiceItem').css("cursor", "not-allowed");
 
 
-    salesInvoiceUnitPrice.value       = salesInvoiceHasItems.unit_price;
+    salesInvoiceUnitPrice.value = salesInvoiceHasItems.unit_price;
     salesInvoiceUnitPrice.style.color = "green";
     $('#salesInvoiceUnitPrice').css("pointer-events", "none");
     $('#salesInvoiceUnitPrice').css("cursor", "not-allowed");
 
 
-    salesInvoiceDiscountRate.value  = salesInvoiceHasItems.discount_rate;
+    salesInvoiceDiscountRate.value = salesInvoiceHasItems.discount_rate;
 
-    salesInvoiceDiscountedPrice.value  = salesInvoiceHasItems.discounted_price;
+    salesInvoiceDiscountedPrice.value = salesInvoiceHasItems.discounted_price;
     $('#salesInvoiceDiscountedPrice').css("pointer-events", "none");
     $('#salesInvoiceDiscountedPrice').css("cursor", "not-allowed");
 
-    salesInvoiceQuantity.value   = salesInvoiceHasItems.quantity;
+    salesInvoiceQuantity.value = salesInvoiceHasItems.quantity;
     salesInvoiceQuantity.style.color = "green";
+    $('#salesInvoiceQuantity').css("pointer-events", "none");
+    $('#salesInvoiceQuantity').css("cursor", "not-allowed");
 
 
-    salesInvoiceLineTotal.value  = salesInvoiceHasItems.line_amount;
+    salesInvoiceLineTotal.value = salesInvoiceHasItems.line_amount;
     salesInvoiceLineTotal.style.color = "green";
     $('#salesInvoiceLineTotal').css("pointer-events", "none");
     $('#salesInvoiceLineTotal').css("cursor", "not-allowed");
@@ -481,15 +561,15 @@ const innerFormRefill = (innerOb, innerRowNo) => {
 const innerRowDelete = (innerOb, innerRowIndex) => {
 
     let deleteMsg = "Would you like to Delete this Sales Invoice Model?\n"
-        +"Item Name : "+ innerOb.items_id.item_name;
+        + "Item Name : " + innerOb.items_id.item_name;
 
     let deleteUserResponse = window.confirm(deleteMsg);
 
     if (deleteUserResponse) {
 
-         salesInvoice.salesInvoiceHasItemsList.splice(innerRowIndex, 1); // deleteCount means how many rows should be deleted from the selected row by the index number of the object,Ex :- If it is 1 that mean only the selected row or if it is 2 that mean only the selected row and the next row.
-         alert("As you wish, Deleted the Sales Invoice Model Successfully !!!");
-         refreshInnerFormAndTable();
+        salesInvoice.salesInvoiceHasItemsList.splice(innerRowIndex, 1); // deleteCount means how many rows should be deleted from the selected row by the index number of the object,Ex :- If it is 1 that mean only the selected row or if it is 2 that mean only the selected row and the next row.
+        alert("As you wish, Deleted the Sales Invoice Model Successfully !!!");
+        refreshInnerFormAndTable();
 
     }
 
@@ -504,37 +584,37 @@ function checkErrors() {
     let error = "";
 
 
-    if (salesInvoice.total_amount == null){
+    if (salesInvoice.total_amount == null) {
 
         error = error + "Total Amount Field Incomplete \n";
 
     }
 
-    if (salesInvoice.discount == ""){
+    if (salesInvoice.discount == null) {
 
         error = error + "Discount Field Incomplete \n";
 
     }
 
-    if (salesInvoice.tax == ""){
+   /* if (salesInvoice.tax == null) {
 
         error = error + "Tax Field Incomplete \n";
 
-    }
+    }*/
 
-    if (salesInvoice.net_amount == null){
+    if (salesInvoice.net_amount == null) {
 
         error = error + "Net Amount Field Incomplete \n";
 
     }
 
-    if (salesInvoice.sales_invoice_status_id == null){
+    if (salesInvoice.sales_invoice_status_id == null) {
 
         error = error + "Sales Invoice Status Field Incomplete \n";
 
     }
 
-    if (salesInvoice.salesInvoiceHasItemsList.length == "0"){
+    if (salesInvoice.salesInvoiceHasItemsList.length == "0") {
 
         error = error + "Sales Invoice Items Not Added \n";
 
@@ -552,14 +632,14 @@ const submitBtnFunction = () => {
 
     let errors = checkErrors();
 
-    if ( errors == ""){
+    if (errors == "") {
 
         let submitConfigMsg = "Are you willing to add this Sales Invoice?\n" +
-            "\n Bill Number : " + salesInvoice.bill_number +
+            "\n Customer Name : " + salesInvoice.customer_name +
             "\n Total Amount : Rs. " + salesInvoice.total_amount +
             "\n Net Amount : Rs. " + salesInvoice.net_amount;
 
-        let userResponse    = window.confirm(submitConfigMsg)
+        let userResponse = window.confirm(submitConfigMsg)
 
         if (userResponse) {
 
@@ -580,7 +660,7 @@ const submitBtnFunction = () => {
             }
         }
 
-    }else {
+    } else {
 
         alert("Form has these following errors \n" + errors)
 
@@ -590,7 +670,7 @@ const submitBtnFunction = () => {
 
 const formRefill = (ob) => {
 
-    empMancontainer.classList.add("right-panel-active");
+    /*empMancontainer.classList.add("right-panel-active");
 
     salesInvoice    = getAjexServiceRequest("/salesinvoice/getbyid/"+ob.id);
     oldSalesInvoice = getAjexServiceRequest("/salesinvoice/getbyid/"+ob.id);
@@ -638,11 +718,12 @@ const formRefill = (ob) => {
 
     disableAddUpdateBtn(false, true);
 
-    refreshInnerFormAndTable();
+    refreshInnerFormAndTable();*/
 
 }
 
-const checkUpdate = () => {
+//No need edit for GRN
+/*const checkUpdate = () => {
 
     let update = "";
 
@@ -799,29 +880,29 @@ const updateBTN = () => {
     }
 
 
-}
+}*/
 
 const rowDelete = (ob) => {
 
     let deleteMsg = "Would you like to Delete the following Sales Invoice?\n"
-        +"Bill Number : "+ ob.bill_number + "\n"
-        +"Customer Name : "+ ob.customer_name + "\n"
-        +"Model : "+ ob.model + "\n"
-        +"Net Amount : "+ ob.net_amount + "\n";
+        + "Bill Number : " + ob.bill_number + "\n"
+        + "Customer Name : " + ob.customer_name + "\n"
+        + "Model : " + ob.model + "\n"
+        + "Net Amount : " + ob.net_amount + "\n";
 
     let deleteUserResponse = window.confirm(deleteMsg);
 
     if (deleteUserResponse) {
 
-        let deleteSeverResponse = getAjexServiceRequest("/salesinvoice","DELETE", ob);
+        let deleteSeverResponse = getAjexServiceRequest("/salesinvoice", "DELETE", ob);
 
 
-        if(deleteSeverResponse == "0"){
+        if (deleteSeverResponse == "0") {
 
             alert("As you wish, Deleted the Sales Invoice Successfully !!!");
             refreshTable();
 
-        }else {
+        } else {
 
             window.confirm("You have the following error\n" + deleteSeverResponse)
 
@@ -833,21 +914,33 @@ const rowDelete = (ob) => {
 
 const rowView = (ob) => {
 
-    modelPrint = getServiceRequest("/model/getbyid/"+ob.id)
+    modelSalesInvoice = getServiceRequest("/salesinvoice/getbyid/" + ob.id)
 
     $('#modelModal').modal("show");
 
-    modSubCategory.innerHTML       = modelPrint.sub_catergory_id.name;
-    modBrand.innerHTML             = modelPrint.brand_id.name;
-    modModelName.innerHTML         = modelPrint.model_name;
-    modModelNo.innerHTML           = modelPrint.model_number;
-    modSalesPrice.innerHTML        = salesPrice(modelPrint);
-    modPurchasePrice.innerHTML     = purchasePrice(modelPrint);
-    modProfitRate.innerHTML        = modelPrint.profit_rate + "%";
-    modMinDiscountRate.innerHTML   = modelPrint.min_discount_rate + "%";
-    modMaxDiscountRate.innerHTML   = modelPrint.max_discount_rate + "%";
-    modModelStatus.innerHTML       = modelPrint.model_status_id.name;
-    modNote.innerHTML              = modelPrint.note;
+
+    modelSalesCustomerName.value = modelSalesInvoice.customer_name;
+    modelSalesCustomerAddress.value = modelSalesInvoice.customer_address;
+    modelSalesContactNumber.value = modelSalesInvoice.contact_number;
+    modelSalesCustomerNic.value = modelSalesInvoice.customer_nic;
+    modelSalesCustomerEmail.value = modelSalesInvoice.customer_email;
+    modelSalesTotalAmount.value = modelSalesInvoice.total_amount;
+    modelSalesTax.value = modelSalesInvoice.discount;
+    modelSalesDiscount.value = modelSalesInvoice.tax;
+    modelSalesNetAmount.value = modelSalesInvoice.net_amount;
+    modelSalesNote.value = modelSalesInvoice.note;
+
+    /* modSubCategory.innerHTML       = modelPrint.sub_catergory_id.name;
+     modBrand.innerHTML             = modelPrint.brand_id.name;
+     modModelName.innerHTML         = modelPrint.model_name;
+     modModelNo.innerHTML           = modelPrint.model_number;
+     modSalesPrice.innerHTML        = salesPrice(modelPrint);
+     modPurchasePrice.innerHTML     = purchasePrice(modelPrint);
+     modProfitRate.innerHTML        = modelPrint.profit_rate + "%";
+     modMinDiscountRate.innerHTML   = modelPrint.min_discount_rate + "%";
+     modMaxDiscountRate.innerHTML   = modelPrint.max_discount_rate + "%";
+     modModelStatus.innerHTML       = modelPrint.model_status_id.name;
+     modNote.innerHTML              = modelPrint.note;*/
 
 
 }
@@ -858,5 +951,62 @@ const clearBtn = () => {
 
 }
 
+//gettingTheNetTotalByDeductingTaxAndDiscountFromTotalAmount
+const gettingTheNetTotal = () => {
+
+    let totalAmountAndTax = parseFloat(salesTotalAmount.value) + parseFloat(salesTotalAmount.value) * parseFloat(salesTax.value) / 100;
+    salesNetAmount.value = (totalAmountAndTax - (totalAmountAndTax * parseFloat(salesDiscount.value) / 100)).toFixed(2)
+    salesNetAmount.style.color = 'green';
+    salesInvoice.net_amount = salesNetAmount.value;
+    console.log(salesInvoice.net_amount)
+
+}
+
+const individualItemDiscountCheck = () => {
+
+    let itemMaxDiscount = parseFloat(JSON.parse(salesInvoiceItem.value).model_id.max_discount_rate);
+    let itemMinDiscount = parseFloat(JSON.parse(salesInvoiceItem.value).model_id.min_discount_rate);
+
+    if (itemMinDiscount <= salesInvoiceDiscountRate.value && itemMaxDiscount >= salesInvoiceDiscountRate.value) {
+
+        window.alert("Discount Rate is Invalid, Please try a valid Discount Rate")
+        innerFormBtnAdd.disabled =true;
+
+    }else{
+
+        innerFormBtnAdd.disabled =false;
+
+    }
 
 
+}
+
+
+const invoiceItemByPreOrder = () => {
+
+    console.log("aaaaa")
+    // salesPreOrder
+    // salesInvoice.salesInvoiceHasItemsList
+
+     customerOrderModel = JSON.parse(salesPreOrder.value).preOrderHasModelList;
+
+    for (const customerOrderModelElement of customerOrderModel) {
+        let avaItembyModel  = getServiceRequest("/items/getbymodelid/" + customerOrderModelElement.model_id.id)
+        if (parseInt(customerOrderModelElement.quantity) < avaItembyModel.length) {
+            for (let i = 0; i < parseInt(customerOrderModelElement.quantity); i++) {
+              let salesInvoiceHasItems = new Object();
+                salesInvoiceHasItems.items_id = avaItembyModel[i];
+                salesInvoiceHasItems.unit_price = parseFloat(customerOrderModelElement.model_id.sales_price).toFixed(2);
+                salesInvoiceHasItems.discount_rate = parseFloat(customerOrderModelElement.model_id.max_discount_rate).toFixed(2);
+                salesInvoiceHasItems.discounted_price = (parseFloat(customerOrderModelElement.model_id.sales_price) - (parseFloat(customerOrderModelElement.model_id.max_discount_rate) * parseFloat(customerOrderModelElement.model_id.max_discount_rate)/100)).toFixed(2);
+                salesInvoiceHasItems.quantity = 1;
+                salesInvoiceHasItems.line_amount = parseFloat( salesInvoiceHasItems.discounted_price).toFixed(2);
+                salesInvoice.salesInvoiceHasItemsList.push(salesInvoiceHasItems);
+            }
+        }
+
+
+    }
+
+    refreshInnerFormAndTable();
+}

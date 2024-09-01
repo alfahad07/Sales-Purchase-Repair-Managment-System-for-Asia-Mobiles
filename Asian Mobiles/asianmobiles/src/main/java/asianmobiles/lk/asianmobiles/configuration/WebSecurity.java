@@ -24,6 +24,7 @@ public class WebSecurity {
                 antMatchers("/employee/**").hasAnyAuthority("Admin","Owner","Manager").
                 antMatchers("/user/**").hasAnyAuthority("Admin","Owner","Manager").
                 antMatchers("/privilage/**").hasAnyAuthority("Admin","Owner","Manager").
+                antMatchers("/grnReports").hasAnyAuthority("Admin","Owner","Manager","Ass_Manager").
                 anyRequest().authenticated().and().csrf().disable().
 
                 formLogin().
@@ -31,7 +32,7 @@ public class WebSecurity {
                       usernameParameter("username").
                       passwordParameter("password").
                       defaultSuccessUrl("/dashboard",true).
-                      failureForwardUrl("/login?error=usernamepassworderror").and().
+                      failureUrl("/login?error=usernamepassworderror").and().
 
                 logout().
                       logoutRequestMatcher(new AntPathRequestMatcher("/logout")).

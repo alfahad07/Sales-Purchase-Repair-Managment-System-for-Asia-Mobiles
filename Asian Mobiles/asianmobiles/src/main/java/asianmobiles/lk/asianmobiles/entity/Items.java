@@ -1,5 +1,6 @@
 package asianmobiles.lk.asianmobiles.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -68,8 +69,14 @@ public class Items {
     private Model model_id;
 
     @ManyToOne
+    @JoinColumn(name = "phone_colour_id",  referencedColumnName = "id")
+    private PhoneColour phone_colour_id;
+
+    @ManyToOne
     @JoinColumn(name = "added_user_id", referencedColumnName = "id")
     private User added_user_id;
+
+
 
     @ManyToOne
     @JoinColumn(name = "updated_user_id",referencedColumnName = "id")
@@ -79,7 +86,10 @@ public class Items {
     @JoinColumn(name = "deleted_user_id",referencedColumnName = "id")
     private User deleted_user_id;
 
-
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "goods_receive_note_has_model_id",referencedColumnName = "id")
+    private GoodsReceiveNoteHasModel goods_receive_note_has_model_id;
 
     public Items( Integer id, String item_code_number, String item_name, Model model_id ){
 
@@ -88,6 +98,14 @@ public class Items {
         this.item_code_number = item_code_number;
         this.item_name        = item_name;
         this.model_id         = model_id;
+
+    }
+
+    public Items(String item_name, Long count){
+
+        //CLASS ID            = PARAMETER ID
+        this.item_name        = item_name;
+        this.id               = count.intValue() ;
 
     }
 

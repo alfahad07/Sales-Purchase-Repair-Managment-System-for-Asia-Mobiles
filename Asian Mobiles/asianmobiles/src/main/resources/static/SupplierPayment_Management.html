@@ -1,0 +1,621 @@
+<html>
+
+<head>
+
+    <!--JQUARY LINK-->
+    <script src="Assets/jquery/jquery.js"></script>
+
+    <link rel="stylesheet" href="Assets/datatable/css/datatables.min.css">
+    <script src="Assets/datatable/js/datatables.min.js"></script>
+
+    <!--BOOSTRAP CSS & JS LINK-->
+    <link rel="stylesheet" href="Assets/bootstrap/css/bootstrap.min.css">
+    <script src="Assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--FONT AWESOME LINK-->
+    <link rel="stylesheet" href="Assets/fontawesome/css/all.css">
+
+    <!--employee_js.JS , employee_css & COMMON.JS LINK-->
+    <link rel="stylesheet" href="Assets/style/common.css">
+    <script src="Assets/script/common.js"></script>
+    <script src="Assets/script/supplierpurchasepayment.js"></script>
+    <script src="Assets/script/login.js"></script>
+
+    <title>Supplier_Payment_Management-Asian_Mobiles</title>
+
+</head>
+
+<!--ADDED BACKGROUND PICTURE ON BODY TAG BY CSS-->
+<body style="background-image: url(Assets/images/desmal14.jpg); overflow-x: hidden; overflow-y: hidden; background-size: cover;">
+
+
+<!--NAVIGATION BAR BY BOOSTRAP5-->
+<div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
+    <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Administration
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li id="EMPLOYEE"><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
+                            <li id="USER"><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
+                            <li id="PRIVILEGE"><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Sales
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="CUSTOMER"><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
+                            <li id="PRE-ORDER"><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+                            <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Sales-Invoice Management System</a></li>
+                            <li id="SALES-PAYMENT"><a class="dropdown-item fw-bold" href="/customerpayment">Customer Payment Management System</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Purchase
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="SUPPLIER"><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
+                            <li id="QUOTATION-REQUEST"><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
+                            <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
+                            <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
+                            <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+                            <li id="PURCHASE-PAYMENT"><a class="dropdown-item fw-bold" href="/supplierpayment">Supplier Payment Management System</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Inventory
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="ITEMS-INVENTORY"><a class="dropdown-item fw-bold" href="/itemsinventory">Items Inventory Management System</a></li>
+                            <li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Reports
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="GRN-REPORT"><a class="dropdown-item fw-bold" href="/grnReports">GRN Reports</a></li>
+                            <!--<li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>-->
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            repair
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" onclick="signOutFunction()" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" style="-webkit-text-stroke: 1.5px rgb(0,196,255) ;font-size: 20px;" id="liaLoggedUser">LoggedUser Name</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+    <div class="container-fluid body">
+
+
+        <div class="row moduleTitleText">
+            <h1 class="fw-bold">SUPPLIER PAYMENT MANAGEMENT SYSTEM</h1>
+        </div>
+
+        <div class="moduleManagementContainer" id="empMancontainer">
+
+            <!----SUPPLIER PAYMENT TABLE CONTAINER-->
+            <div class="form-container moduleTable-container" id="employeeFormContainer">
+
+                <!--SUPPLIER PAYMENT TABLE-->
+                <div class="row">
+
+                    <div class="col-9">
+
+                        <h2 class="fw-bold"><i class="fa fa-table"></i>SUPPLIER PAYMENT TABLE</h2>
+
+                    </div>
+
+                    <div class="col-3 text-end">
+
+                        <button type="button" class="btn btn-outline-primary" onclick="printTable(tableSupplierPayment)">PRINT TABLE</button>
+
+                    </div>
+
+                </div><br>
+
+                <table class="table table-hover table-dark table-striped-columns" id="tableSupplierPayment">
+
+                    <thead class="table-secondary">
+
+                    <tr class="fw-bold">
+                        <th class="text-center">#</th>
+                        <th class="text-center" style="font-size: 13px">BILL NUMBER</th>
+                        <th class="text-center" style="font-size: 13px">SUPPLIER NAME</th>
+                        <th class="text-center" style="font-size: 13px;">GRN CODE NO</th>
+                        <th class="text-center" style="font-size: 13px">TOTAL AMOUNT</th>
+                        <th class="text-center" style="font-size: 13px">PAYMENT TYPE</th>
+                        <th class="text-center" style="font-size: 13px">STATUS</th>
+                        <th class="text-center modify" style="column-width: 800px;font-size: 13px">MODIFY</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+
+            <!----SUPPLIER PAYMENT FORM CONTAINER-->
+            <div class="form-container moduleForm-container">
+
+                <!--  SUPPLIER PAYMENT FORM -->
+                <form onsubmit="return false">
+
+                    <!--- SUPPLIER PAYMENT FORM HEADING -->
+                    <div class="row">
+                        <h2 class="fw-bold"><i class="fa fa-user"></i>SUPPLIER PAYMENT FORM</h2>
+                    </div>
+
+                    <!--- REQUIRED STAR MARK  -->
+                    <div class="row text-end">
+                        <span class="fw-bold" style="font-size: 18px;"><span id="star">*</span> Required
+                        </span>
+                    </div><br>
+
+                    <!--SUPPLIER NAME /GRN NUMBER-->
+                    <div class="row">
+
+                        <!--SUPPLIER NAME-->
+                        <div class="col-6 selectStyle" style="width: 47%;">
+
+                            <label for="supplierName" id="labelSupplierName" class="fw-bold">Supplier Name : <span id="star">*</span></label>
+
+                            <select id="supplierName" class="fw-bold" onchange="selectValidator(supplierName, '','supplierPayment', 'supplier_id','oldSupplierPayment')" required>
+
+                            </select>
+
+                            <i style="top: 171px; width: 43%;"></i>
+
+                        </div>
+
+                        <!--GRN NUMBER-->
+                        <div class="col-6 selectStyle" style="width: 47%;">
+
+                            <label for="supplierGrnNo" id="labelSupplierGrnNo" class="fw-bold">GRN Number : <span id="star">*</span></label>
+
+                            <select id="supplierGrnNo" class="fw-bold" onchange="selectValidator(supplierGrnNo, '','supplierPayment', 'goods_recieve_note_id','oldSupplierPayment')" required>
+
+                            </select>
+
+                            <i style="top: 171px; width: 43%; left: 48%;"></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--ARREAS AMOUNT /TOTAL AMOUNT-->
+                    <div class="row">
+
+                        <!--ARREAS AMOUNT -->
+                        <div class="col-6 inputBox" style="width: 50%;">
+
+                            <input type="text" class="fw-bold" id="arreasAmount"  onkeyup="textFeildValidtor(arreasAmount,'^[0-9]{3,10}$','supplierPayment','arreas_amount','oldSupplierPayment')" required>
+
+                            <label for="arreasAmount" id="labelArreasAmount" class="fw-bold">Arreas Amount :  <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--TOTAL AMOUNT-->
+                        <div class="col-6 inputBox" style="width: 50%;">
+
+                            <input type="text" class="fw-bold" id="totalAmount" onkeyup="textFeildValidtor(totalAmount,'^[0-9]{3,10}$','supplierPayment','total_amount','oldSupplierPayment')" required>
+
+                            <label for="totalAmount" id="labelTotalAmount" class="fw-bold">Total Amount :  <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+
+                    </div><br>
+
+                    <!--PAID AMOUNT /BALANCE AMOUNT /PAYMENT TYPE-->
+                    <div class="row">
+
+                        <!--PAID AMOUNT-->
+                        <div class="col-4 inputBox" style="width: 33%;">
+
+                            <input type="text" class="fw-bold" id="paidAmount" onkeyup="textFeildValidtor(paidAmount,'^[0-9]{3,10}$','supplierPayment','paid_amount','oldSupplierPayment'),balanceCalculation()" required>
+
+                            <label for="paidAmount" id="labelPaidAmount" class="fw-bold">Paid Amount : <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+
+                        <!--BALANCE AMOUNT-->
+                        <div class="col-4 inputBox" style="width: 33%">
+
+                            <input type="text" class="fw-bold" id="balanceAmount" onkeyup="textFeildValidtor(balanceAmount,'^[0-9]{3,10}$','supplierPayment','balance_amount','oldSupplierPayment')" required>
+
+                            <label for="balanceAmount" id="labelBalanceAmount" class="fw-bold">Balance Amount : <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--PAYMENT TYPE-->
+                        <div class="col-4 selectStyle" style="width: 33%; left: 3%">
+
+                            <label for="paymentType" id="labelPaymentType" class="fw-bold">Payment Type : <span id="star">*</span></label>
+
+                            <select id="paymentType" class="fw-bold" onchange="selectValidator(paymentType, '','supplierPayment', 'payment_method_id','oldSupplierPayment'), visibleBankdetailsFields(), visibleChequeDetailsFields()" required>
+
+                            </select>
+
+                            <i style="top: 299px; width: 30%; left: 66%"></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--BANK NAME /BANK BRANCH /BANK ACCOUNT NUMBER-->
+                    <div class="row" id="bankDetails">
+
+                        <!--BANK NAME-->
+                        <div class="col-4 selectStyle" id="bankNameDiv" style="width: 33%; display: none">
+
+                            <label for="bankName" id="labelBank" class="fw-bold">Bank Name : <span id="star">*</span></label>
+
+                            <select id="bankName" class="fw-bold" onchange="selectValidator(bankName, '','supplierPayment', 'bank_id','oldSupplierPayment')" required>
+
+                            </select>
+
+                            <i style="top: 370px; width: 30%;"></i>
+
+                        </div>
+
+
+                        <!--BANK BRANCH-->
+                        <div class="col-4 inputBox" id="bankBranchDiv" style="width: 33%; display: none">
+
+                            <input type="text" class="fw-bold" id="supplierBankBranch" onkeyup="textFeildValidtor(supplierBankBranch,'','supplierPayment','bank_branch_name','oldSupplierPayment')" required>
+
+                            <label for="supplierBankBranch" id="labelSupplierBankBranch" class="fw-bold">Bank Branch : <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--BANK ACCOUNT NUMBER-->
+                        <div class="col-4 inputBox" id="bankAccountDiv" style="width: 33%; display: none">
+
+                            <input type="text" class="fw-bold" id="supplierBankAccount" onkeyup="textFeildValidtor(supplierBankAccount,'^[0-9]{6,15}$','supplierPayment','bank_account_number','oldSupplierPayment')" required>
+
+                            <label for="supplierBankAccount" id="labelSupplierBankAccount" class="fw-bold">Bank Account No : <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--BANK ACCOUNT HOLDER NAME /CASH DEPOSIT DATE-->
+                    <div class="row" id="bankDetails">
+
+                        <!--BANK ACCOUNT HOLDER NAME-->
+                        <div class="col-6 inputBox" id="bankAccHolderNameDiv" style="width: 50%; display: none">
+
+                            <input type="text" class="fw-bold" id="supplierBankAccHolderName" onkeyup="textFeildValidtor(supplierBankAccHolderName,'','supplierPayment','account_holder_name','oldSupplierPayment')" required>
+
+                            <label for="supplierBankAccHolderName" id="labelSupplierBankAccHolderName" class="fw-bold">Bank Account Holder Name : <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--CASH DEPOSIT DATE-->
+                        <div class="col-6 inputBox" id="depositDateDiv" style="width: 50%; display: none; left: 3%">
+
+                            <input type="text" class="fw-bold" id="supplierDepositDate" name="date" onfocus="(this.type='date')"
+                                   onblur="if(!this.value) this.type='text'" onchange="dateFeildValidtor(supplierDepositDate,'', 'supplierPayment','deposite_or_transfered_datetime', 'oldSupplierPayment')" required>
+
+                            <label for="supplierDepositDate" class="fw-bold">Cash Deposit Date : <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--CHEQUE DATE /CHEQUE NO-->
+                    <div class="row" id="chequeDetails">
+
+                        <!--CHEQUE DATE-->
+                        <div class="col-6 inputBox" id="chequeDateDiv" style="width: 50%; display: none">
+
+                            <input type="text" class="fw-bold" id="supplierChequeDate" name="date" onfocus="(this.type='date')"
+                                   onblur="if(!this.value) this.type='text'" onchange="dateFeildValidtor(supplierChequeDate,'', 'supplierPayment','cheque_date', 'oldSupplierPayment')" required>
+
+                            <label for="supplierChequeDate" class="fw-bold">Cheque Date : <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--CHEQUE NO--->
+                        <div class="col-6 inputBox" id="chequeNoDiv" style="width: 50%; display: none; left: 3%">
+
+                            <input type="text" class="fw-bold" id="supplierChequeNo" onkeyup="textFeildValidtor(supplierChequeNo,'^[0-9]{6,15}$','supplierPayment','cheque_number','oldSupplierPayment')" required>
+
+                            <label for="supplierChequeNo" id="labelSupplierChequeNo" class="fw-bold">Cheque Number : <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--SUPPLIER PAYMENT STATUS-->
+                    <div class="row">
+
+                        <!--SUPPLIER PAYMENT STATUS-->
+                        <div class="col-6 selectStyle" style="width: 47%;">
+
+                            <label for="supplierPaymentStatus" id="labelSupplierPaymentStatus" class="fw-bold">Supplier Payment Status : <span id="star">*</span></label>
+
+                            <select id="supplierPaymentStatus" class="fw-bold" onchange="selectValidator(supplierPaymentStatus, '','supplierPayment', 'payment_status_id','oldSupplierPayment')" required>
+
+                            </select>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--PAYMENT NOTE-->
+                    <div class="row">
+
+                        <!--PAYMENT NOTE-->
+                        <div class="col-12">
+
+                            <label for="paymentNote" class="fw-bold empDescriptionLabel"> Payment Note :
+                            </label>
+
+                            <textarea class="textArea fw-bold" id="paymentNote" cols="100" rows="5"></textarea>
+
+                        </div>
+
+                    </div><br><br>
+
+                    <!-- ADD, UPDATE & CLEAR BUTTON -->
+                    <div class="row text-center">
+
+                        <!--ADD BUTTON-->
+                        <div class="col-4">
+
+                            <button class="addBtn" id="btnAdd" onclick="submitBtnFunction()" > ADD  </button>
+
+                        </div>
+
+                        <!--CLEAR BUTTON-->
+                        <div class="col-4">
+
+                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR  </button>
+
+                        </div>
+
+                    </div><br>
+
+                </form>
+
+            </div>
+
+            <!--OVERLAY SLIDE-->
+            <div class="overlay-container">
+
+                <div class="overlay">
+
+                    <div class="overlay-panel overlay-left">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Supplier Payment Table!</h1>
+                        <p id="p" class="fw-bold">Please click the below button to display the Payment Table...</p>
+                        <button class="press" id="empTableBtn">Supplier Payment Table</button>
+
+                    </div>
+
+                    <div class="overlay-panel overlay-right">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Supplier Payment Form!</h1>
+                        <p class="fw-bold">Please click the below button to display the Payment Form...</p>
+                        <button class="press" id="empFormBtn">Supplier Payment Form</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="supplierPaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                   <div class="row">
+
+                       <div class="col-5" style="background-image: url(Assets/images/allmobiles.jpg); background-size: cover" >
+
+                       </div>
+
+                       <div class="col-7">
+
+                           <div class="row">
+
+                               <div class="col-10">
+                                   <h4 class="modal-title" id="exampleModalLabel"> <i class="fa fa-user"></i> Supplier Payment Details</h4>
+
+                               </div>
+
+                               <div class="col-2">
+
+                                   <button type="button" class="btn-close btn-outline-danger text-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                               </div>
+
+                           </div> <br>
+
+                           <div class="row">
+
+                               <div class="col-12">
+
+                                   <table id="viewTable" class="table  table-striped table-hover shadow rounded">
+
+                                       <tr>
+                                           <th>
+                                               Supplier Name :
+                                           </th>
+
+                                           <td id="modSupplierName">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               GRN Number :
+                                           </th>
+
+                                           <td id="modGrnNo">
+
+                                           </td>
+                                       </tr>
+
+                                           <th>
+                                               Arreas Amount :
+                                           </th>
+
+                                           <td id="modArreasAmount">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Total Amount :
+                                           </th>
+
+                                           <td id="modTotalAmount">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Paid Amount :
+                                           </th>
+
+                                           <td id="modPaidAmount">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Balance Amount :
+                                           </th>
+
+                                           <td id="modBalanceAmount">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Payment Type :
+                                           </th>
+
+                                           <td id="modPaymentType">
+
+                                           </td>
+                                       </tr>
+
+
+
+                                   </table>
+
+                               </div>
+
+                           </div>
+
+                           <div class="row">
+
+                               <div class="col text-end">
+
+                                   <button type="button" class="btn btn-outline-primary" onclick="printView()">PRINT</button>
+
+                               </div>
+
+                           </div>
+
+                       </div>
+
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+

@@ -2,6 +2,7 @@ package asianmobiles.lk.asianmobiles.controller;
 
 import asianmobiles.lk.asianmobiles.entity.Items;
 import asianmobiles.lk.asianmobiles.entity.Model;
+import asianmobiles.lk.asianmobiles.entity.Quotation;
 import asianmobiles.lk.asianmobiles.entity.User;
 import asianmobiles.lk.asianmobiles.repository.ModelRepository;
 import asianmobiles.lk.asianmobiles.repository.ModelStatusRepository;
@@ -43,7 +44,41 @@ public class ModelController {
 
     }
 
+    // filltering model for given quotation
+    @GetMapping(value = "/listbymodel/{qid}", produces = "application/json")
+    public List<Model> modelNameByPurchaseOrderQuotationNo(@PathVariable("qid") Integer qid) {
 
+        return modelDao.findByPurchaseOrderQuotation(qid);
+
+    }
+
+    // filltering model for given purchase-order
+    @GetMapping(value = "/listbypurchaseorder/{pid}", produces = "application/json")
+    public List<Model> modelNameByPurchaseOrder(@PathVariable("pid") Integer pid) {
+
+        return modelDao.findByPurchaseOrder(pid);
+
+    }
+
+    // filltering model for given purchase-order
+    @GetMapping(value = "/listbypurchaseorderquantity/{pid}", produces = "application/json")
+    public List<Model> modelByPurchaseOrderQuantity(@PathVariable("pid") Integer pid) {
+
+        return modelDao.findByPurchaseOrderQuantity(pid);
+
+    }
+
+
+    //filltering all models without the selected models in supplierUI
+    @GetMapping(value = "/listwithoutsupplier/{sid}", produces = "application/json")
+    public List<Model> getAllModelsWithoutSelectedModels (@PathVariable("sid") int sid){
+
+        return modelDao.getWithoutSupplier(sid);
+
+    }
+
+
+    // display model UI
     @GetMapping
     public ModelAndView modelUi(){
 
@@ -56,6 +91,7 @@ public class ModelController {
     }
 
 
+    // to get all models
     @GetMapping(value = "/findall", produces = "application/json")
     public List<Model> findAll (){
 
@@ -82,6 +118,7 @@ public class ModelController {
 
 
 
+    // to get all models details with selected columns
     @GetMapping(value = "/list", produces = "application/json")
     public List<Model> modelList () {
 

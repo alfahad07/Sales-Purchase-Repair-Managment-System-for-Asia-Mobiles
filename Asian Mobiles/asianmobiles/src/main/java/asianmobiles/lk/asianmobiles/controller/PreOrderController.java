@@ -44,6 +44,12 @@ public class PreOrderController {
 
     }
 
+    @GetMapping(value = "/getpreorderbycustomer/{cid}", produces = "application/json")
+    public List<PreOrder> getPreOrderByCustomer (@PathVariable("cid") int cid){
+
+        return preOrderDao.findByPreOrderCustomerName(cid);
+
+    }
 
     //CREATED A LIST TO GET THE MAIN DETAILS OF THE ITEMS TO THE ITEM DROPDOWN(COMBO BOX) IN INNER FORM OF THE ITEM MODULE...
     @GetMapping(value = "/list", produces = "application/json")
@@ -218,14 +224,16 @@ public class PreOrderController {
                 preOrder.setPre_order_code(nextPreOrderNo);
 
 
-                PreOrder newPreOrder = preOrderDao.saveAndFlush(preOrder);
+
 
                 for (PreOrderHasModel preOrderHasModel : preOrder.getPreOrderHasModelList()){
 
-                    preOrderHasModel.setPre_order_id(newPreOrder);
-                    preOrderHasModelDao.save(preOrderHasModel);
+                    preOrderHasModel.setPre_order_id(preOrder);
+                   // preOrderHasModelDao.save(preOrderHasModel);
 
                 }
+
+                preOrderDao.save(preOrder);
 
                 return "0";
 

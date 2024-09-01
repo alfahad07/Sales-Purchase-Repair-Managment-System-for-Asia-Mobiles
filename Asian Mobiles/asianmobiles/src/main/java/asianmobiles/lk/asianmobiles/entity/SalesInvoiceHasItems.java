@@ -47,10 +47,10 @@ public class SalesInvoiceHasItems implements Serializable {
     private BigDecimal unit_price;
 
     @Column(name = "discount_rate")
-    private Integer discount_rate;
+    private BigDecimal discount_rate;
 
     @Column(name = "discounted_price")
-    private Integer discounted_price;
+    private BigDecimal discounted_price;
 
     @Column(name = "quantity")
     private Integer quantity;

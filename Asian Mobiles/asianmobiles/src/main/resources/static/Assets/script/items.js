@@ -37,7 +37,7 @@ const refreshTable = () => {
     // calling filldataintotable function to fill data
     fillDataIntoTable(tableItems, items, DisplayPropertyList, DisplayPropertyListType, formRefill, rowDelete, rowView, loggedUserPrivilage);
 
-    //Invisibling the Delete Button in the table when the Status is deleted (Once Deleted the Details or row, the Delete Btn will Disappear)
+    //Removing the Delete, Edit and View Button in the table when the Status is deleted (Once Deleted the Details or row, the Delete Btn will Disappear)
     for (let index in items){
 
         if(items[index].item_status_id.name == "Deleted")
@@ -62,6 +62,9 @@ const refreshForm = () => {
     itmeModels = getServiceRequest("/model/findall")
     fillSelectFeild(itemModelName, "Select Item Model Name", itmeModels, "model_name", "");
 
+    phoneColours = getServiceRequest("/modelcolour/list")
+    fillSelectFeild(itemPhoneColour, "Select Phone Colour", phoneColours, "name", "");
+
     //CLEARING THE EMPLOYEE DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE CUSTOMER
 
     itemStatus.style.color        = "grey";
@@ -69,6 +72,9 @@ const refreshForm = () => {
 
     itemModelName.style.color        = "grey";
     itemModelName.style.borderBottom = "none";
+
+    itemPhoneColour.style.color        = "grey";
+    itemPhoneColour.style.borderBottom = "none";
 
 
     itemNote.value          = "";
@@ -121,7 +127,7 @@ const disableAddUpdateBtn = (addBtn, updBtn) => {
 
 }
 
-
+//Auto generate item name
 const generateItemName = () => {
 
     if ( itemModelName.value != "" ){

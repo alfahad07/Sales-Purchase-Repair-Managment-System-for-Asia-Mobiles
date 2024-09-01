@@ -34,7 +34,7 @@ public class PrivilegeController {
     //creating a function to display the Privilege Management UI.
     public ModelAndView privilegeUi() {
 
-        // create ModelAndView object called userui
+        //Create ModelAndView object called userui
         ModelAndView privilegeui =  new ModelAndView();
 
         //set user.html

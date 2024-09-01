@@ -3,6 +3,7 @@ package asianmobiles.lk.asianmobiles.controller;
 import asianmobiles.lk.asianmobiles.entity.*;
 import asianmobiles.lk.asianmobiles.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,14 +25,23 @@ public class QuotationController {
     @Autowired // USED TO CREATE A COPY OF AN OBJECT AND INTERFACE
     private QuotationRepository quotationDao;
 
+    @Autowired // USED TO CREATE A COPY OF AN OBJECT AND INTERFACE
+    private QuotationRequestRepository quotationRequestDao;
+
     @Autowired
     private UserRepository userDao;
+
+    @Autowired
+    private ModelRepository modelDao;
 
     @Autowired // USED TO CREATE A COPY OF AN OBJECT AND INTERFACE
     private PrivilegeController privilegeController;
 
     @Autowired
     private QuotationStatusRepository quotationStatusDao;
+
+    @Autowired
+    private QuotationRequestStatusRepository quotationRequestStatusDao;
 
 
     @GetMapping(value = "/getbyid/{id}", produces = "application/json")
@@ -51,10 +63,10 @@ public class QuotationController {
     }
 
     //GET MAPPING to get Quotation Number by given Supplier Name for filtering [/quotation/listbyquotation?cid=]
-    @GetMapping(value = "/listbyquotation/{qid}", produces = "application/json")
-    public List<Quotation> quotationNoByPurchaseOrderSupplierName(@PathVariable("qid") Integer qid) {
+    @GetMapping(value = "/listbyquotation/{sid}", produces = "application/json")
+    public List<Quotation> quotationNoByPurchaseOrderSupplierName(@PathVariable("sid") Integer sid) {
 
-        return quotationDao.findByPurchaseOrderSupplierName(qid);
+        return quotationDao.findByPurchaseOrderSupplierName(sid, LocalDate.now());
 
     }
 
@@ -174,7 +186,7 @@ public class QuotationController {
                 quotation.setAdded_datetime(LocalDateTime.now());
                 quotation.setAdded_user_id(loggedUser);
 
-
+                //QUOTATION NUMBER AUTO GENERATE
                 String lastQuotationNo = quotationDao.getLastQuotationNo();
                 String nextQuotationNo = "";
 
@@ -195,7 +207,22 @@ public class QuotationController {
                     quotationHasModel.setQuotation_id(quotation);
                 }
 
-                quotationDao.save(quotation);
+                Quotation newQuotaton = quotationDao.save(quotation);
+
+                //need to change QR status in to Recieved
+                QuotationRequest quotationRequest = newQuotaton.getQuotation_request_id();
+                quotationRequest.setQuotation_request_status_id(quotationRequestStatusDao.getReferenceById(2));
+                quotationRequestDao.save(quotationRequest);
+
+                for (QuotationHasModel quotationHasModel : quotation.getQuotationHasModelList()){
+                    Model model = modelDao.getReferenceById(quotationHasModel.getModel_id().getId());
+                    model.setPurchase_price(quotationHasModel.getPurchase_price());
+                    /// 20% -- 150,000/=  --> 150,000 + (150,000*20/100)
+                    BigDecimal salesprice = model.getPurchase_price().add(model.getPurchase_price().multiply(model.getProfit_rate().divide(BigDecimal.valueOf(100))));
+                    model.setSales_price(salesprice);
+                    modelDao.save(model);
+                }
+
 
                 return "0";
 

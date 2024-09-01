@@ -1,6 +1,7 @@
 window.addEventListener('load', ev =>{
 
     let loggedUser = getServiceRequest("/loggeduser")
+    liaLoggedUser.innerText = loggedUser.username;
 
     let moduleList  = getServiceRequest("/modulename/byuser/"+loggedUser.username);
 
@@ -13,3 +14,11 @@ window.addEventListener('load', ev =>{
 
 
 })
+
+const signOutFunction = () => {
+  let userConfirm = confirm("Are You sure to Logged Out..?");
+
+  if(userConfirm){
+      window.location.replace("/logout");
+  }
+}

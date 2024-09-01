@@ -213,6 +213,7 @@ public class UserController {
 
                 //SET AUTO INSERT VALUE OF THE LAST UPDATED TIME ONCE THE UPDATE IS DONE BY THE USER.
                 user.setUpdateddatetime(LocalDateTime.now());
+                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
                 //SAVE THE CHANGES
                 userDao.save(user);

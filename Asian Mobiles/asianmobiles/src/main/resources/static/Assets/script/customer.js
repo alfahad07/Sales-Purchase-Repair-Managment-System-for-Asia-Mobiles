@@ -57,6 +57,7 @@ const refreshForm = () => {
 
     custStatus = getServiceRequest("/customerstatus/list")
     fillSelectFeild(customerStatus, "Select Customer Status", custStatus, "name", "Registered")
+    customer.customer_status_id = JSON.parse(customerStatus.value);
 
     //CLEARING THE EMPLOYEE DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE CUSTOMER
 

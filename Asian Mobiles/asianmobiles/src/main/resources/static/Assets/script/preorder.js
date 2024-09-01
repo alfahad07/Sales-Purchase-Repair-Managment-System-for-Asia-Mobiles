@@ -87,8 +87,8 @@ const refreshForm = () => {
     fillSelectFeild(preOrderCustomer, "Select Pre-Order Customer", Customers, "fullname")
 
     Statuses = getServiceRequest("/preorderstatus/list")
-    fillSelectFeild(preOrderStatus, "Select Pre-Order Status", Statuses, "name", "Initial")
-
+    fillSelectFeild(preOrderStatus, "Select Pre-Order Status", Statuses, "name", "Requested")
+    preOrder.pre_order_status_id = JSON.parse(preOrderStatus.value);
 
     //CLEARING THE MODEL DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE MODELS
 

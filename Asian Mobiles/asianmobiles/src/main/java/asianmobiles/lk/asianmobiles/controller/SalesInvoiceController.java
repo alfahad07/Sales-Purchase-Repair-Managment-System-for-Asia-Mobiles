@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,6 +29,18 @@ public class SalesInvoiceController {
 
     @Autowired
     private UserRepository userDao;
+
+    @Autowired
+    private PreOrderRepository preoOrderDao;
+
+    @Autowired
+    private PreOrderStatusRepository preoOrderStatusDao;
+
+    @Autowired
+    private ItemsRepository itemsDao;
+
+    @Autowired
+    private ItemStatusRepository itemStausDao;
 
     @Autowired // USED TO CREATE A COPY OF AN OBJECT AND INTERFACE
     private PrivilegeController privilegeController;
@@ -81,6 +94,14 @@ public class SalesInvoiceController {
     }
 
 
+    //to get all the supplier needed details
+    @GetMapping(value = "/list", produces = "application/json")
+    public List<SalesInvoice> salesInvoicetList () {
+
+        return salesInvoiceDao.list();
+
+    }
+
 
     //Create delete mapping to delete User by using DeleteMapping Annotation
     @DeleteMapping
@@ -91,10 +112,8 @@ public class SalesInvoiceController {
         //Checking the logged user is existing in the  database. ( Authenticated user )
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-
         //Getting authenticated logged user's username
         User loggedUser = userDao.findUserByUsername(authentication.getName());
-
 
         //Created a HashMap instance or copy
         HashMap<String, Boolean> loggedUserPrivillage = privilegeController.getPrivilage(loggedUser.getUsername(), "SALES-INVOICE");
@@ -114,7 +133,16 @@ public class SalesInvoiceController {
                     existSalesInvoice.setDeleted_datetime(LocalDateTime.now()); // Setting the delete time of the user
                     existSalesInvoice.setSales_invoice_status_id(salesInvoiceStatusDao.getReferenceById(3)); // Setting userStatus to deleted once the delete is done
 
-                    salesInvoiceDao.save(existSalesInvoice);
+                    SalesInvoice newSalesInvoice = salesInvoiceDao.save(existSalesInvoice);
+
+                    //Changing the item status to Available after adding an invoice
+                    for (SalesInvoiceHasItems salesInvoiceHasItems : newSalesInvoice.getSalesInvoiceHasItemsList()){
+
+                        Items item = itemsDao.getReferenceById( salesInvoiceHasItems.getItems_id().getId());
+                        item.setItem_status_id(itemStausDao.getReferenceById(1));
+                        itemsDao.save(item);
+
+                    }
 
                     return "0";
 
@@ -163,6 +191,10 @@ public class SalesInvoiceController {
 
             try {
 
+                //SET AUTO INSERT VALUE
+                salesInvoice.setAdded_datetime(LocalDateTime.now());
+                salesInvoice.setAdded_user_id(loggedUser);
+
                 String lastSalesInvoiceBillNo = salesInvoiceDao.getLastSalesInvoiceBillNumber();
                 String nextSalesInvoiceBillNo = "";
                 LocalDate currentDate         = LocalDate.now();
@@ -203,12 +235,38 @@ public class SalesInvoiceController {
                 salesInvoice.setBill_number(nextSalesInvoiceBillNo);
 
 
-                SalesInvoice newSalesInvoice = salesInvoiceDao.saveAndFlush(salesInvoice);
-
                 for (SalesInvoiceHasItems salesInvoiceHasItems : salesInvoice.getSalesInvoiceHasItemsList()){
 
-                    salesInvoiceHasItems.setSales_invoice_id(newSalesInvoice);
-                    salesInvoiceHasItemsDao.save(salesInvoiceHasItems);
+                    salesInvoiceHasItems.setSales_invoice_id(salesInvoice);
+                    //salesInvoiceHasItemsDao.save(salesInvoiceHasItems);
+
+                }
+
+                SalesInvoice newSalesInvoice = salesInvoiceDao.save(salesInvoice);
+
+                //Changing the item status to sold after adding an invoice
+                for (SalesInvoiceHasItems salesInvoiceHasItems : newSalesInvoice.getSalesInvoiceHasItemsList()){
+
+                    Items item = itemsDao.getReferenceById( salesInvoiceHasItems.getItems_id().getId());
+                    item.setItem_status_id(itemStausDao.getReferenceById(3));
+                    itemsDao.save(item);
+
+                }
+
+                //Need to change the Pre-Order Status to received
+                if (newSalesInvoice.getPre_order_id() != null){
+
+                    //Need to change the Purchase-Order Status to received
+                    PreOrder preOrder = preoOrderDao.getReferenceById(newSalesInvoice.getPre_order_id().getId());
+                    preOrder.setPre_order_status_id(preoOrderStatusDao.getReferenceById(2));
+
+                    //THE FOR LOOP IS WRITTEN BCOZ WE IGNORED THE PURCHASE ORDER ID(POID) IN THE PurchaseOrderHasModel JAVA FILE TO PREVENT THE RECURSION, THE FIELD SHOULD BE SET BEFORE SAVING BECAUSE NULL VALUE CANNOT BE SAVED.
+                    for (PreOrderHasModel preOrderHasModel : preOrder.getPreOrderHasModelList()){
+
+                        preOrderHasModel.setPre_order_id(preOrder);
+                    }
+
+                    preoOrderDao.save(preOrder);
 
                 }
 
@@ -230,7 +288,7 @@ public class SalesInvoiceController {
 
 
     //CREATE PUT MAPPING FUNCTION TO UPDATE MODEL [/Model - PUT]
-    @PutMapping
+   /* @PutMapping
     public String updateItem( @RequestBody SalesInvoice salesInvoice ){
 
         //NEED TO CHECK PRIVILAGE FOR LOGGED USER --> This is done below...
@@ -247,23 +305,6 @@ public class SalesInvoiceController {
         HashMap<String, Boolean> loggedUserPrivillage = privilegeController.getPrivilage(loggedUser.getUsername(), "SALES-INVOICE");
 
         if (!(authentication instanceof AnonymousAuthenticationToken) && loggedUser != null && loggedUserPrivillage.get("upd")){
-
-            /*//NEED TO CHECK DUPLICATION OF THE COLUMNS VALUE
-            Model extModelName = modelDao.getByModelName(salesInvoice.getModel_name());
-            if (extModelName != null && salesInvoice.getId() != extModelName.getId()) {
-
-                return "Model update not completed : Model Name already Exist";
-
-            }
-
-
-            //CHECKING THE EMAIL EXIST OR NOT IN THE DATABASE COZ IT IS UNIQUE.
-            Model extModelNumber = modelDao.getByModelNumber(model.getModel_number());
-            if (extModelNumber != null && model.getId() != extModelNumber.getId()) {
-
-                return "Model update not completed : Model Number already Exist";
-
-            }*/
 
             try {
 
@@ -288,7 +329,7 @@ public class SalesInvoiceController {
 
         }
 
-    }
+    }*/
 
 
 }

@@ -35,6 +35,7 @@ public class ItemsController {
     private UserRepository userDao;
 
 
+
     @GetMapping(value = "/getbyid/{id}", produces = "application/json")
     public Items getItemsByPVId (@PathVariable("id") int id){
 
@@ -42,6 +43,12 @@ public class ItemsController {
 
     }
 
+    @GetMapping(value = "/getbymodelid/{modelid}", produces = "application/json")
+    public List<Items> getItemsByModelId (@PathVariable("modelid") int modelid){
+
+        return itemsDao.getByModel(modelid);
+
+    }
     //CREATED A LIST TO GET THE MAIN DETAILS OF THE ITEMS TO THE ITEM DROPDOWN(COMBO BOX) IN INNER FORM OF THE ITEM MODULE...
     @GetMapping(value = "/list", produces = "application/json")
     public List<Items> itemsList () {

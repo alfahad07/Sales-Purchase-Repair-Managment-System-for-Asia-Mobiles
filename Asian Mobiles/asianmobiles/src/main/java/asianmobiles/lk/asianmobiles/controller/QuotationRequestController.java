@@ -88,6 +88,14 @@ public class QuotationRequestController {
 
     }
 
+    //GET MAPPING to get Quotation Request code by given Supplier for filtering [/quotationrequest/listbysuppliers?sid=]
+    @GetMapping(value = "/listbysuppliers/{sid}", produces = "application/json")
+    public List<QuotationRequest> quotationRequestListBySupplier(@PathVariable("sid") Integer sid) {
+
+        return quotationRequestDao.getByActiveSupplierName(sid);
+
+    }
+
 
     //Create delete mapping to delete User by using DeleteMapping Annotation
     @DeleteMapping

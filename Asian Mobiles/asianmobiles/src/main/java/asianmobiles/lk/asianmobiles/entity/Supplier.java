@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 // Entity annotation is used to convert as persistance API coz to map the classes to the table in the database.
 @Entity
@@ -32,8 +33,8 @@ public class Supplier {
     @Column(name = "id") // Column annotation is used to map or match database table colunm to the data.
     private Integer id;
 
-    @Column(name = "business_reg_no")
-    private String business_reg_no;
+    @Column(name = "supplier_reg_no")
+    private String supplier_reg_no;
 
     @Column(name = "supplier_company_reg_no")
     private String supplier_company_reg_no;
@@ -103,8 +104,10 @@ public class Supplier {
     @JoinColumn(name = "deleted_user_id",referencedColumnName = "id")
     private User deleted_user_id;
 
-    @OneToMany(mappedBy = "supplier_id", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<SupplierHasModel> supplierHasModelList ;
+    // TO SAVE THE SUPPLIER LIST TRANSFER TO THE "SUPPLIER HAS MODELS" TABLE
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "supplier_has_model" , joinColumns = @JoinColumn(name = "supplier_id") , inverseJoinColumns = @JoinColumn(name = "model_id"))
+    Set<Model> supplierHasModelList;
 
 
     public Supplier( Integer id, String supplier_company_name, SupplierStatus supplier_status_id){

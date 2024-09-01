@@ -1,8 +1,6 @@
 package asianmobiles.lk.asianmobiles.controller;
 
-import asianmobiles.lk.asianmobiles.entity.Model;
-import asianmobiles.lk.asianmobiles.entity.Supplier;
-import asianmobiles.lk.asianmobiles.entity.User;
+import asianmobiles.lk.asianmobiles.entity.*;
 import asianmobiles.lk.asianmobiles.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -12,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +34,7 @@ public class SupplierController {
 
 
     @GetMapping(value = "/getbyid/{id}", produces = "application/json")
-    public Supplier getModelByPVId (@PathVariable("id") int id){
+    public Supplier getSupplierByPVId (@PathVariable("id") int id){
 
         return supplierDao.getReferenceById(id);
 
@@ -83,6 +82,22 @@ public class SupplierController {
     public List<Supplier> supplierList (){
 
         return supplierDao.list();
+
+    }
+
+    //getting supplier by given supplier id to get bank details to supplier payment module
+    @GetMapping(value = "/getbysupplierId/{sid}", produces = "application/json")
+    public Supplier getSupplierById (@PathVariable("sid") int sid){
+
+        return supplierDao.getSupplierBankDetailsBySupplierId(sid);
+
+    }
+
+    // [/supplier/listbyactivesupplierstatus]
+    @GetMapping(value = "/listbyactivesupplierstatus", produces = "application/json")
+    public List<Supplier> supplierListBySupplierStatus (){
+
+        return supplierDao.getBySupplierStatusActive();
 
     }
 
@@ -166,12 +181,12 @@ public class SupplierController {
         if (!(authentication instanceof AnonymousAuthenticationToken) && loggedUser != null && loggedUserPrivillage.get("ins")){
 
             //NEED TO CHECK DUPLICATION OF THE COLUMNS VALUE
-            Supplier extBusinessRegNo = supplierDao.getByBusinessRegNo(supplier.getBusiness_reg_no());
+            /*Supplier extBusinessRegNo = supplierDao.getByBusinessRegNo(supplier.getBusiness_reg_no());
             if ( extBusinessRegNo != null ){
 
                 return "Supplier insert not completed : Supplier Business Reg No Duplicated (Business Reg No already Exist)";
 
-            }
+            }*/
 
             //CHECKING THE SUPPLIER COMPANY REG Number EXIST OR NOT IN THE DATABASE.
             Supplier extCompanyRegNo = supplierDao.getByCompanyRegNo(supplier.getSupplier_company_reg_no());
@@ -199,13 +214,52 @@ public class SupplierController {
 
             try {
 
+                String lastSupplierRegistrationNo = supplierDao.getLastSupplierRegistrationNo();
+                String nextSupplierRegistrationNo = "";
+                LocalDate currentDate  = LocalDate.now();
+
+                int currentMonth = currentDate.getMonth().getValue();
+                String currentYearString  = String.valueOf(currentDate.getYear());
+                String currentMonthString = "";
+                if (currentMonth < 10)
+                    currentMonthString = "0" + currentMonth;
+
+
+                if (lastSupplierRegistrationNo != null){
+
+                    if (lastSupplierRegistrationNo.substring(3,7).equals(currentYearString)){
+
+                        if (lastSupplierRegistrationNo.substring(7,9).equals(currentMonthString)){
+
+                            nextSupplierRegistrationNo = "SRN" + currentDate.getYear() + currentMonthString + String.format("%03d" ,Integer.valueOf(lastSupplierRegistrationNo.substring(9)) + 1);
+
+                        }else {
+
+                            nextSupplierRegistrationNo = "SRN" + currentDate.getYear() + currentMonthString + "001";
+
+                        }
+
+                    }else {
+
+                        nextSupplierRegistrationNo = "SRN" + currentDate.getYear() + currentMonthString + "001";
+
+                    }
+
+                }else {
+
+                    nextSupplierRegistrationNo = "SRN" + currentDate.getYear() + currentMonthString + "001";
+
+                }
+
+                supplier.setSupplier_reg_no(nextSupplierRegistrationNo);
+
+
                 //SET AUTO INSERT VALUE
                 supplier.setAdded_datetime(LocalDateTime.now());
                 supplier.setAdded_user_id(loggedUser);
 
+                supplierDao.saveAndFlush(supplier);
 
-                //SAVE THE CHANGES
-                supplierDao.save(supplier);
                 return "0";
 
             }catch (Exception ex){
@@ -243,7 +297,7 @@ public class SupplierController {
         if (!(authentication instanceof AnonymousAuthenticationToken) && loggedUser != null && loggedUserPrivillage.get("upd")){
 
             //NEED TO CHECK DUPLICATION OF THE COLUMNS VALUE
-            Supplier extBusinessRegNo = supplierDao.getByBusinessRegNo(supplier.getBusiness_reg_no());
+            Supplier extBusinessRegNo = supplierDao.getByBusinessRegNo(supplier.getSupplier_reg_no());
             if (extBusinessRegNo != null && supplier.getId() != extBusinessRegNo.getId()) {
 
                 return "Supplier update not completed : Supplier Business Reg No already Exist";

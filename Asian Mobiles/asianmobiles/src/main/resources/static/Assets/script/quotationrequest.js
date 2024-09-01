@@ -61,21 +61,21 @@ const refreshForm = () => {
     oldQuotationRequest = null;
 
 
-    Suppliers = getServiceRequest("/supplier/list");
+    Suppliers = getServiceRequest("/supplier/listbyactivesupplierstatus");
     fillSelectFeild(quotationRequestSupplier, "Select Quotation Request Supplier", Suppliers, "supplier_company_name")
 
     QrStatuses = getServiceRequest("/quotationrequeststatus/list")
-    fillSelectFeild(quotationRequestStatus, "Select Quotation Request Status", QrStatuses, "name")
+    fillSelectFeild(quotationRequestStatus, "Select Quotation Request Status", QrStatuses, "name", "Requested")
 
+    quotationRequest.quotation_request_status_id = JSON.parse(quotationRequestStatus.value);
 
     //CLEARING THE MODEL DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE MODELS
 
     quotationRequestSupplier.style.color        = "grey";
     quotationRequestSupplier.style.borderBottom = "none";
 
-    quotationRequestStatus.style.color          = "grey";
-    quotationRequestStatus.style.borderBottom   = "none";
-
+    quotationRequestStatus.style.color          = "green";
+    quotationRequestStatus.style.borderBottom   = "solid";
 
     quotationRequestRequiredDate.value = "";
     quotationRequestNote.value         = "";
@@ -154,7 +154,7 @@ function checkErrors() {
 
     }
 
-    if (quotationRequest.quotation_request_status_id == null){
+    if (quotationRequest.quotation_request_status_id == ""){
 
         error = error + "Quotation Request Status Field Incomplete \n";
 
@@ -175,10 +175,8 @@ const submitBtnFunction = () => {
     if ( errors == ""){
 
         let submitConfigMsg = "Are you willing to add this Quotation Request?\n" +
-            "\n Quotation Request Number : " + quotationRequest.qr_number +
             "\n Quotation Request Supplier : " + quotationRequest.supplier_id.supplier_company_name +
             "\n Quotation Request Required Date : " + quotationRequest.quotation_required_date;
-
 
 
         let userResponse    = window.confirm(submitConfigMsg)
@@ -353,19 +351,9 @@ const rowView = (ob) => {
 
     $('#quotationRequestModal').modal("show");
 
-    modSubCategory.innerHTML       = modelPrint.sub_catergory_id.name;
-    modBrand.innerHTML             = modelPrint.brand_id.name;
-    modModelName.innerHTML         = modelPrint.model_name;
-    modModelNo.innerHTML           = modelPrint.model_number;
-    modSalesPrice.innerHTML        = salesPrice(modelPrint);
-    modPurchasePrice.innerHTML     = purchasePrice(modelPrint);
-    modProfitRate.innerHTML        = modelPrint.profit_rate + "%";
-    modMinDiscountRate.innerHTML   = modelPrint.min_discount_rate + "%";
-    modMaxDiscountRate.innerHTML   = modelPrint.max_discount_rate + "%";
-    modModelStatus.innerHTML       = modelPrint.model_status_id.name;
-    modNote.innerHTML              = modelPrint.note;
-
-
+    modSupplier.innerHTML       = quotationRequestPrint.supplier_id.supplier_company_name;
+    modDate.innerHTML           = quotationRequestPrint.quotation_required_date;
+    modStatus.innerHTML         = quotationRequestPrint.quotation_request_status_id.name;
 
 }
 

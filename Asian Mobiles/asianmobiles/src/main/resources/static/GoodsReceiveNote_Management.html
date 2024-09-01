@@ -29,83 +29,104 @@
 <body style="background-image: url(Assets/images/desmal14.jpg); overflow-x: hidden; overflow-y: hidden; background-size: cover;">
 
 
-    <!--NAVIGATION BAR BY BOOSTRAP5-->
-    <div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
-        <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
-            <div class="container">
-                <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Administration
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li id="EMPLOYEE"><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
-                                <li id="USER"><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
-                                <li id="PRIVILEGE"><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Sales
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<!--NAVIGATION BAR BY BOOSTRAP5-->
+<div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
+    <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Administration
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li id="EMPLOYEE"><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
+                            <li id="USER"><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
+                            <li id="PRIVILEGE"><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Sales
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                                <li id="CUSTOMER"><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
-                                <li id="PRE-ORDER"><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+                            <li id="CUSTOMER"><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
+                            <li id="PRE-ORDER"><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+                            <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Sales-Invoice Management System</a></li>
+                            <li id="SALES-PAYMENT"><a class="dropdown-item fw-bold" href="/customerpayment">Customer Payment Management System</a></li>
 
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Purchase
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li id="SUPPLIER"><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
-                                <li id="QUOTATION-REQUEST"><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
-                                <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
-                                <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
-                                <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
-                                <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Supplier-Invoice Management System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Purchase
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Inventory
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li id="SUPPLIER"><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
+                            <li id="QUOTATION-REQUEST"><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
+                            <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
+                            <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
+                            <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+                            <li id="PURCHASE-PAYMENT"><a class="dropdown-item fw-bold" href="/supplierpayment">Supplier Payment Management System</a></li>
 
-                                <li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
-                                <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Managaement System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Inventory
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                repair
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item fw-bold" href="#"></a></li>
-                                <li><a class="dropdown-item fw-bold" href="#"></a></li>
-                                <li><a class="dropdown-item fw-bold" href="#"></a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold" href="/logout" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
-                        </li>
-                    </ul>
-                </div>
+                            <li id="ITEMS-INVENTORY"><a class="dropdown-item fw-bold" href="/itemsinventory">Items Inventory Management System</a></li>
+                            <li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Reports
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="GRN-REPORT"><a class="dropdown-item fw-bold" href="/grnReports">GRN Reports</a></li>
+                            <!--<li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>-->
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            repair
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" onclick="signOutFunction()" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" style="-webkit-text-stroke: 1.5px rgb(0,196,255) ;font-size: 20px;" id="liaLoggedUser">LoggedUser Name</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </div>
+        </div>
+    </nav>
+</div>
 
     <div class="container-fluid body">
 
@@ -236,7 +257,7 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="grnBillDate" name="date" onfocus="(this.type='date')"
-                                   onblur="if(!this.value) this.type='text'" onchange="dateFeildValidtor(grnBillDate,'', 'goodsReceiveNote','bill_date', 'oldGoodsReceiveNote')" required>
+                                   onblur="if(!this.value) this.type='text'" onkeydown="return false" onchange="dateFeildValidtor(grnBillDate,'', 'goodsReceiveNote','bill_date', 'oldGoodsReceiveNote')" required>
 
                             <label for="grnBillDate" class="fw-bold">Bill Date : <span id="star">*</span></label>
 
@@ -248,7 +269,7 @@
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="grnGoodsReceiveDate" name="date" onfocus="(this.type='date')"
-                                   onblur="if(!this.value) this.type='text'" onchange="dateFeildValidtor(grnGoodsReceiveDate,'', 'goodsReceiveNote','goods_receive_date', 'oldGoodsReceiveNote')" required>
+                                   onblur="if(!this.value) this.type='text'" onkeydown="return false" onchange="dateFeildValidtor(grnGoodsReceiveDate,'', 'goodsReceiveNote','goods_receive_date', 'oldGoodsReceiveNote')" required>
 
                             <label for="grnGoodsReceiveDate" class="fw-bold">Goods Receive Date : <span id="star">*</span></label>
 
@@ -296,11 +317,11 @@
 
                     </div><br>
 
-                    <!--GRN NET TOTAL AMOUNT /GRN PAID AMOUNT / GRN STATUS-->
+                    <!--GRN NET TOTAL AMOUNT/ GRN STATUS-->
                     <div class="row">
 
                         <!--GRN NET TOTAL AMOUNT-->
-                        <div class="col-4 inputBox">
+                        <div class="col-6 inputBox">
 
                             <input type="text" class="fw-bold" id="grnNetTotalAmount" onkeyup="textFeildValidtor(grnNetTotalAmount,'^[0-9]{3,7}[.][0-9]{1,2}$','goodsReceiveNote','net_total_amount','oldGoodsReceiveNote')" required>
 
@@ -310,21 +331,8 @@
 
                         </div>
 
-                        <!--GRN PAID AMOUNT -->
-                        <div class="col-4 inputBox">
-
-                            <input type="text" class="fw-bold" id="grnPaidAmount"
-                                   onkeyup="textFeildValidtor(grnPaidAmount,'^[0-9]{3,7}$','goodsReceiveNote','paid_amount','oldGoodsReceiveNote')"
-                                   required>
-
-                            <label for="grnPaidAmount" class="fw-bold">Paid Amount : <span id="star">*</span></label>
-
-                            <i></i>
-
-                        </div>
-
                         <!--GRN STATUS-->
-                        <div class="col-4 selectStyle">
+                        <div class="col-6 selectStyle">
 
                             <label for="grnStatus" class="fw-bold">GRN STATUS : <span id="star">*</span></label>
 
@@ -332,7 +340,7 @@
                                 <option selected disabled> Select GRN Status</option>
                             </select>
 
-                            <i style="width: 31%; top: 72%; left: 67%;"></i>
+                            <i style="width: 46%; top: 72%; left: 35%;"></i>
 
                         </div>
 
@@ -368,7 +376,7 @@
 
                                     <label for="innerGrnModel" id="labelInnerGrnModel" class="fw-bold">Model : <span id="star">*</span></label>
 
-                                    <select style="width: 104%;" id="innerGrnModel" class="fw-bold" onchange="selectValidator(innerGrnModel,'','goodsReceiveNoteHasModel','model_id','oldGoodsReceiveNoteHasModel'), selectModelToGetUnitPrice()" required>
+                                    <select style="width: 104%;" id="innerGrnModel" class="fw-bold" onchange="selectValidator(innerGrnModel,'','goodsReceiveNoteHasModel','model_id','oldGoodsReceiveNoteHasModel'), selectModelToGetUnitPriceAndOrderedQuantity()" required>
 
                                     </select>
 
@@ -452,13 +460,6 @@
 
                                 </div>
 
-                                <!--UPDATE BUTTON-->
-                                <div class="col-4">
-
-                                    <button class="btn btn-outline-warning" id="innerFormBtnUpdate" style="border-radius: 20px; width: 100%"  > UPDATE </button>
-
-                                </div>
-
                                 <!--CLEAR BUTTON-->
                                 <div class="col-4">
 
@@ -508,21 +509,14 @@
                         <!--ADD BUTTON-->
                         <div class="col-4">
 
-                            <button class="addBtn"  id="btnAdd" onclick="submitBtnFunction()" > ADD EMPLOYEE </button>
-
-                        </div>
-
-                        <!--UPDATE BUTTON-->
-                        <div class="col-4">
-
-                            <button class="updateBtn" id="btnUpdate"  onclick="updateBTN()" > UPDATE EMPLOYEE </button>
+                            <button class="addBtn"  id="btnAdd" onclick="submitBtnFunction()" > ADD GRN </button>
 
                         </div>
 
                         <!--CLEAR BUTTON-->
                         <div class="col-4">
 
-                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR EMPLOYEE </button>
+                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR GRN </button>
 
                         </div>
 
@@ -562,9 +556,165 @@
     </div>
 
 
+    <!-- MODEL FOR ITEM MANAGEMT SYSTEM TO ADD ITEM SERIAL NO, IMEI 1, IMEI 2 AND PHONE COLOR WHILE ADDING GRN -->
+    <div class="modal fade" id="modalAddSerialNo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div>
+
+                            <!-- MODEL NAME AND CLOSE BTN -->
+                            <div class="row">
+
+                                <div class="col-10">
+
+                                    <h4 class="modal-title" id="exampleModalLabel"> <i class="fa fa-sitemap"></i>  Item Details </h4>
+
+                                </div>
+
+                                <div class="col-2">
+
+                                    <button type="button" class="btn-close btn-outline-danger text-end" onclick="innerGrnSubmit()" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                </div>
+
+                            </div> <br>
+
+
+                            <!-- ITEM DETAILS FORM FOR PHONE -->
+                            <div class="row">
+
+                                <!--ITEM IMEI NUMBER 01 /ITEM IMEI NUMBER 02-->
+                                <div class="row">
+
+                                        <!-- ITEM IMEI NUMBER 01 -->
+                                        <div class="col-6 inputBox" style="width: 50%;">
+
+                                            <input type="text" class="fw-bold" id="itemImeiNumber01"  onkeyup="textFeildValidtor(itemImeiNumber01,'^[0-9]{15}$','grnItems','iemi_number_1','oldgrnItems')" required>
+
+                                            <label for="itemImeiNumber01" id="labelItemImeiNumber01" class="fw-bold"> Item Imei Number 01 :  <span id="star">*</span></label>
+
+                                            <i style="width: 94%"> </i>
+
+                                        </div>
+
+                                        <!-- ITEM IMEI NUMBER 02 -->
+                                        <div class="col-6 inputBox" style="width: 50%;">
+
+                                            <input type="text" class="fw-bold" id="itemImeiNumber02"  onkeyup="textFeildValidtor(itemImeiNumber02,'^[0-9]{15}$','grnItems','iemi_number_2','oldgrnItems')" >
+
+                                            <label for="itemImeiNumber02" id="labelItemImeiNumber02" class="fw-bold"> Item Imei Number 02 : </label>
+
+                                            <i style="width: 94%"> </i>
+
+                                        </div>
+
+
+                                    </div><br>
+
+
+                                <!-- ITEM SERIAL NUMBER / ITEM PHONE COLOUR -->
+                                <div class="row">
+
+                                    <!-- ITEM SERIAL NUMBER -->
+                                    <div class="col-6 inputBox" style="width: 50%;">
+
+                                        <input type="text" class="fw-bold" id="itemSerialNumber" onkeyup="textFeildValidtor(itemSerialNumber,'^[A-Za-z0-9]{7,16}$','grnItems','serial_number','oldgrnItems')"  required>
+
+                                        <label for="itemSerialNumber" id="labelItemSerialNumber" class="fw-bold">Item Serial Number : <span
+                                                id="star">*</span></label>
+
+                                        <i style="width: 94%"></i>
+
+                                    </div>
+
+
+                                    <!-- ITEM PHONE COLOUR -->
+                                    <div class="col-6 selectStyle" style="width: 50%;">
+
+                                        <label for="itemPhoneColour" id="labelItemPhoneColour" class="fw-bold">Phone Colour : <span id="star">*</span></label>
+
+                                        <select id="itemPhoneColour" class="fw-bold" onchange="selectValidator(itemPhoneColour, '','grnItems', 'phone_colour_id','oldgrnItems')" required>
+
+                                        </select>
+
+                                        <i style="top: 162px; width: 45%; left: 50%;"></i>
+
+                                    </div>
+
+                                </div>
+
+                            </div><br>
+
+                            <!-- ADD, UPDATE & CLEAR BUTTON -->
+                            <div class="row text-center">
+
+                                <!--ADD BUTTON-->
+                                <div class="col-4">
+
+                                    <button class="addBtn" id="btnInnerItemAdd" onclick="addSerialNoBtn()" > ADD ITEM </button>
+
+                                </div>
+
+                            </div><br><br>
+
+                            <!-- GRN INNER ITEMS TABLE -->
+                            <div class="row">
+
+                                <table class="table table-hover table-dark table-striped-columns" id="tableGrnItems">
+
+                                    <thead class="table-secondary">
+
+                                    <tr class="fw-bold">
+                                        <th class="text-center">#</th>
+                                        <th class="text-center" style="font-size: 13px;">IMEI NUMBER 01 </th>
+                                        <th class="text-center" style="font-size: 13px">IMEI NUMBER 02</th>
+                                        <th class="text-center" style="font-size: 13px">SERIAL NUMBER</th>
+                                        <th class="text-center" style="font-size: 13px">PHONE COLOUR</th>
+                                        <th class="text-center modify" style="column-width: 800px;font-size: 13px">MODIFY</th>
+                                    </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                            <!-- MODAL FOOTER WHERE PRINT BTN IS VISIBLE-->
+                            <div class="row">
+
+                                <div class="col text-end">
+
+                                    <button type="button" class="btn btn-outline-primary" onclick="printView()">PRINT</button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 
     <!-- Modal -->
-    <div class="modal fade" id="supplierModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="grnModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -581,7 +731,7 @@
                            <div class="row">
 
                                <div class="col-10">
-                                   <h4 class="modal-title" id="exampleModalLabel"> <i class="fa fa-user"></i> Supplier Details</h4>
+                                   <h4 class="modal-title" id="exampleModalLabel"> <i class="fa fa-user"></i> GRN Details</h4>
 
                                </div>
 
@@ -597,153 +747,65 @@
                                <div class="col-12">
 
                                    <table id="viewTable" class="table  table-striped table-hover shadow rounded">
-                                       <tr>
 
                                        <tr>
-                                           <th>
-                                               Business Reg No :
-                                           </th>
-
-                                           <td id="modSupBusRegNo">
-
-                                           </td>
-                                       </tr>
 
                                            <th>
-                                               Company Reg No :
+                                               Supplier :
                                            </th>
 
-                                           <td id="modSupComRegNo">
+                                           <td id="modSupplier">
 
                                            </td>
+
                                        </tr>
 
                                        <tr>
                                            <th>
-                                               Company Name :
+                                               Purchase Bill Invoice No :
                                            </th>
 
-                                           <td id="modSupCompName">
+                                           <td id="modPurchaseBillInvoiceNo">
 
                                            </td>
                                        </tr>
 
                                        <tr>
                                            <th>
-                                               Contact No :
+                                               Goods Receive Date :
                                            </th>
 
-                                           <td id="modSupContNo">
+                                           <td id="modGrnGoodsReceiveDate">
 
                                            </td>
                                        </tr>
 
                                        <tr>
                                            <th>
-                                               Email :
+                                               Total Amount :
                                            </th>
 
-                                           <td id="modSupEmail">
+                                           <td id="modGrnTotalAmount">
 
                                            </td>
                                        </tr>
 
                                        <tr>
                                            <th>
-                                               Address :
+                                               Tax :
                                            </th>
 
-                                           <td id="modSupAddress">
+                                           <td id="modGrnTax">
 
                                            </td>
                                        </tr>
 
                                        <tr>
                                            <th>
-                                               Staff Name :
+                                               Discount :
                                            </th>
 
-                                           <td id="modSupStaffName">
-
-                                           </td>
-                                       </tr>
-
-                                       <tr>
-                                           <th>
-                                               Staff Mobile Number :
-                                           </th>
-
-                                           <td id="modSupStaffMobileNo">
-
-                                           </td>
-                                       </tr>
-
-                                       <tr>
-                                           <th>
-                                               Bank :
-                                           </th>
-
-                                           <td id="modSupBank">
-
-                                           </td>
-                                       </tr>
-
-                                       <tr>
-                                           <th>
-                                               Bank Branch :
-                                           </th>
-
-                                           <td id="modSupBankBranch">
-
-                                           </td>
-                                       </tr>
-
-                                       <tr>
-                                           <th>
-                                               Bank Account No :
-                                           </th>
-
-                                           <td id="modSupBankAccountNo">
-
-                                           </td>
-                                       </tr>
-
-                                       <tr>
-                                           <th>
-                                               Bank Account Holder Name :
-                                           </th>
-
-                                           <td id="modSupBankAccountHolderName">
-
-                                           </td>
-                                       </tr>
-
-                                       <tr>
-                                           <th>
-                                               Areas Amount :
-                                           </th>
-
-                                           <td id="modSupAreasAmount">
-
-                                           </td>
-                                       </tr>
-
-                                       <tr>
-                                           <th>
-                                                Status :
-                                           </th>
-
-                                           <td id="modSupStatus">
-
-                                           </td>
-                                       </tr>
-
-                                       <tr>
-                                           <th>
-                                               Note :
-                                           </th>
-
-                                           <td id="modSupNote">
+                                           <td id="modGrnDiscount">
 
                                            </td>
                                        </tr>

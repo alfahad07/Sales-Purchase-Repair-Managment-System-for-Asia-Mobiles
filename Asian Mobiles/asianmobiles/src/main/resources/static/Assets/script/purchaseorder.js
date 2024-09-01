@@ -18,6 +18,7 @@ function loadUserInterface() {
     //CALLED REFRESH FORM FUNCTION
     refreshForm();
 
+    //filtering for Quotation number by active supplier
     purchaseOrderSupplierName.addEventListener('change', event => {
 
         quotationNoByPurchaseOrderSupplierName = getServiceRequest("/quotation/listbyquotation/" + JSON.parse(purchaseOrderSupplierName.value).id)
@@ -35,9 +36,63 @@ function loadUserInterface() {
 
         }
 
+        $('#purchaseOrderQuotationNo').css("pointer-events", "all");
+        $('#purchaseOrderQuotationNo').css("cursor", "pointer");
+
     })
 
+    //filtering for model by quotation
+    purchaseOrderQuotationNo.addEventListener('change', event => {
+
+        modelNameByPurchaseOrderQuotationNumber = getServiceRequest("/model/listbymodel/" + JSON.parse(purchaseOrderQuotationNo.value).id)
+        fillSelectFeild2(purchaseOrderModel, "Select Model", modelNameByPurchaseOrderQuotationNumber, "model_number", "model_name")
+
+        if (oldPurchaseOrder != null && JSON.parse(purchaseOrderQuotationNo.value).name != oldPurchaseOrder.quotation_id.quotation_number){
+
+            purchaseOrderQuotationNo.style.color = "orange"
+            purchaseOrderQuotationNo.style.borderBottom = "2px solid orange"
+
+        }else {
+
+            purchaseOrderQuotationNo.style.color = "green"
+            purchaseOrderQuotationNo.style.borderBottom = "2px solid green"
+
+        }
+
+        /*$('#purchaseOrderModel').css("pointer-events", "all");
+        $('#purchaseOrderModel').css("cursor", "pointer");*/
+
+    })
+
+    //filtering for unit price by model
+    purchaseOrderModel.addEventListener('change', event => {
+
+        unitPriceByPurchaseOrderModel = getServiceRequest("/quotationhasmodel/listbymodelpurchaseprice/"+JSON.parse(purchaseOrderQuotationNo.value).id+"/"+JSON.parse(purchaseOrderModel.value).id);
+        modelPurchasePrice = unitPriceByPurchaseOrderModel.purchase_price;
+        purchaseOrderUnitPrice.value = parseFloat(modelPurchasePrice).toFixed(2)
+        purchaseOrderHasModel.unit_price = parseFloat(modelPurchasePrice).toFixed(2);
+        purchaseOrderUnitPrice.style.color = 'green';
+
+        console.log(unitPriceByPurchaseOrderModel);
+
+        if (oldPurchaseOrder != null && JSON.parse(purchaseOrderModel.value).name != oldPurchaseOrder.purchaseOrderHasModelList.model_id.model_name){
+
+            purchaseOrderModel.style.color = "orange"
+            purchaseOrderModel.style.borderBottom = "2px solid orange"
+
+        }else {
+
+            purchaseOrderModel.style.color = "green"
+            purchaseOrderModel.style.borderBottom = "2px solid green"
+
+        }
+
+    })
+
+
 }
+
+
 
 
 //create function for refresh  table
@@ -63,14 +118,15 @@ const refreshTable = () => {
         if(purchaseOrders[index].purchase_order_status_id.name == "Deleted")
             tablePurchaseOrder.children[1].children[index].children[7].children[1].style.display = "none";
 
-    }
+        /*if(purchaseOrders[index].purchase_order_status_id.name != "Requested")*/
+            tablePurchaseOrder.children[1].children[index].children[7].children[0].style.display = "none";
 
+    }
     //need to add jquery table
     $('#tablePurchaseOrder').dataTable();
 
 
 }
-
 
 const getTotalAmount = (ob) => {
 
@@ -86,11 +142,12 @@ const refreshForm = () => {
 
     purchaseOrder.purchaseOrderHasModelList = new Array();
 
-    suppliers = getServiceRequest("/supplier/list");
+    suppliers = getServiceRequest("/supplier/listbyactivesupplierstatus");
     fillSelectFeild(purchaseOrderSupplierName, "Select Purchase-Order Supplier", suppliers, "supplier_company_name")
 
     statuses = getServiceRequest("/purchaseorderstatus/list")
-    fillSelectFeild(purchaseOrderStatus, "Select Purchase-Order Status", statuses, "name")
+    fillSelectFeild(purchaseOrderStatus, "Select Purchase-Order Status", statuses, "name", "Requested")
+    purchaseOrder.purchase_order_status_id = JSON.parse(purchaseOrderStatus.value);
 
     quotationNos = getServiceRequest("/quotation/list")
     fillSelectFeild(purchaseOrderQuotationNo, "Select Quotation Number", quotationNos, "quotation_number")
@@ -101,11 +158,17 @@ const refreshForm = () => {
     purchaseOrderSupplierName.style.color        = "grey";
     purchaseOrderSupplierName.style.borderBottom = "none";
 
-    purchaseOrderStatus.style.color        = "grey";
-    purchaseOrderStatus.style.borderBottom = "none";
+    $('#purchaseOrderSupplierName').css("pointer-events", "all");
+    $('#purchaseOrderSupplierName').css("cursor", "pointer");
+
+    purchaseOrderStatus.style.color        = "green";
+    purchaseOrderStatus.style.borderBottom = "solid";
 
     purchaseOrderQuotationNo.style.color        = "grey";
     purchaseOrderQuotationNo.style.borderBottom = "none";
+
+    $('#purchaseOrderQuotationNo').css("pointer-events", "all");
+    $('#purchaseOrderQuotationNo').css("cursor", "pointer");
 
 
     purchaseOrderRequiredDate.value = "";
@@ -131,12 +194,12 @@ const refreshForm = () => {
 
     refreshInnerFormAndTable();
 
-    disableAddUpdateBtn(true, false);
+    disableAddUpdateBtn(true);
 
 }
 
 
-const disableAddUpdateBtn = (addBtn, updBtn) => {
+const disableAddUpdateBtn = (addBtn) => {
 
 
     if( addBtn && loggedUserPrivilage.ins ){
@@ -155,7 +218,7 @@ const disableAddUpdateBtn = (addBtn, updBtn) => {
     }
 
 
-    if( updBtn && loggedUserPrivilage.upd ){
+    /*if( updBtn && loggedUserPrivilage.upd ){
 
         btnUpdate.disabled = false;
         $('#btnUpdate').css("pointer-events", "all");
@@ -168,7 +231,7 @@ const disableAddUpdateBtn = (addBtn, updBtn) => {
         $('#btnUpdate').css("pointer-events", "all");
         $('#btnUpdate').css("cursor", "not-allowed");
 
-    }
+    }*/
 
 
 }
@@ -180,10 +243,19 @@ const refreshInnerFormAndTable = () => {
     purchaseOrderHasModel = new Object();
     oldPurchaseOrderHasModel = null;
 
+    //checking the purchase order to fill the model filed according to the selected purchase order
+    if(purchaseOrderQuotationNo.value != ""){
+        modelNameByQuotation = modelNameByPurchaseOrderQuotationNumber = getServiceRequest("/model/listbymodel/" + JSON.parse(purchaseOrderQuotationNo.value).id)
+        fillSelectFeild2(purchaseOrderModel, "Select Model", modelNameByQuotation, "model_number", "model_name")
 
-    innerModels = getServiceRequest("/model/list")
-    fillSelectFeild2(purchaseOrderModel, "Select Model", innerModels,"model_number" ,"model_name",)
+    }else{
 
+        innerModels = getServiceRequest("/model/list")
+        fillSelectFeild2(purchaseOrderModel, "Select Model", innerModels,"model_number" ,"model_name",)
+
+    }
+
+    console.log(purchaseOrderModel)
     purchaseOrderModel.style.color        = "grey";
     purchaseOrderModel.style.borderBottom = "none";
 
@@ -193,6 +265,10 @@ const refreshInnerFormAndTable = () => {
     purchaseOrderQuantity.value   = "";
     purchaseOrderLineTotal.value  = "";
     /*preOrderLineTotal.disabled = true;*/
+
+    //DISABLED THE DROPDOWN FIELD, WILL ENABLE THE DROPDOWN WHEN THE QUOTATION IS SELECTED
+    /*$('#purchaseOrderModel').css("pointer-events", "none");
+    $('#purchaseOrderModel').css("cursor", "not-allowed");*/
 
     $('#purchaseOrderUnitPrice').css("pointer-events", "none");
     $('#purchaseOrderUnitPrice').css("cursor", "not-allowed");
@@ -219,6 +295,7 @@ const refreshInnerFormAndTable = () => {
     //
     for (let index in purchaseOrder.purchaseOrderHasModelList){
 
+        tablePurchaseOrderInnerTable.children[1].children[index].children[5].children[0].style.display = "none";
         tablePurchaseOrderInnerTable.children[1].children[index].children[5].children[2].style.display = "none";
 
         totalAmount = parseFloat(totalAmount) + parseFloat(purchaseOrder.purchaseOrderHasModelList[index].line_amount)
@@ -250,8 +327,11 @@ const refreshInnerFormAndTable = () => {
 
 const selectModelToGetUnitPrice = () => {
 
-    purchaseOrderUnitPrice.value = parseFloat(JSON.parse(purchaseOrderModel.value).sales_price).toFixed(2)
+
+    purchaseOrderUnitPrice.value = parseFloat(JSON.parse(purchaseOrderModel.value).purchase_price).toFixed(2)
     purchaseOrderHasModel.unit_price = purchaseOrderUnitPrice.value;
+
+
     purchaseOrderUnitPrice.style.color = 'green';
 
 }
@@ -310,6 +390,8 @@ const innerAddMC = () => {
             "\n Quantity   : "   + purchaseOrderHasModel.quantity +
             "\n Line Total : Rs. " + purchaseOrderHasModel.line_amount;
 
+       // window.alert(purchaseOrderUnitPrice.value);
+
         let userResponse    = window.confirm(submitConfigMsg)
 
         if (userResponse) {
@@ -335,7 +417,40 @@ const innerClearMC = () => {
 
 }
 
-const innerFormRefill = () => {
+const innerFormRefill = (innerOb, innerRowNo) => {
+
+    selectedInnerRow = innerRowNo;
+    purOrHasModels = JSON.parse(JSON.stringify(innerOb));
+    oldPurOrHasModels = JSON.parse(JSON.stringify(innerOb));
+
+    innerModels = getServiceRequest("/model/list")
+    fillSelectFeild2(purchaseOrderModel, "Select Model", innerModels,"model_number" ,"model_name", purOrHasModels.model_id.model_number)
+
+    purchaseOrderModel.style.color        = "green";
+    purchaseOrderModel.style.borderBottom = "solid";
+    $('#purchaseOrderModel').css("pointer-events", "none");
+    $('#purchaseOrderModel').css("cursor", "not-allowed");
+
+
+    purchaseOrderUnitPrice.value       = purOrHasModels.unit_price;
+    purchaseOrderUnitPrice.style.color = "green";
+    $('#purchaseOrderUnitPrice').css("pointer-events", "none");
+    $('#purchaseOrderUnitPrice').css("cursor", "not-allowed");
+
+
+    purchaseOrderQuantity.value   = purOrHasModels.quantity;
+    purchaseOrderQuantity.style.color = "green";
+
+
+    purchaseOrderLineTotal.value  = purOrHasModels.line_amount;
+    purchaseOrderLineTotal.style.color = "green";
+    $('#purchaseOrderLineTotal').css("pointer-events", "none");
+    $('#purchaseOrderLineTotal').css("cursor", "not-allowed");
+
+
+    //Disabling the inner Add Btn...
+    innerFormBtnAdd.disabled = true;
+    $('#innerFormBtnAdd').css("cursor", "not-allowed");
 
 }
 
@@ -467,12 +582,16 @@ const formRefill = (ob) => {
 
     fillSelectFeild(purchaseOrderSupplierName, "Select Purchase-Order Supplier", suppliers, "supplier_company_name", purchaseOrder.quotation_id.quotation_request_id.supplier_id.supplier_company_name);
     purchaseOrderSupplierName.style.borderBottom   = "solid";
+    $('#purchaseOrderSupplierName').css("pointer-events", "none");
+    $('#purchaseOrderSupplierName').css("cursor", "not-allowed")
 
     fillSelectFeild(purchaseOrderStatus, "Select Purchase-Order Status", statuses, "name", purchaseOrder.purchase_order_status_id.name);
     purchaseOrderStatus.style.borderBottom   = "solid";
 
     fillSelectFeild(purchaseOrderQuotationNo, "Select Quotation Number", quotationNos, "quotation_number", purchaseOrder.quotation_id.quotation_number);
     purchaseOrderQuotationNo.style.borderBottom   = "solid";
+    $('#purchaseOrderQuotationNo').css("pointer-events", "none");
+    $('#purchaseOrderQuotationNo').css("cursor", "not-allowed");
 
     refreshInnerFormAndTable();
 
@@ -608,7 +727,7 @@ const rowView = (ob) => {
     modPurchaseOrderRequiredDate.innerHTML = purchaseOrderPrint.required_date;
     modPurchaseOrderTotalAmount.innerHTML  = purchaseOrderPrint.total_amount;
     modPurchaseOrderStatus.innerHTML       = purchaseOrderPrint.purchase_order_status_id.name;
-    modPurchaseOrderNote.innerHTML                   = purchaseOrderPrint.note;
+    modPurchaseOrderNote.innerHTML         = purchaseOrderPrint.note;
 
 
 

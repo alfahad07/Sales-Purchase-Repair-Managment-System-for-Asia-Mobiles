@@ -100,7 +100,7 @@ public class PurchaseOrderController {
 
     }
 
-    //Create delete mapping to delete User by using DeleteMapping Annotation
+    //Create delete mapping to delete Purchase-Order by using DeleteMapping Annotation
     @DeleteMapping
     public String deletePurchaseOrder( @RequestBody PurchaseOrder purchaseOrder ){
 
@@ -130,7 +130,7 @@ public class PurchaseOrderController {
 
                     //set auto insert Values
                     existPurchaseOrder.setDeleted_datetime(LocalDateTime.now()); //Setting the delete time of the user...
-                    existPurchaseOrder.setPurchase_order_status_id(purchaseOrderStatusDao.getReferenceById(5)); //Setting Status to "deleted" once the delete is done...
+                    existPurchaseOrder.setPurchase_order_status_id(purchaseOrderStatusDao.getReferenceById(4)); //Setting Status to "deleted" once the delete is done...
 
                     purchaseOrderDao.save(existPurchaseOrder);
 
@@ -158,6 +158,7 @@ public class PurchaseOrderController {
     }
 
 
+    //Create Post mapping to Add Purchase-Order
     @PostMapping
     @Transactional
     public String addInnerPurchaseOrder( @RequestBody PurchaseOrder purchaseOrder ){
@@ -226,6 +227,7 @@ public class PurchaseOrderController {
                 purchaseOrder.setPurchase_order_number(nextPurchaseOrderNo);
 
 
+                //THE FOR LOOP IS WRITTEN BCOZ WE IGNORED THE PURCHASE ORDER ID(POID) IN THE PurchaseOrderHasModel JAVA FILE TO PREVENT THE RECURSION, THE FIELD SHOULD BE SET BEFORE SAVING BECAUSE NULL VALUE CANNOT BE SAVED.
                 for (PurchaseOrderHasModel purchaseOrderHasModel : purchaseOrder.getPurchaseOrderHasModelList()){
 
                     purchaseOrderHasModel.setPurchase_order_id(purchaseOrder);
@@ -251,7 +253,7 @@ public class PurchaseOrderController {
     }
 
 
-    //CREATE POST MAPPING FUNCTION TO UPDATE MODEL [/Model - PUT]
+    //Create PUT mapping to Update Purchase-Order
     @PutMapping
     public String updatePurchaseOrder( @RequestBody  PurchaseOrder purchaseOrder ){
 
@@ -271,7 +273,7 @@ public class PurchaseOrderController {
         if (!(authentication instanceof AnonymousAuthenticationToken) && loggedUser != null && loggedUserPrivillage.get("upd")){
 
 
-            //checking function to check weather the Quotation exist in the database
+            //checking function to check whether the Quotation exist in the database
             PurchaseOrder existPurchaseOrder = purchaseOrderDao.getReferenceById(purchaseOrder.getId());
 
             if (existPurchaseOrder != null){

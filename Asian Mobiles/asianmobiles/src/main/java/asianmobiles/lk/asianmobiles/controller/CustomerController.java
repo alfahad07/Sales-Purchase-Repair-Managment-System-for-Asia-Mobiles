@@ -2,6 +2,7 @@ package asianmobiles.lk.asianmobiles.controller;
 
 import asianmobiles.lk.asianmobiles.entity.Customer;
 
+import asianmobiles.lk.asianmobiles.entity.Items;
 import asianmobiles.lk.asianmobiles.entity.Model;
 import asianmobiles.lk.asianmobiles.entity.User;
 import asianmobiles.lk.asianmobiles.repository.CustomerRepository;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,7 +62,22 @@ public class CustomerController {
     @GetMapping(value = "/findall", produces = "application/json") //attribute "produces" used to take the data as which type to display on the browser, "application/json" is used to take the data as JSON OBJECT.
     private List<Customer> findAll(){
 
-        return customerDao.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        //Checking the logged user is existing in the  database. ( Authenticated user )
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        //Created a HashMap instance or copy
+        HashMap<String, Boolean> loggedUserPrivilege = privilegeController.getPrivilage(authentication.getName(), "CUSTOMER");
+
+        if (loggedUserPrivilege != null && loggedUserPrivilege.get("sel")) {
+
+            return customerDao.findAll(Sort.by(Sort.Direction.DESC, "id"));
+
+        }else {
+
+            List<Customer> customerList = new ArrayList<>();
+            return  customerList;
+
+        }
 
     }
 
@@ -69,7 +86,24 @@ public class CustomerController {
     @GetMapping(value = "/list", produces = "application/json")
     public List<Customer> customerList () {
 
-        return customerDao.list();
+        //NEED TO CHECK PRIVILAGE FOR LOGGED USER --> This is done below...
+
+        //Checking the logged user is existing in the  database. ( Authenticated user )
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        //Created a HashMap instance or copy
+        HashMap<String, Boolean> loggedUserPrivilege = privilegeController.getPrivilage(authentication.getName(), "CUSTOMER");
+
+        if (loggedUserPrivilege != null && loggedUserPrivilege.get("sel")) {
+
+            return customerDao.findAll(Sort.by(Sort.Direction.DESC, "id"));
+
+        }else {
+
+            List<Customer> customerList = new ArrayList<>();
+            return  customerList;
+
+        }
 
     }
 

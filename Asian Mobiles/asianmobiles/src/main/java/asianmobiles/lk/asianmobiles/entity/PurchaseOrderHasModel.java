@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Entity
 
 //Table annotation is used notify to map the class with which table.
-@Table(name = "pre_order_has_model")
+@Table(name = "purchase_order_has_model")
 
 //Data annotation is used to automate functions like getters, setters, toSrting etc... It is needed here coz the variables are private
 @Data
@@ -51,6 +51,9 @@ public class PurchaseOrderHasModel implements Serializable {
 
     @Column(name = "line_amount")
     private BigDecimal line_amount;
+
+
+
 
 
 }

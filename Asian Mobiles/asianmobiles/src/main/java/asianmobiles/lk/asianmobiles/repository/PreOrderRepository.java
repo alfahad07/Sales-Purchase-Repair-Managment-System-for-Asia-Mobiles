@@ -14,7 +14,12 @@ public interface PreOrderRepository extends JpaRepository<PreOrder,Integer> {
     @Query(value = "select max(po.pre_order_code) from PreOrder po")
     String getLastPreOrderCode();
 
+    //created a constructor to get only preorder id and code from the database
     @Query(value = "select new PreOrder (p.id, p.pre_order_code) from PreOrder p")
     List<PreOrder> list();
+
+    //Created to get the preorder code by the given customer for filltring part in the salesinvoice
+    @Query(value = "select po from PreOrder po where po.customer_id.id=?1")
+    List<PreOrder> findByPreOrderCustomerName(Integer cid);
 
 }

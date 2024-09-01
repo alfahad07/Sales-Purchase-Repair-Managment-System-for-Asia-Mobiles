@@ -20,7 +20,8 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder,Int
     @Query(value = "select new PurchaseOrder (p.id, p.purchase_order_number, p.total_amount) from PurchaseOrder p")
     List<PurchaseOrder> list();
 
-    @Query(value = "select p from PurchaseOrder p where p.quotation_id.quotation_request_id.supplier_id.id = ?1")
+    @Query(value = "select p from PurchaseOrder p where p.quotation_id.quotation_request_id.supplier_id.id = ?1 and p.purchase_order_status_id.id=1")
     List<PurchaseOrder> findByPurchaseOrderSupplierName(Integer pid);
+
 
 }

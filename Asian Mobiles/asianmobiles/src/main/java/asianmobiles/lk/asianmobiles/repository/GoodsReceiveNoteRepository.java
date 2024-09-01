@@ -1,7 +1,6 @@
 package asianmobiles.lk.asianmobiles.repository;
 
 import asianmobiles.lk.asianmobiles.entity.GoodsReceiveNote;
-import asianmobiles.lk.asianmobiles.entity.Quotation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,10 +13,14 @@ public interface GoodsReceiveNoteRepository extends JpaRepository<GoodsReceiveNo
     @Query(value = "select max(grn.grn_code) from GoodsReceiveNote grn")
     String getLastGrnNo();
 
-    /*@Query(value = "select new Quotation (q.id, q.quotation_number) from Quotation q")
+    @Query(value = "select new GoodsReceiveNote (grn.id, grn.grn_code) from GoodsReceiveNote grn")
     List<GoodsReceiveNote> list();
 
-    @Query(value = "select q from Quotation q where q.quotation_request_id.supplier_id.id = ?1")
-    List<GoodsReceiveNote> findByPurchaseOrderSupplierName(Integer qid);*/
+    @Query(value = "select grn from GoodsReceiveNote grn where grn.supplier_id.id = ?1 and grn.goods_receive_note_status_id.id = 1")
+    List<GoodsReceiveNote> getGrnCodeBySupplier(Integer sid);
+
+    @Query(value = "select grn from GoodsReceiveNote grn where grn.id = ?1 and grn.goods_receive_note_status_id.id = 1")
+    GoodsReceiveNote getGrnNetTotalByGrn(Integer gid);
+
 
 }

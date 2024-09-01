@@ -567,7 +567,7 @@ const nameCapitalLetterCheckValidtor =   (feildid, pattern, object, property, ol
 
         if (namepattern.test(feildid.value)) {
 
-            name = feildid.value.split(" ");
+           let name = feildid.value.split(" ");
             console.log(name);
 
             let fullNameWithUpperCase = "";

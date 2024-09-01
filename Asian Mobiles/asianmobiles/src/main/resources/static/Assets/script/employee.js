@@ -18,6 +18,7 @@ function loadUserInterface() {
     //CALLED REFRESH FORM FUNCTION
     refreshForm();
 
+    //checking DOB
     empDOB.addEventListener("change", checkDOB)
 
 }
@@ -76,7 +77,7 @@ const refreshForm = () => {
 
     employeeStatuses = getAjexServiceRequest("/employeestatus/list")
     fillSelectFeild(empStatus, "Select Employee Status", employeeStatuses, "name", "Working")
-
+    employee.employeestatus_id = JSON.parse(empStatus.value);
     //CLEARING THE EMPLOYEE DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE EMPLOYEE
     empfullname.value = "";
     empCallingname.value = "";

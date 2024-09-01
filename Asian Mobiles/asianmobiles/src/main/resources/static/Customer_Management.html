@@ -29,83 +29,104 @@
 <body style="background-image: url(Assets/images/desmal14.jpg); overflow-x: hidden; overflow-y: hidden; background-size: cover;">
 
 
-    <!--NAVIGATION BAR BY BOOSTRAP5-->
-    <div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
-        <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
-            <div class="container">
-                <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Administration
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li id="EMPLOYEE"><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
-                                <li id="USER"><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
-                                <li id="PRIVILEGE"><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Sales
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<!--NAVIGATION BAR BY BOOSTRAP5-->
+<div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
+    <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Administration
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li id="EMPLOYEE"><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
+                            <li id="USER"><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
+                            <li id="PRIVILEGE"><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Sales
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                                <li id="CUSTOMER"><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
-                                <li id="PRE-ORDER"><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+                            <li id="CUSTOMER"><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
+                            <li id="PRE-ORDER"><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+                            <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Sales-Invoice Management System</a></li>
+                            <li id="SALES-PAYMENT"><a class="dropdown-item fw-bold" href="/customerpayment">Customer Payment Management System</a></li>
 
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Purchase
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li id="SUPPLIER"><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
-                                <li id="QUOTATION-REQUEST"><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
-                                <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
-                                <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
-                                <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
-                                <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Supplier-Invoice Management System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Purchase
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Inventory
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li id="SUPPLIER"><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
+                            <li id="QUOTATION-REQUEST"><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
+                            <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
+                            <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
+                            <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+                            <li id="PURCHASE-PAYMENT"><a class="dropdown-item fw-bold" href="/supplierpayment">Supplier Payment Management System</a></li>
 
-                                <li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
-                                <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Managaement System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Inventory
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                repair
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item fw-bold" href="#"></a></li>
-                                <li><a class="dropdown-item fw-bold" href="#"></a></li>
-                                <li><a class="dropdown-item fw-bold" href="#"></a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold" href="/logout" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
-                        </li>
-                    </ul>
-                </div>
+                            <li id="ITEMS-INVENTORY"><a class="dropdown-item fw-bold" href="/itemsinventory">Items Inventory Management System</a></li>
+                            <li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Reports
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="GRN-REPORT"><a class="dropdown-item fw-bold" href="/grnReports">GRN Reports</a></li>
+                            <!--<li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>-->
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            repair
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" onclick="signOutFunction()" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" style="-webkit-text-stroke: 1.5px rgb(0,196,255) ;font-size: 20px;" id="liaLoggedUser">LoggedUser Name</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </div>
+        </div>
+    </nav>
+</div>
 
     <div class="container-fluid body">
 
@@ -257,7 +278,7 @@
                         <!--CUSTOMER ADDRESS-->
                         <div class="col-6 inputBox" style="width: 50%; left: 3%">
 
-                            <input type="text" class="fw-bold" id="customerAddress" onkeyup="textFeildValidtor(customerAddress,'^[A-Za-z0-9\\/\\.\\,]{1,250}$','customer','address','oldCustomer')" required>
+                            <input type="text" class="fw-bold" id="customerAddress" onkeyup="textFeildValidtor(customerAddress,'^[A-Za-z0-9\\/\\.\\,\\s]{1,250}$','customer','address','oldCustomer')" required>
 
                             <label for="customerAddress" id="labelCustomerAddress" class="fw-bold">Customer Address :  <span id="star">*</span></label>
 
@@ -319,17 +340,17 @@
 
                     <div class="overlay-panel overlay-left">
 
-                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">User Table!</h1>
-                        <p id="p" class="fw-bold">Please click the below button to display the User Table...</p>
-                        <button class="press" id="empTableBtn">User Table</button>
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Customer Table!</h1>
+                        <p id="p" class="fw-bold">Please click the below button to display the Customer Table...</p>
+                        <button class="press" id="empTableBtn">Customer Table</button>
 
                     </div>
 
                     <div class="overlay-panel overlay-right">
 
-                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">User Form!</h1>
-                        <p class="fw-bold">Please click the below button to display the User Form...</p>
-                        <button class="press" id="empFormBtn">User Form</button>
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Customer Form!</h1>
+                        <p class="fw-bold">Please click the below button to display the Customer Form...</p>
+                        <button class="press" id="empFormBtn">Customer Form</button>
 
                     </div>
 

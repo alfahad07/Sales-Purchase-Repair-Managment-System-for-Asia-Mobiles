@@ -15,7 +15,10 @@ public interface SupplierRepository extends JpaRepository<Supplier,Integer> {
     @Query(value = "select new Supplier (s.id, s.supplier_company_name, s.supplier_status_id) from Supplier s")
     List<Supplier> list();
 
-    @Query("select s from Supplier s where s.business_reg_no = ?1")
+    @Query("select s from Supplier s where s.supplier_status_id.id=1")
+    List<Supplier> getBySupplierStatusActive();
+
+    @Query("select s from Supplier s where s.supplier_reg_no = ?1")
     Supplier getByBusinessRegNo(String SupBusRegNo);
 
     @Query("select s from Supplier s where s.supplier_company_reg_no = ?1")
@@ -26,5 +29,11 @@ public interface SupplierRepository extends JpaRepository<Supplier,Integer> {
 
     @Query("select s from Supplier s where s.bank_account_number = ?1")
     Supplier getByCompanyAccountNo(String SupAccountNo);
+
+    @Query(value = "select max(s.supplier_reg_no) from Supplier s")
+    String getLastSupplierRegistrationNo();
+
+    @Query("select s from Supplier s where s.id = ?1")
+    Supplier getSupplierBankDetailsBySupplierId(Integer sid);
 
 }

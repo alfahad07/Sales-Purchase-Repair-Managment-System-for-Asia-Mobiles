@@ -54,13 +54,13 @@ public class SalesInvoice {
     private BigDecimal total_amount;
 
     @Column(name = "discount")
-    private String discount;
+    private BigDecimal discount;
 
     @Column(name = "tax")
-    private String tax;
+    private BigDecimal tax;
 
     @Column(name = "net_amount")
-    private String net_amount;
+    private BigDecimal net_amount;
 
     @Column(name = "added_datetime")
     private LocalDateTime added_datetime;
@@ -105,6 +105,16 @@ public class SalesInvoice {
 
     @OneToMany(mappedBy = "sales_invoice_id", orphanRemoval = true , cascade = CascadeType.ALL)
     List<SalesInvoiceHasItems> salesInvoiceHasItemsList ;
+
+
+    public SalesInvoice(Integer id, String bill_number, BigDecimal net_amount){
+
+        //CLASS ID                  = PARAMETER ID
+        this.id                     = id;
+        this.bill_number            = bill_number;
+        this.net_amount             = net_amount;
+
+    }
 
 
 }

@@ -37,6 +37,28 @@ function loadUserInterface() {
 
     })
 
+    grnPurchaseOrder.addEventListener('change', event => {
+
+        modelNameByGrnPurchaseOrder = getServiceRequest("/model/listbypurchaseorder/" + JSON.parse(grnPurchaseOrder.value).id)
+        fillSelectFeild2(innerGrnModel, "Select Model", modelNameByGrnPurchaseOrder, "model_number", "model_name")
+
+        if (oldGoodsReceiveNote != null && JSON.parse(grnPurchaseOrder.value).id != oldGoodsReceiveNote.purchase_order_id.id){
+
+            grnPurchaseOrder.style.color = "orange"
+            grnPurchaseOrder.style.borderBottom = "2px solid orange"
+
+        }else {
+
+            grnPurchaseOrder.style.color = "green"
+            grnPurchaseOrder.style.borderBottom = "2px solid green"
+
+        }
+
+        /*$('#purchaseOrderModel').css("pointer-events", "all");
+        $('#purchaseOrderModel').css("cursor", "pointer");*/
+
+    })
+
 }
 
 
@@ -57,17 +79,16 @@ const refreshTable = () => {
     // calling filldataintotable function to fill data
     fillDataIntoTable(tableGoodsReceiveNote, goodsReceiveNotes, DisplayPropertyList, DisplayPropertyListType, formRefill, rowDelete, rowView, true,loggedUserPrivilage);
 
-    //Invisibling the Delete Button in the table when the Status is deleted (Once Deleted the Details or row, the Delete Btn will Disappear)
+    //Invisibling the Delete and edit Button in the table
     for (let index in goodsReceiveNotes){
 
-        if(goodsReceiveNotes[index].goods_receive_note_status_id.name == "Deleted")
-            tableGoodsReceiveNote.children[1].children[index].children[7].children[1].style.display = "none";
+        tableGoodsReceiveNote.children[1].children[index].children[8].children[1].style.display = "none";
+        tableGoodsReceiveNote.children[1].children[index].children[8].children[0].style.display = "none";
 
     }
 
     //need to add jquery table
     $('#tableGoodsReceiveNote').dataTable();
-
 
 }
 
@@ -98,15 +119,15 @@ const refreshForm = () => {
 
     goodsReceiveNote.goodsReceiveNoteHasModelList = new Array();
 
-    suppliers = getServiceRequest("/supplier/list");
+    suppliers = getServiceRequest("/supplier/listbyactivesupplierstatus");
     fillSelectFeild(grnSupplier, "Select Supplier", suppliers, "supplier_company_name");
 
     purchaseOrders = getServiceRequest("/purchaseorder/list");
     fillSelectFeild(grnPurchaseOrder, "Select Purchase-Order No", purchaseOrders, "purchase_order_number");
 
     grnStatuses = getServiceRequest("/goodsreceivenotestatus/list")
-    fillSelectFeild(grnStatus, "Select GRN Status", grnStatuses, "name")
-
+    fillSelectFeild(grnStatus, "Select GRN Status", grnStatuses, "name", "Received")
+    goodsReceiveNote.goods_receive_note_status_id = JSON.parse(grnStatus.value);
 
     goodsReceiveNote.total_amount = 0.00;
     goodsReceiveNote.tax = 0.00;
@@ -121,8 +142,8 @@ const refreshForm = () => {
     grnPurchaseOrder.style.color        = "grey";
     grnPurchaseOrder.style.borderBottom = "none";
 
-    grnStatus.style.color               = "grey";
-    grnStatus.style.borderBottom        = "none";
+    grnStatus.style.color               = "green";
+    grnStatus.style.borderBottom        = "solid";
 
 
 
@@ -130,10 +151,9 @@ const refreshForm = () => {
     grnBillDate.value         = "";
     grnGoodsReceiveDate.value = "";
     grnTotalAmount.value      = "";
-    grnTax.value              = "";
-    grnDiscount.value         = "";
+    grnTax.value              = "0.00";
+    grnDiscount.value         = "0.00";
     grnNetTotalAmount.value   = "";
-    grnPaidAmount.value       = "";
     grnNote.value             = "";
 
 
@@ -145,12 +165,12 @@ const refreshForm = () => {
 
     refreshInnerFormAndTable();
 
-    disableAddUpdateBtn(true, false);
+    disableAddUpdateBtn(true);
 
 }
 
 
-const disableAddUpdateBtn = (addBtn, updBtn) => {
+const disableAddUpdateBtn = (addBtn) => {
 
 
     if( addBtn && loggedUserPrivilage.ins ){
@@ -168,22 +188,6 @@ const disableAddUpdateBtn = (addBtn, updBtn) => {
 
     }
 
-    if( updBtn && loggedUserPrivilage.upd ){
-
-        btnUpdate.disabled = false;
-        $('#btnUpdate').css("pointer-events", "all");
-        $('#btnUpdate').css("cursor", "pointer");
-
-
-    }else {
-
-        btnUpdate.disabled = true;
-        $('#btnUpdate').css("pointer-events", "all");
-        $('#btnUpdate').css("cursor", "not-allowed");
-
-    }
-
-
 }
 
 
@@ -193,9 +197,19 @@ const refreshInnerFormAndTable = () => {
     goodsReceiveNoteHasModel    = new Object();
     oldGoodsReceiveNoteHasModel = null;
 
+    //THE BELOW ARRAY "goodsReceiveNoteHasModel.itemsList" IS USED TO ADD PHONE DETAILS TO THE ITEM MODULE.
+    goodsReceiveNoteHasModel.itemsList = new Array();
 
-    innerModels = getServiceRequest("/model/list")
-    fillSelectFeild2(innerGrnModel, "Select Model", innerModels,"model_number" ,"model_name",)
+    //checking the purchase order to fill the model filed according to the selected purchase order
+    if(grnPurchaseOrder.value != ""){
+        modelNameByGrnPurchaseOrder = getServiceRequest("/model/listbypurchaseorder/" + JSON.parse(grnPurchaseOrder.value).id)
+        fillSelectFeild2(innerGrnModel, "Select Model", modelNameByGrnPurchaseOrder, "model_number", "model_name")
+
+    }else{
+        innerModels = getServiceRequest("/model/list")
+        fillSelectFeild2(innerGrnModel, "Select Model", innerModels,"model_number" ,"model_name",)
+
+    }
 
 
     innerGrnModel.style.color        = "grey";
@@ -232,7 +246,7 @@ const refreshInnerFormAndTable = () => {
     fillDataIntoTable(tableGrnInnerTable,goodsReceiveNote.goodsReceiveNoteHasModelList,DisplayPropertyList, DisplayPropertyListType, innerFormRefill, innerRowDelete, innerRowView,true, innerLoggedUserPrivilage);
 
 
-    // Created to invisible the Delete Btn in inner table  and sum all the line_total to total field.
+    // Created to invisible the View Btn in inner table  and sum all the line_total to total field.
     for (let index in goodsReceiveNote.goodsReceiveNoteHasModelList){
 
         tableGrnInnerTable.children[1].children[index].children[6].children[2].style.display = "none";
@@ -267,15 +281,21 @@ const refreshInnerFormAndTable = () => {
 
 }
 
-const selectModelToGetUnitPrice = () => {
+// to get the unit price and Ordered Quantity of the model once selected the model
+const selectModelToGetUnitPriceAndOrderedQuantity = () => {
 
-    innerGrnUnitPrice.value = parseFloat(JSON.parse(innerGrnModel.value).sales_price).toFixed(2)
+    innerGrnUnitPrice.value = parseFloat(JSON.parse(innerGrnModel.value).purchase_price).toFixed(2)
     goodsReceiveNoteHasModel.unit_price = innerGrnUnitPrice.value;
     innerGrnUnitPrice.style.color = 'green';
 
+    let porderhasmodal = getServiceRequest("/purchaseorderhasmodel/listbymodelpurchaseorderquantity/" + JSON.parse(grnPurchaseOrder.value).id + "/"+JSON.parse(innerGrnModel.value).id) ;
+    innerGrnOrderQuantity.value = porderhasmodal.quantity;
+     goodsReceiveNoteHasModel.ordered_quantity = innerGrnOrderQuantity.value;
+    innerGrnOrderQuantity.style.color = 'green';
 
 }
 
+//multiplying unitprice with quantity to generate total price
 const multiplyQuantityWithUnitPrice = () => {
 
     if (innerGrnReceivedQuantity.value != 0){
@@ -307,7 +327,147 @@ const multiplyQuantityWithUnitPrice = () => {
 }
 
 
+//inner grn form add btn
 const innerAddMC = () => {
+
+    if (goodsReceiveNoteHasModel.model_id.sub_catergory_id.category_id.name == "Phones") {
+
+        //need to open item modal
+        $("#modalAddSerialNo").modal("show");
+
+        refreshModalInnerItemFormAndTable()
+
+    }else{
+        innerGrnSubmit();
+    }
+}
+
+
+// Inner Item form and table which appear as modal only for phones
+const refreshModalInnerItemFormAndTable = () => {
+
+    grnItems = new Object();
+    oldgrnItems = null;
+
+
+    //FILL DATA INTO INNER FORM TABLE
+
+    phoneColours = getServiceRequest("/modelcolour/list")
+    fillSelectFeild(itemPhoneColour, "Select Phone Colour", phoneColours, "name", "");
+
+    itemPhoneColour.style.color        = "grey";
+    itemPhoneColour.style.borderBottom = "none";
+
+    //need empty inner item form element
+    itemImeiNumber01.value  = "";
+    itemImeiNumber02.value  = "";
+    itemSerialNumber.value  = "";
+
+
+    //FILL DATA INTO INNER ITEM TABLE
+
+    //create display property list
+    let DisplayPropertyList = ['iemi_number_1','iemi_number_2','serial_number','phone_colour_id.name'];
+
+    //create display property list type
+    let DisplayPropertyListType = ['text','text','text','object'];
+
+    let innerLoggedUserPrivilage = getServiceRequest("/userprivilage/bymodule?modulename=GOODS-RECEIVE-NOTE");
+
+    // calling filldataintotable function to fill data
+    fillDataIntoTable(tableGrnItems,goodsReceiveNoteHasModel.itemsList, DisplayPropertyList, DisplayPropertyListType, innerItemFormRefill, innerItemRowDelete, innerItemRowView,true, innerLoggedUserPrivilage);
+
+
+    // Created to invisible the EditBtn & ViewBtn in inner item table
+    for (let index in goodsReceiveNoteHasModel.itemsList){
+
+        tableGrnItems.children[1].children[index].children[5].children[0].style.display = "none";
+        tableGrnItems.children[1].children[index].children[5].children[2].style.display = "none";
+
+    }
+
+    //Allowing to add the phone details according to the received quantity and auto submit
+    if (goodsReceiveNoteHasModel.itemsList.length == goodsReceiveNoteHasModel.received_quantity){
+
+           //setting timeout for the inner item form
+           setTimeout(()=>{
+               $("#modalAddSerialNo").modal("hide");
+               innerGrnSubmit();
+           }, 1500)
+    }
+
+}
+
+// MODIFY BUTTONS FOR INNER ITEMS TABLE ONLY FOR PHONE
+const innerItemFormRefill = () => {
+
+}
+
+const innerItemRowDelete = (innerOb , innerRowIndex) => {
+
+    let deleteMsg = "Would you like to Delete this Item Details?\n"
+        +"Serial No :  "+ innerOb.serial_number ;
+
+    let deleteUserResponse = window.confirm(deleteMsg);
+
+    if (deleteUserResponse) {
+
+        goodsReceiveNoteHasModel.itemsList.splice(innerRowIndex, 1);
+         alert("As you wish, Deleted the Item Details? Successfully !!!");
+        refreshModalInnerItemFormAndTable();
+
+    }
+
+}
+
+const innerItemRowView = () => {
+
+}
+
+
+
+
+// inner grn item form add button (Small Add Btn)
+const addSerialNoBtn = () => {
+    let itemExt = false;
+
+    for (let index in goodsReceiveNoteHasModel.itemsList){
+
+        if (goodsReceiveNoteHasModel.itemsList[index].serial_number == grnItems.serial_number){
+
+            itemExt = true;
+            break;
+
+        }
+
+    }
+
+    if (!itemExt){
+
+        let submitConfigMsg = "Are you willing to add following Phone Details ?\n" +
+            "\n Serial No : " + grnItems.serial_number ;
+
+        let userResponse    = window.confirm(submitConfigMsg)
+
+        if (userResponse) {
+
+            goodsReceiveNoteHasModel.itemsList.push(grnItems);
+            alert("Phone Details Added Successfully as you wish!!!");
+            refreshModalInnerItemFormAndTable();
+
+        }
+
+    }else {
+
+        alert("Phone Details Cannot be Added : It's already Exist!!!\n" + "\n Serial No : " + grnItems.serial_number)
+
+    }
+
+}
+
+
+// this function works as inner grn form add btn (Big Add Btn)
+const innerGrnSubmit = () => {
 
     let itemExt = false;
 
@@ -356,6 +516,7 @@ const innerClearMC = () => {
 }
 
 const innerFormRefill = () => {
+
 
 }
 
@@ -418,7 +579,7 @@ function checkErrors() {
 
     }
 
-    if (goodsReceiveNote.total_amount == null){
+    if (goodsReceiveNote.total_amount == ""){
 
         error = error + "Total Amount Field Incomplete \n";
 
@@ -442,11 +603,11 @@ function checkErrors() {
 
     }
 
-    if (goodsReceiveNote.paid_amount == null){
+    /*if (goodsReceiveNote.paid_amount == null){
 
         error = error + "Paid Amount Field Incomplete \n";
 
-    }
+    }*/
 
     if (grnStatus.value == ""){
 
@@ -460,32 +621,21 @@ function checkErrors() {
 
     }
 
-
     return error;
-
 
 }
 
 //SETTING THE NET TOTAL AMOUNT BY DEDUCTING THE TAX & THE DISCOUNT FROM THE TOTAL AMOUNT...
 const netTotalCalculation = () => {
 
-    if (grnNetTotalAmount.value == 0){
-
         let tax = parseFloat(grnTotalAmount.value)*parseFloat(grnTax.value)/100;
         let totalAmountAfterAddingTax = parseFloat(grnTotalAmount.value)+tax;
         let discount = totalAmountAfterAddingTax*parseFloat(grnDiscount.value)/100;
 
-
         grnNetTotalAmount.value  = (totalAmountAfterAddingTax-discount).toFixed(2)
         grnNetTotalAmount.style.color = 'green';
-        goodsReceiveNote.net_total_amount = innerGrnLineTotal.value;
-        console.log(grnNetTotalAmount)
-
-    }else {
-
-        grnNetTotalAmount.style.color = 'red';
-
-    }
+        goodsReceiveNote.net_total_amount = grnNetTotalAmount.value;
+        console.log(goodsReceiveNote.net_total_amount)
 
 }
 
@@ -531,157 +681,8 @@ const submitBtnFunction = () => {
 
 }
 
-const formRefill = (ob) => {
-
-    empMancontainer.classList.add("right-panel-active");
-
-    goodsReceiveNote    = getAjexServiceRequest("/goodsreceivenote/getbyid/"+ob.id);
-    oldGoodsReceiveNote = getAjexServiceRequest("/goodsreceivenote/getbyid/"+ob.id);
-
-
-    //SET VALUE
-    grnBillInvoiceNo.value    = goodsReceiveNote.bill_invoice_number;
-    grnBillDate.value         = goodsReceiveNote.bill_date;
-    grnGoodsReceiveDate.value = goodsReceiveNote.goods_receive_date;
-    grnTotalAmount.value      = goodsReceiveNote.total_amount;
-    grnTax.value              = goodsReceiveNote.tax;
-    grnDiscount.value         = goodsReceiveNote.discount;
-    grnNetTotalAmount.value   = goodsReceiveNote.net_total_amount;
-    grnPaidAmount.value       = goodsReceiveNote.paid_amount;
-    grnNote.value             = goodsReceiveNote.note;
-
-
-
-    fillSelectFeild(grnSupplier, "Select Supplier", suppliers, "supplier_company_name", goodsReceiveNote.supplier_id.supplier_company_name);
-    grnSupplier.style.borderBottom   = "solid";
-
-    fillSelectFeild(grnPurchaseOrder, "Select Purchase-Order No", purchaseOrders, "purchase_order_number", goodsReceiveNote.purchase_order_id.purchase_order_number);
-    grnPurchaseOrder.style.borderBottom   = "solid";
-
-    fillSelectFeild(grnStatus, "Select GRN Status", grnStatuses, "name", goodsReceiveNote.goods_receive_note_status_id.name);
-    grnStatus.style.borderBottom   = "solid";
-
-
-
-    refreshInnerFormAndTable();
-
-    disableAddUpdateBtn(false, true);
-
-}
-
-const checkUpdate = () => {
-
-    let update = "";
-
-    if (goodsReceiveNote != null && oldGoodsReceiveNote != null) {
-
-
-        if (JSON.parse(grnSupplier.value).id != oldGoodsReceiveNote.supplier_id.id) {
-            update = update + "GRN Supplier Updated \n";
-        }
-
-        if (JSON.parse(grnPurchaseOrder.value).id != oldGoodsReceiveNote.purchase_order_id.id) {
-            update = update + "GRN Purchase-Order Number Updated \n";
-        }
-
-        if (goodsReceiveNote.bill_invoice_number != oldGoodsReceiveNote.bill_invoice_number) {
-            update = update + "GRN Bill Invoice Updated \n";
-        }
-
-        if (goodsReceiveNote.bill_date != oldGoodsReceiveNote.bill_date) {
-            update = update + "GRN Bill Date Updated \n";
-        }
-
-        if (goodsReceiveNote.goods_receive_date != oldGoodsReceiveNote.goods_receive_date) {
-            update = update + "GRN Goods Receive Date Updated \n";
-        }
-
-        if (goodsReceiveNote.total_amount != oldGoodsReceiveNote.total_amount) {
-            update = update + "GRN Total Amount Updated \n";
-        }
-
-        if (goodsReceiveNote.tax != oldGoodsReceiveNote.tax) {
-            update = update + "GRN Tax Updated \n";
-        }
-
-        if (goodsReceiveNote.discount != oldGoodsReceiveNote.discount) {
-            update = update + "GRN Discount Updated \n";
-        }
-
-        if (goodsReceiveNote.net_total_amount != oldGoodsReceiveNote.net_total_amount) {
-            update = update + "GRN Net Total Amount Updated \n";
-        }
-
-
-        if (goodsReceiveNote.paid_amount != oldGoodsReceiveNote.paid_amount) {
-            update = update + "GRN Paid Amount updated \n";
-        }
-
-        if (goodsReceiveNote.note != oldGoodsReceiveNote.note) {
-            update = update + "GRN Note updated \n";
-        }
-
-        if (goodsReceiveNote.goods_receive_note_status_id.id != oldGoodsReceiveNote.goods_receive_note_status_id.id) {
-            update = update + "GRN Status updated \n";
-        }
-
-    }
-
-    return update;
-
-}
-
-const updateBTN = () => {
-
-    // checking any errors in the form
-    let errors = checkErrors();
-
-    if (errors == "") {
-
-        //checking any field is updated, does form has any updated value...
-        let update = checkUpdate();
-        if (update == ""){  //IF UPDATE IS EMPTY , NO UPDATE AVAILABLE IN THE FORM. BELOW CODE RUNS
-
-            //if update is not available
-            window.alert("Nothing Updated...!\n");
-
-        }else {
-
-            // get confirmation from user for updated value if available...
-            let updateResponce = window.confirm("Are you willing to update following Goods Receive Note Details? \n" + update);
-
-            if (updateResponce) {
-
-                //IF USER CLICK OK BTN FOR UPDATE CONFIRMATION.
-                let putResponce = getAjexServiceRequest("/goodsreceivenote","PUT",goodsReceiveNote);;
-
-                if (putResponce == "0") {
-
-                    //IF THE DATA UPDATED AND STORED SUCCESSFULLY
-                    window.alert("Updated the Goods Receive Note Details successfully as you wish...!");
-                    refreshTable();
-                    refreshForm();
-                    refreshInnerFormAndTable()
-                    empMancontainer.classList.remove("right-panel-active");
-
-                }else {
-
-                    //IF THE DATA UPDATED AND STORED IS UNSUCCESSFUL
-                    window.alert("Failed to update the Goods Receive Note Details, Please try Again...!\n" + putResponce);
-
-                }
-
-            }
-
-        }
-
-    }else{
-
-        // if any errors occurred in the form this line will execute...
-        window.alert("You have the following errors in your form...! \n" + errors)
-
-    }
-
+const formRefill = () => {
+  
 }
 
 const rowDelete = (ob) => {
@@ -713,18 +714,16 @@ const rowDelete = (ob) => {
 
 const rowView = (ob) => {
 
-    purchaseOrderPrint = getServiceRequest("/purchaseorder/getbyid/"+ob.id)
+    grnPrint = getServiceRequest("/goodsreceivenote/getbyid/"+ob.id)
 
-    $('#purchaseOrderModal').modal("show");
+    $('#grnModal').modal("show");
 
-    modPurchaseOrderSupplierName.innerHTML = purchaseOrderPrint.quotation_id.quotation_request_id.supplier_id.supplier_company_name;
-    modPurchaseOrderQuotationNo.innerHTML  = purchaseOrderPrint.quotation_id.quotation_number;
-    modPurchaseOrderRequiredDate.innerHTML = purchaseOrderPrint.required_date;
-    modPurchaseOrderTotalAmount.innerHTML  = purchaseOrderPrint.total_amount;
-    modPurchaseOrderStatus.innerHTML       = purchaseOrderPrint.purchase_order_status_id.name;
-    modPurchaseOrderNote.innerHTML         = purchaseOrderPrint.note;
-
-
+    modSupplier.innerHTML           = grnPrint.quotation_id.quotation_number;
+    modPurchaseBillInvoiceNo.innerHTML = grnPrint.quotation_id.quotation_request_id.supplier_id.supplier_company_name;
+    modGrnGoodsReceiveDate.innerHTML   = grnPrint.required_date;
+    modGrnTotalAmount.innerHTML        = grnPrint.total_amount;
+    modGrnTax.innerHTML                = grnPrint.purchase_order_status_id.name;
+    modGrnDiscount.innerHTML           = grnPrint.note;
 
 }
 
@@ -733,6 +732,7 @@ const clearBtn = () => {
     refreshForm();
 
 }
+
 
 
 

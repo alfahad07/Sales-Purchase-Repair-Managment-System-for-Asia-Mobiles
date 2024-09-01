@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="Assets/style/common.css">
     <script src="Assets/script/common.js"></script>
     <script src="Assets/script/supplier.js"></script>
+    <script src="Assets/script/login.js"></script>
+
+    <link href="Assets/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="Assets/select2/dist/js/select2.min.js"></script>
 
     <title>Supplier_Management-Asian_Mobiles</title>
 
@@ -28,83 +32,104 @@
 <body style="background-image: url(Assets/images/desmal14.jpg); overflow-x: hidden; overflow-y: hidden; background-size: cover;">
 
 
-    <!--NAVIGATION BAR BY BOOSTRAP5-->
-    <div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
-        <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
-            <div class="container">
-                <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Administration
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li id="EMPLOYEE"><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
-                                <li id="USER"><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
-                                <li id="PRIVILEGE"><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Sales
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<!--NAVIGATION BAR BY BOOSTRAP5-->
+<div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
+    <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Administration
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li id="EMPLOYEE"><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
+                            <li id="USER"><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
+                            <li id="PRIVILEGE"><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Sales
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                                <li id="CUSTOMER"><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
-                                <li id="PRE-ORDER"><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+                            <li id="CUSTOMER"><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
+                            <li id="PRE-ORDER"><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+                            <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Sales-Invoice Management System</a></li>
+                            <li id="SALES-PAYMENT"><a class="dropdown-item fw-bold" href="/customerpayment">Customer Payment Management System</a></li>
 
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Purchase
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li id="SUPPLIER"><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
-                                <li id="QUOTATION-REQUEST"><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
-                                <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
-                                <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
-                                <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
-                                <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Supplier-Invoice Management System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Purchase
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                Inventory
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li id="SUPPLIER"><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
+                            <li id="QUOTATION-REQUEST"><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
+                            <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
+                            <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
+                            <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+                            <li id="PURCHASE-PAYMENT"><a class="dropdown-item fw-bold" href="/supplierpayment">Supplier Payment Management System</a></li>
 
-                                <li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
-                                <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Managaement System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Inventory
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-                                repair
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item fw-bold" href="#"></a></li>
-                                <li><a class="dropdown-item fw-bold" href="#"></a></li>
-                                <li><a class="dropdown-item fw-bold" href="#"></a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold" href="/logout" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
-                        </li>
-                    </ul>
-                </div>
+                            <li id="ITEMS-INVENTORY"><a class="dropdown-item fw-bold" href="/itemsinventory">Items Inventory Management System</a></li>
+                            <li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Reports
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="GRN-REPORT"><a class="dropdown-item fw-bold" href="/grnReports">GRN Reports</a></li>
+                            <!--<li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>-->
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            repair
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" onclick="signOutFunction()" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" style="-webkit-text-stroke: 1.5px rgb(0,196,255) ;font-size: 20px;" id="liaLoggedUser">LoggedUser Name</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </div>
+        </div>
+    </nav>
+</div>
 
     <div class="container-fluid body">
 
@@ -142,7 +167,7 @@
                     <tr class="fw-bold">
 
                         <th class="text-center">#</th>
-                        <th class="text-center" style="font-size: 13px">Business Reg No</th>
+                        <th class="text-center" style="font-size: 13px">Supplier Reg No</th>
                         <th class="text-center" style="font-size: 13px">Company Reg No</th>
                         <th class="text-center" style="font-size: 13px">Company Name</th>
                         <th class="text-center" style="font-size: 13px">Contact Number</th>
@@ -185,7 +210,7 @@
                     <!--SUPPLIER BUSINESS REG NO /SUPPLIER COMPANY REG NO / SUPPLIER COMPANY NAME-->
                     <div class="row">
 
-                        <!--SUPPLIER BUSINESS REG NO-->
+                        <!--SUPPLIER BUSINESS REG NO
                         <div class="col-4 inputBox">
 
                             <input type="text" class="fw-bold" id="supBusinessRegNo"
@@ -197,16 +222,16 @@
 
                             <i></i>
 
-                        </div>
+                        </div> -->
 
                         <!--SUPPLIER COMPANY REG NO-->
-                        <div class="col-4 inputBox">
+                        <div class="col-6 inputBox" style="width: 50%">
 
                             <input type="text" class="fw-bold" id="supCompanyRegNo"
-                                   onkeyup="textFeildValidtor(supCompanyRegNo,'^[S][C][R][N][0-9]{6}$','supplier','supplier_company_reg_no','oldSupplier')"
+                                   onkeyup="textFeildValidtor(supCompanyRegNo,'^[C][R][N][0-9]{6}$','supplier','supplier_company_reg_no','oldSupplier')"
                                    required>
 
-                            <label for="supCompanyRegNo" class="fw-bold">Company Registration No (EX: SCRNXXXXXX): <span
+                            <label for="supCompanyRegNo" class="fw-bold">Company Registration No (EX: CRNXXXXXX): <span
                                     id="star">*</span></label>
 
                             <i></i>
@@ -214,7 +239,7 @@
                         </div>
 
                         <!--SUPPLIER COMPANY NAME-->
-                        <div class="col-4 inputBox">
+                        <div class="col-6 inputBox" style="width: 50%">
 
                             <input type="text" class="fw-bold" id="supCompanyName"
                                    onkeyup="nameCapitalLetterCheckValidtor(supCompanyName,'^[A-Za-z\\s]{3,40}$','supplier','supplier_company_name','oldSupplier')"
@@ -236,7 +261,7 @@
 
                             <input type="text" class="fw-bold" id="supContactNo" onkeyup="textFeildValidtor(supContactNo,'^[0-9]{10}$','supplier','contact_number','oldSupplier')" required>
 
-                            <label for="supContactNo" class="fw-bold">Contact NUMBER : </label>
+                            <label for="supContactNo" class="fw-bold">Contact NUMBER : <span id="star">*</span></label>
 
                             <i></i>
 
@@ -376,7 +401,7 @@
                             <label for="supStatus" class="fw-bold">Supllier Status : <span id="star">*</span></label>
 
                             <select id="supStatus" class="fw-bold" onchange="selectValidator(supStatus, '','supplier', 'supplier_status_id','oldSupplier')" required>
-                                <option selected disabled>Select Supllier Status</option>
+
                             </select>
 
                             <i style="top: 477px;width: 31%; left: 67%" ></i>
@@ -400,8 +425,10 @@
 
                     </div><br>
 
+                    <!--SUPPLIER LIST TRANSFER-->
                     <div class="row">
 
+                        <!--ALL MODELS-->
                         <div class="col-5">
 
                             <div class="row">
@@ -412,7 +439,7 @@
 
                             <div class="row">
 
-                                <select class="form-select" multiple id="allModelsSelectionField" onchange="selectValidator(allModelsSelectionField, '','supplier', 'supplierHasModelList','oldSupplier')">
+                                <select class="form-select" size="10" multiple  id="allModelsSelectionField" >
 
                                 </select>
 
@@ -420,7 +447,7 @@
 
                         </div>
 
-
+                        <!--BUTTONS OF LIST TRANSFER-->
                         <div class="col-2">
 
                             <div class="row text-center">
@@ -465,7 +492,7 @@
 
                         </div>
 
-
+                        <!--SELECTED MODELS-->
                         <div class="col-5">
 
                             <div class="row">
@@ -476,7 +503,7 @@
 
                             <div class="row">
 
-                                <select class="form-select" multiple id="selectedModelsSelectionField">
+                                <select class="form-select" size="10" multiple id="selectedModelsSelectionField">
 
                                 </select>
 
@@ -492,21 +519,21 @@
                         <!--ADD BUTTON-->
                         <div class="col-4">
 
-                            <button class="addBtn"  id="btnAdd" onclick="submitBtnFunction()" > ADD EMPLOYEE    </button>
+                            <button class="addBtn"  id="btnAdd" onclick="submitBtnFunction()" > ADD </button>
 
                         </div>
 
                         <!--UPDATE BUTTON-->
                         <div class="col-4">
 
-                            <button class="updateBtn" id="btnUpdate"  onclick="updateBTN()" > UPDATE EMPLOYEE </button>
+                            <button class="updateBtn" id="btnUpdate"  onclick="updateBTN()" > UPDATE </button>
 
                         </div>
 
                         <!--CLEAR BUTTON-->
                         <div class="col-4">
 
-                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR EMPLOYEE  </button>
+                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR </button>
 
                         </div>
 

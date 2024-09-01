@@ -76,7 +76,7 @@ public class GoodsReceiveNote {
     private LocalDateTime deleted_datetime;
 
 
-
+    //  forieng keys
     @ManyToOne(optional = false)
     @JoinColumn(name = "goods_receive_note_status_id",referencedColumnName = "id")
     private GoodsReceiveNoteStatus goods_receive_note_status_id;
@@ -106,5 +106,14 @@ public class GoodsReceiveNote {
 
     @OneToMany(mappedBy = "goods_receive_note_id", orphanRemoval = true, cascade = CascadeType.ALL)
     List<GoodsReceiveNoteHasModel> goodsReceiveNoteHasModelList ;
+
+
+    public GoodsReceiveNote(Integer id, String grn_code){
+
+        //CLASS ID                  = PARAMETER ID
+        this.id                     = id;
+        this.grn_code               = grn_code;
+
+    }
 
 }

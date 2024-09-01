@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 // Entity annotation is used to convert as persistence API coz to map the classes to the table in the database.
 @Entity
@@ -54,6 +55,9 @@ public class GoodsReceiveNoteHasModel implements Serializable {
 
     @Column(name = "line_amount")
     private BigDecimal line_amount;
+
+    @OneToMany(mappedBy = "goods_receive_note_has_model_id", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<Items> itemsList ;
 
 
 }

@@ -18,6 +18,26 @@ function loadUserInterface() {
     //CALLED REFRESH FORM FUNCTION
     refreshForm();
 
+    //filltering quotation request code according to the selected supplier
+    quotationSupplier.addEventListener('change', event => {
+
+        quotationRequestCodeByQuotationSupplier = getServiceRequest("/quotationrequest/listbysuppliers/" + JSON.parse(quotationSupplier.value).id)
+        fillSelectFeild(quotationRequestCode, "Select Quotation Request Codes", quotationRequestCodeByQuotationSupplier, "qr_number", "")
+
+        if (oldQuotation != null && JSON.parse(quotationSupplier.value).supplier_company_name != oldQuotation.quotation_request_id.supplier_id.supplier_company_name){
+
+            quotationSupplier.style.color = "orange"
+            quotationSupplier.style.borderBottom = "2px solid orange"
+
+        }else {
+
+            quotationSupplier.style.color = "green"
+            quotationSupplier.style.borderBottom = "2px solid green"
+
+        }
+
+    })
+
 
 }
 
@@ -62,22 +82,27 @@ const refreshForm = () => {
 
     quotation.quotationHasModelList = new Array();
 
-    Suppliers = getServiceRequest("/supplier/list");
+    Suppliers = getServiceRequest("/supplier/listbyactivesupplierstatus");
     fillSelectFeild(quotationSupplier, "Select Quotation Supplier", Suppliers, "supplier_company_name");
+    $('#quotationSupplier').css("cursor", "pointer"); // enabling the field to enter data
+    $('#quotationSupplier').css("pointer-events", "all");
 
     quotationStatuses = getServiceRequest("/quotationstatus/list")
-    fillSelectFeild(quotationStatus, "Select Quotation Status", quotationStatuses, "name");
+    fillSelectFeild(quotationStatus, "Select Quotation Status", quotationStatuses, "name", "Valid" );
+    quotation.quotation_status_id = JSON.parse(quotationStatus.value);
 
     qrCodes = getServiceRequest("/quotationrequest/list")
     fillSelectFeild(quotationRequestCode, "Select Quotation Request Codes", qrCodes, "qr_number");
+    $('#quotationRequestCode').css("cursor", "pointer"); // enabling the field to enter data
+    $('#quotationRequestCode').css("pointer-events", "all");
 
     //CLEARING THE MODEL DETAILS IN THE ATTRIBUTE FIELDS IN THE FORM AFTER ADDING THE MODELS
 
     quotationSupplier.style.color        = "grey";
     quotationSupplier.style.borderBottom = "none";
 
-    quotationStatus.style.color          = "grey";
-    quotationStatus.style.borderBottom   = "none";
+    quotationStatus.style.color          = "green";
+    quotationStatus.style.borderBottom   = "solid";
 
     quotationRequestCode.style.color          = "grey";
     quotationRequestCode.style.borderBottom   = "none";
@@ -86,6 +111,25 @@ const refreshForm = () => {
     quotationReceivedDate.value = "";
     quotationExpiredDate.value  = "";
     quotationNote.value         = "";
+
+    // SETTING THE REVIEVED DATE
+    let currentDateForMinReciveDate = new Date();
+    currentDateForMinReciveDate.setDate(currentDateForMinReciveDate.getDate());
+
+    quotationReceivedDate.min = currentDateForMinReciveDate.getFullYear() + getMontahDate(currentDateForMinReciveDate);
+
+
+    // SETTING THE EXPIRE DATE
+    let currentDateForMin = new Date();
+    currentDateForMin.setDate(currentDateForMin.getDate());
+
+    quotationExpiredDate.min = currentDateForMin.getFullYear() + getMontahDate(currentDateForMin);
+
+
+    let currentDateForMax = new Date();
+    currentDateForMax.setDate(currentDateForMax.getDate() + 60);
+
+    quotationExpiredDate.max = currentDateForMax.getFullYear() + getMontahDate(currentDateForMax);
 
 
     refreshInnerFormAndTable();
@@ -143,7 +187,6 @@ const refreshInnerFormAndTable = () => {
 
     innerModels = getServiceRequest("/model/list")
     fillSelectFeild2(quotationModel, "Select Model", innerModels,"model_number" ,"model_name",)
-
     quotationModel.style.color        = "grey";
     quotationModel.style.borderBottom = "none";
 
@@ -168,6 +211,7 @@ const refreshInnerFormAndTable = () => {
     for (let index in quotation.quotationHasModelList){
 
         tableQuotationInnerTable.children[1].children[index].children[3].children[2].style.display = "none";
+        tableQuotationInnerTable.children[1].children[index].children[3].children[0].style.display = "none";
 
     }
 
@@ -176,11 +220,10 @@ const refreshInnerFormAndTable = () => {
 function innerRowView() {
 
 
-
 }
 
-function innerFormRefill() {
-
+//no need of inner edit coz not required
+const innerFormRefill = () => {
 
 
 }
@@ -201,8 +244,6 @@ const innerRowDelete = (innerOb, innerRowIndex) => {
     }
 
 }
-
-
 
 const innerAddMC = () => {
 
@@ -309,7 +350,6 @@ const submitBtnFunction = () => {
     if ( errors == ""){
 
         let submitConfigMsg = "Are you willing to add this Quotation Request?\n" +
-            "\n Quotation Number         : " + quotation.quotation_number +
             "\n Quotation Request Number : " + quotation.quotation_request_id.qr_number +
             "\n Quotation Supplier       : " + quotation.supplier_id.supplier_company_name;
 
@@ -362,12 +402,17 @@ const formRefill = (ob) => {
 
     fillSelectFeild(quotationSupplier, "Select Quotation Supplier", Suppliers, "supplier_company_name", quotation.quotation_request_id.supplier_id.supplier_company_name);
     quotationSupplier.style.borderBottom   = "solid";
+    $('#quotationSupplier').css("pointer-events", "none");
+    $('#quotationSupplier').css("cursor", "not-allowed");
 
     fillSelectFeild(quotationStatus, "Select Quotation Status", quotationStatuses, "name", quotation.quotation_status_id.name);
     quotationStatus.style.borderBottom   = "solid";
 
+    qrCodes = getServiceRequest("/quotationrequest/list")
     fillSelectFeild(quotationRequestCode, "Select Quotation Request Codes", qrCodes, "qr_number", quotation.quotation_request_id.qr_number);
     quotationRequestCode.style.borderBottom   = "solid";
+    $('#quotationRequestCode').css("pointer-events", "none");
+    $('#quotationRequestCode').css("cursor", "not-allowed");
 
     refreshInnerFormAndTable();
 

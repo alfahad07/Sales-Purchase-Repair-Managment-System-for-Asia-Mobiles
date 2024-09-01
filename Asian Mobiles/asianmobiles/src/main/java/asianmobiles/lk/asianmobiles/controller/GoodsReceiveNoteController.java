@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,14 +29,26 @@ public class GoodsReceiveNoteController {
     @Autowired // USED TO CREATE A COPY OF AN OBJECT AND INTERFACE
     private GoodsReceiveNoteRepository goodsReceiveNoteDao;
 
+    @Autowired // USED TO CREATE A COPY OF AN OBJECT AND INTERFACE
+    private PurchaseOrderRepository purchaseOrderDao;
+
     @Autowired
     private UserRepository userDao;
 
     @Autowired
     private GoodsReceiveNoteStatusRepository goodsReceiveNoteStatusDao;
 
+    @Autowired
+    private PurchaseOrderStatusRepository purchaseOrderStatusDao;
+
+    @Autowired
+    private ItemStatusRepository itemStatusDao;
+
+    @Autowired
+    private ItemsRepository itemDao;
 
 
+    //GETTING GRN OBJECT BY GIVEN ID FROM DATABASE
     @GetMapping(value = "/getbyid/{id}", produces = "application/json")
     public GoodsReceiveNote getGoodsReceiveNoteByPVId (@PathVariable("id") int id){
 
@@ -57,7 +70,7 @@ public class GoodsReceiveNoteController {
         return goodsReceiveNoteui;
     }
 
-
+    //GETTING ALL THE GRN
     @GetMapping(value = "/findall", produces = "application/json")
     public List<GoodsReceiveNote> findAll (){
 
@@ -79,6 +92,30 @@ public class GoodsReceiveNoteController {
             return  purchaseOrderList;
 
         }
+
+    }
+
+    // GETING ONLY NEEDED DETAILS OF GRN
+    @GetMapping(value = "/list", produces = "application/json")
+    public List<GoodsReceiveNote> getGoodsReceiveNoteList (){
+
+        return goodsReceiveNoteDao.list();
+
+    }
+
+    //
+    @GetMapping(value = "/getgrncodebysupplier/{sid}", produces = "application/json")
+    public List<GoodsReceiveNote> getGoodsReceiveNoteCodeBySupplier (@PathVariable("sid") int sid){
+
+        return goodsReceiveNoteDao.getGrnCodeBySupplier(sid);
+
+    }
+
+    //
+    @GetMapping(value = "/getgrnnettotalbygrn/{gid}", produces = "application/json")
+    public GoodsReceiveNote getGoodsReceiveNoteCodeByGrnId (@PathVariable("gid") int gid){
+
+        return goodsReceiveNoteDao.getGrnNetTotalByGrn(gid);
 
     }
 
@@ -141,6 +178,7 @@ public class GoodsReceiveNoteController {
     }
 
 
+    //CREATE POST MAPPING FUNCTION TO ADD GRN
     @PostMapping
     @Transactional
     public String addInnerGoodsReceiveNote( @RequestBody GoodsReceiveNote goodsReceiveNote ){
@@ -163,10 +201,10 @@ public class GoodsReceiveNoteController {
 
             try {
 
-
                 //SET AUTO INSERT VALUE
                 goodsReceiveNote.setAdded_datetime(LocalDateTime.now());
                 goodsReceiveNote.setAdded_user_id(loggedUser);
+                goodsReceiveNote.setPaid_amount(BigDecimal.ZERO);
 
 
                 String lastGoodsReceiveNoteCodeNo = goodsReceiveNoteDao.getLastGrnNo();
@@ -209,13 +247,80 @@ public class GoodsReceiveNoteController {
                 goodsReceiveNote.setGrn_code(nextGoodsReceiveNoteCodeNo);
 
 
-                for (GoodsReceiveNoteHasModel goodsReceiveNoteHasModel : goodsReceiveNote.getGoodsReceiveNoteHasModelList()){
+                //TO SET ITEM CODE TO THE RECEIVED ITEMS IN GRN IS PROVIDED BELOW
+                //IC20240003 - IC20240004 - IC20240005 | IC20240006 IC20240007 IC20240008 IC20240009
+                String nextItemCode = itemDao.getNextCode(); //GOT THE NEXT CODE
+                int totalRecievedItemCount = 0;
 
+                //A for loop to get the total received quantity from the inner form of the grn
+                for (GoodsReceiveNoteHasModel goodsReceiveNoteHasModel : goodsReceiveNote.getGoodsReceiveNoteHasModelList()){
+                    totalRecievedItemCount = totalRecievedItemCount + goodsReceiveNoteHasModel.getReceived_quantity(); //took the total received quantity from the inner form of the grn. EX:- 10 ITEMS RECEIVED
+                }
+
+                String[] itemCodeList =  new String[totalRecievedItemCount]; //Created a new array in the length of total recieved quantity to generate ItemCode
+                itemCodeList[0] = nextItemCode; //Setting the next Item code to the 1st item in the array index [0].
+
+                for (int i = 1; i < totalRecievedItemCount; i++) { // i = 1 bcoz the itemcode for the 1st item in the array is set index[0].
+
+                    String nextCode = nextItemCode.substring(0,6) + String.format("%04d" ,Integer.valueOf(nextItemCode.substring(6)) + i); //Creating next itemcode from the 2nd item in the array to last item in the array.
+                    itemCodeList[i] = nextCode; //Setting the created itemcode to the item in the array.
+                }
+
+                int k = 0;
+
+                for (GoodsReceiveNoteHasModel goodsReceiveNoteHasModel : goodsReceiveNote.getGoodsReceiveNoteHasModelList()){
                     goodsReceiveNoteHasModel.setGoods_receive_note_id(goodsReceiveNote);
+                    if (goodsReceiveNoteHasModel.getModel_id().getSub_catergory_id().getCategory_id().getName() == "Phone"){
+                        for (Items item : goodsReceiveNoteHasModel.getItemsList()) {
+                            item.setGoods_receive_note_has_model_id(goodsReceiveNoteHasModel);
+                            item.setItem_status_id(itemStatusDao.getReferenceById(1));
+                            item.setItem_name(goodsReceiveNoteHasModel.getModel_id().getModel_name());
+                            item.setModel_id(goodsReceiveNoteHasModel.getModel_id());
+                            item.setAdded_user_id(loggedUser);
+                            item.setAdded_datetime(LocalDateTime.now());
+                            item.setItem_code_number(itemCodeList[k]);
+                            k++;
+
+                        }
+                    }else {
+
+                        List<Items> itemsList = new ArrayList<>();
+                        for (int i=0 ; i < goodsReceiveNoteHasModel.getReceived_quantity() ; i++) {
+
+                            Items item = new Items();
+                            item.setGoods_receive_note_has_model_id(goodsReceiveNoteHasModel);
+                            item.setItem_status_id(itemStatusDao.getReferenceById(1));
+                            item.setItem_name(goodsReceiveNoteHasModel.getModel_id().getModel_name());
+                            item.setModel_id(goodsReceiveNoteHasModel.getModel_id());
+                            item.setAdded_user_id(loggedUser);
+                            item.setAdded_datetime(LocalDateTime.now());
+                            item.setItem_code_number(itemCodeList[k]);
+                            k++;
+                            itemsList.add(item);
+
+                        }
+                        goodsReceiveNoteHasModel.setItemsList(itemsList);
+                    }
 
                 }
 
-                goodsReceiveNoteDao.save(goodsReceiveNote);
+
+                GoodsReceiveNote newGrn = goodsReceiveNoteDao.save(goodsReceiveNote);
+
+
+                //Need to change the Purchase-Order Status to received
+                PurchaseOrder purchaseOrder = newGrn.getPurchase_order_id();
+                purchaseOrder.setPurchase_order_status_id(purchaseOrderStatusDao.getReferenceById(2));
+
+                    //THE FOR LOOP IS WRITTEN BCOZ WE IGNORED THE PURCHASE ORDER ID(POID) IN THE PurchaseOrderHasModel JAVA FILE TO PREVENT THE RECURSION, THE FIELD SHOULD BE SET BEFORE SAVING BECAUSE NULL VALUE CANNOT BE SAVED.
+                    for (PurchaseOrderHasModel purchaseOrderHasModel : purchaseOrder.getPurchaseOrderHasModelList()){
+
+                        purchaseOrderHasModel.setPurchase_order_id(purchaseOrder);
+                    }
+
+                purchaseOrderDao.save(purchaseOrder);
+
+
 
                 return "0";
 
@@ -232,66 +337,5 @@ public class GoodsReceiveNoteController {
         }
 
     }
-
-
-    //CREATE PUT MAPPING FUNCTION TO UPDATE GRN [/goodsreceivenote - PUT]
-    @PutMapping
-    public String updatePurchaseOrder( @RequestBody  GoodsReceiveNote goodsReceiveNote ){
-
-        //NEED TO CHECK PRIVILAGE FOR LOGGED USER --> This is done below...
-
-        //Checking the logged user is exixting in the  database. ( Authenticated user )
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-
-        //Getting authenticated logged user's username
-        User loggedUser = userDao.findUserByUsername(authentication.getName());
-
-
-        //Created a HashMap instance or copy
-        HashMap<String, Boolean> loggedUserPrivillage = privilegeController.getPrivilage(loggedUser.getUsername(), "GOODS-RECEIVE-NOTE");
-
-        if (!(authentication instanceof AnonymousAuthenticationToken) && loggedUser != null && loggedUserPrivillage.get("upd")){
-
-
-            //checking function to check weather the Quotation exist in the database
-            GoodsReceiveNote existGoodsReceiveNote = goodsReceiveNoteDao.getReferenceById(goodsReceiveNote.getId());
-
-            if (existGoodsReceiveNote != null){
-
-                try {
-
-                    //SET AUTO INSERT VALUE OF THE LAST UPDATED TIME ONCE THE UPDATE IS DONE BY THE USER.
-                    goodsReceiveNote.setLast_updated_datetime(LocalDateTime.now());
-                    goodsReceiveNote.setUpdated_user_id(loggedUser);
-
-                    //SAVE THE CHANGES
-                    for (GoodsReceiveNoteHasModel goodsReceiveNoteHasModel : goodsReceiveNote.getGoodsReceiveNoteHasModelList()) {
-                        goodsReceiveNoteHasModel.setGoods_receive_note_id(goodsReceiveNote);
-                    }
-                    goodsReceiveNoteDao.save(goodsReceiveNote);
-
-                    return "0";
-
-                }catch (Exception ex){
-
-                    return "Goods Receive Note update is incomplete : " + ex.getMessage();
-
-                }
-
-            }else{
-
-                return "Update Not Completed : Goods Receive Note Not Available";
-
-            }
-
-        }else {
-
-            return "Goods Receive Note update not completed : You dont have access";
-
-        }
-
-    }
-
 
 }
