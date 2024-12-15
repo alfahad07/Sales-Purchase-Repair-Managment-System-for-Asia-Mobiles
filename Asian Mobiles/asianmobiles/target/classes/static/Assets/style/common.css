@@ -1,0 +1,783 @@
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+/* STYLES FOR TOP NAVIGATION BAR CLASS */
+.topNavBar{
+    
+    background: rgba(26, 26, 26, 0.62);
+   
+} 
+
+/* STYLES FOR HTML BODY AREA */
+.body {
+
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    overflow-y: hidden;
+    /*background: linear-gradient(#ffffff, #5d5d5e);*/
+
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    min-height: 100vh;
+    margin: 0 auto;
+
+    perspective: 1500px;
+
+}
+
+.moduleTitleText h1 {
+
+    margin-top: -110px;
+    margin-bottom:-000px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    position: relative;
+    font-size: 4em;
+    text-transform: uppercase;
+    background-color: white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 2px grey;
+
+}
+
+
+/*------------------------------------------------------------------------------------------------------------------------------*/
+
+#star {
+
+    color: red;
+
+}
+
+/* STYLES EMPLOYEE FORM & EMPLOYEE TABLE BOX */
+.moduleManagementContainer {
+
+    margin-top: -20px;
+    z-index: 1500;
+    background-color: white;
+    background: linear-gradient(white, rgb(236, 236, 236));
+    border-radius: 30px;
+    width: 1340px;
+    max-width: 100%;
+    min-height: 510px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 15px 28px rgba(0, 0, 0, 0.25),
+                0px 15px 30px rgba(0, 0, 0, 0.25);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+}
+
+/* STYLES FOR BACKGROUND BORDER ANIMATION */
+.moduleManagementContainer::before {
+
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300%;
+    /*
+    background: linear-gradient(to right, rgb(80, 80, 252), rgb(255, 89, 89));
+    */
+
+    background: linear-gradient(to right, green, );
+    animation: animateBackgroundBorderLight 4s linear infinite;
+
+}
+
+@keyframes animateBackgroundBorderLight {
+
+    0% {
+
+        transition: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.moduleManagementContainer::after {
+
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: linear-gradient(to bottom, white, rgb(240, 240, 240));
+    border-radius: 30px;
+
+}
+/*------------------------------------------------------------------------------------------------------------------------------*/
+
+.form-container {
+
+    position: absolute;
+    top: 0%;
+    height: 100%;
+    transition: all 0.6 ease-in-out;
+
+}
+
+.moduleForm-container {
+
+    padding: 15px;
+    left: 0;
+    width: 85%;
+    z-index: 1;
+    opacity: 0;
+    overflow-y: scroll;
+
+}
+
+form {
+
+    padding: 10px 25px;
+    height: 100%;
+
+}
+
+
+.moduleTable-container {
+
+    padding: 15px;
+    left: 0;
+    width: 85%;
+    z-index: 2;
+    overflow-y: scroll;
+}
+
+.overlay-container {
+
+    position: absolute;
+    top: 0;
+    left: 85%;
+    width: 15%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 100;
+    transition: 0.7s ease-in-out
+}
+
+/* STYLES FOR OVERLAY ( MAIN SLIDE CONTAINER OR BOX ) */
+.overlay {
+
+    /* background-color: #FF416C; */
+   /* background: linear-gradient(to right, #FF4B2B, #FF416C); */
+    background-image: url(../images/mobiles.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    color: #FFFFFF;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: 0.7s ease-in-out;
+
+}
+
+/* STYLES FOR OVERLAY-PANEL ( THE RED COLOUR BOX ON THE RIGHT SIDE OF THE EMPLOYEE FORM & EMPLOYEE TABLE BOX ) */
+.overlay-panel {
+
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0px 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+
+}
+
+/* STYLES FOR OVERLAY-LEFT & OVERLAY-RIGHT HEADING */
+.overlayPanelH1 {
+
+    font-weight: bold;
+    margin-top: 0px;
+
+}
+
+/* STYLES FOR OVERLAY-LEFT-PANEL EMPLOYEE TABLE */
+.overlay-left {
+
+    transform: translateX(-20%);
+
+}
+
+/* STYLES FOR OVERLAY-LEFT-PANEL EMPLOYEE FORM */
+.overlay-right {
+
+    right: 0;
+    transform: translateX(0);
+
+}
+
+/* STYLES FOR OVERLAY-LEFT-PANEL & OVERLAY-RIGHT-PANEL BUTTON CLICK ANIMATION */
+.press:active {
+
+    transform: scale(.30);
+
+}
+
+/* STYLES FOR OVERLAY-LEFT-PANEL & OVERLAY-RIGHT-PANEL BUTTON */
+.press {
+
+    border-radius: 20px;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: .8s ease-in;
+    background-color: transparent;
+
+}
+
+/* STYLES FOR OVERLAY-LEFT-PANEL & OVERLAY-RIGHT-PANEL PARAGRAPH */
+p {
+
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    letter-spacing: .5px;
+    margin: 20px 0 30px;
+
+}
+
+.moduleManagementContainer.right-panel-active .moduleTable-container {
+
+    transform: translateX(200%);
+
+}
+
+.moduleManagementContainer.right-panel-active .moduleForm-container {
+
+    transform: translateX(17%);
+    opacity: 1;
+    z-index: 5;
+    animation: slide 0.6s;
+
+}
+
+@keyframes slide {
+
+    0%,
+    49.99% {
+
+        opacity: 0;
+        z-index: 1;
+
+    }
+
+    50%,
+    100% {
+
+        opacity: 1;
+        z-index: 5;
+
+    }
+
+}
+
+.moduleManagementContainer.right-panel-active .overlay-container {
+
+    transform: translateX(-567%);
+
+}
+
+.moduleManagementContainer.right-panel-active .overlay {
+
+    transform: translateX(50%);
+
+}
+
+.moduleManagementContainer.right-panel-active .overlay-left {
+
+    transform: translateX(0);
+
+}
+
+.moduleManagementContainer.right-panel-active .overlay-right {
+
+    transform: translateX(20%);
+
+}
+
+
+
+/**************** STYLES FOR INPUTFIELD ANIMATION *********************************/
+.inputBox {
+
+    position: relative;
+    width: 33.3%;
+
+}
+
+.inputBox input {
+
+    width: 100%;
+    background: transparent;
+    color: black;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding-top: 20px;
+    padding-bottom: 0;
+    font-size: .9em;
+    letter-spacing: 0.1em;
+    
+
+}
+
+.inputBox label {
+
+    left: 12px;
+    position: absolute;
+    padding: 25px 0 5px;
+    color: rgba(53, 53, 53, 0.623);
+    text-transform: uppercase;
+    pointer-events: none;
+    bottom: 1px;
+    font-size: 0.9em;
+
+}
+
+.inputBox input:valid~label,
+.inputBox input:focus~label {
+
+    color: #2196f3;
+    transform: translateY(-14px);
+    font-size: 0.70em;
+
+}
+
+.disabledLabel {
+
+    color: grey;
+
+}
+
+.inputBox i {
+
+    position: absolute;
+    left: 13px;
+    bottom: 0;
+    width: 92%;
+    height: 3px;
+    background: transparent;
+    overflow: hidden;
+
+}
+
+.inputBox i::before {
+
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0%;
+    /*background: linear-gradient(90deg, #ff1b69, #ff0, #2196f3, #9c27b0, #ff1b69);*/
+    background: linear-gradient(90deg, lightslategrey, lightslategrey);
+
+    animation: animateInputUnderline 3s linear infinite;
+
+}
+
+@keyframes animateInputUnderline {
+
+    0% {
+        background-position-x: 0;
+    }
+
+    100% {
+        background-position-x: 250px;
+    }
+
+}
+
+.selectStyle select {
+
+    margin-top: 3px;
+    width: 100%;
+    background: transparent;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    font-size: .9em;
+    text-transform: uppercase;
+
+}
+
+.inputSelect {
+
+    margin-top: 3px;
+    width: 100%;
+    background: transparent;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    font-size: .9em;
+    text-transform: uppercase;
+
+}
+
+.selectStyle label {
+
+    color: #2196f3;
+    text-transform: uppercase;
+    pointer-events: none;
+    bottom: 0px;
+    font-size: 0.9em;
+
+}
+
+.selectStyle i {
+
+    position: absolute;
+    left: 40px;
+    bottom: 47px;
+    width: 95%;
+    height: 3px;
+    background: transparent;
+    overflow: hidden;
+
+}
+
+.selectStyle i::before {
+
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0%;
+    background: linear-gradient(90deg, lightslategrey, lightslategrey);
+
+    animation: animateUnderline 2s linear infinite;
+
+}
+
+
+@keyframes animateUnderline {
+
+    0% {
+        background-position-x: 0;
+    }
+
+    100% {
+        background-position-x: 250px;
+    }
+
+}
+
+.empDescriptionLabel {
+
+    color: #2196f3;
+    text-transform: uppercase;
+    pointer-events: none;
+    bottom: 0;
+
+}
+
+.textArea{
+
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    font-size: .9em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+}
+
+/*******************************************************************************************/
+
+/**************** STYLES FOR EDIT, DELETE & VIEW BUTTON IN THE EMPLOYEE TABLE MODIFY COLUMN *****************/
+.tableBtn{
+
+    position: relative;
+    list-style: none;
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(45deg, var(--i), var(--j));
+    border: 60px;
+    border-radius: 100px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: 0.5s;
+    display: inline;
+
+}
+
+.tableBtn:hover{
+
+    width: 90px;
+
+}
+
+.tableBtn::before{
+
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 100px;
+    background: linear-gradient(45deg, var(--i), var(--j));
+    opacity: 0;
+    transition: 0.5s;
+    
+}
+
+.tableBtn:hover::before{
+
+    opacity: 1;
+
+}
+
+.tableBtn::after{
+
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(45deg, var(--i), var(--j));
+    transition: 0.5s;
+    filter: blur(15px);
+    z-index: -1;
+    opacity: 0;
+}
+
+.tableBtn:hover::after{
+
+    opacity: 0.5;
+
+}
+.tableBtn i {
+
+    color: #ffffff;
+    font-size: 1.2em;
+    transition: 0.5s;
+    transition-delay: 0.25s;
+    position: absolute;
+    bottom: 9px;;
+    left: 9px;
+
+}
+
+.tableBtn:hover i{
+
+    transform: scale(0);
+    color: #fff;
+    transition-delay: 0s;
+
+}
+
+.tableBtn span{
+
+    position: absolute;
+
+}
+
+/*STYLE FOR TEXT IN THE BUTTON*/
+.btnTitle{
+
+    color: #fff;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transform: scale(0);
+    transition: 0.3s;
+    transition-delay: 0s;
+    bottom: 10px;
+    left: 26px;
+
+}
+
+.tableBtn:hover .btnTitle{
+
+    transform: scale(1);
+    transition-delay: 0.25s;
+
+}
+
+/*STYLES FOR EDIT, DELETE & VIEW COLOURS*/
+.editBtnColour{
+
+    --i:#62ff4e;
+    --j:#48e1fc;
+
+}
+
+.viewBtnColour{
+
+    --i:#56CCF2;
+    --j:#2F80ED;
+
+}
+
+.deleteBtnColour{
+
+    --i:#fc9292;
+    --j:#ff3131;
+
+}
+
+.deleteText{
+
+    left: 18px;
+
+}
+
+/**************************************************************************************************************/
+
+.clearBtn{
+
+    color: #0ff;
+    font-size: 16px;
+    border: 3px solid #0ff;
+    border-radius: 100px;
+    padding: 5px 3rem;
+    cursor: pointer;
+   
+
+}
+
+.clearBtn:hover{
+
+    background: #0ff;
+    color: white;
+    box-shadow: 0 0 50px #0ff, 0 0 21px #0ff;
+
+}
+
+.addBtn{
+
+    color: #52ff3b;
+    font-size: 16px;
+    border: 3px solid #52ff3b;
+    border-radius: 100px;
+    padding: 5px 4rem;
+    cursor: pointer;
+
+}
+
+.addBtn:hover{
+
+    background: #52ff3b;
+    color: white;
+    box-shadow: 0 0 50px #52ff3b, 0 0 21px #52ff3b;
+
+}
+
+.updateBtn{
+
+    color: rgb(255, 184, 51);
+    font-size: 16px;
+    border: 3px solid rgb(255, 184, 51);
+    border-radius: 100px;
+    padding: 5px 3rem;
+    cursor: pointer;
+
+}
+
+.updateBtn:hover{
+
+    background: rgb(255, 184, 51);
+    color: white;
+    box-shadow: 0 0 50px rgb(255, 184, 51), 0 0 21px rgb(255, 184, 51);
+
+}
+
+
+.clockHero{
+
+    position: relative;
+
+}
+
+.clockContainer{
+
+    width: 400px;
+    height: 58px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 42px;
+    left: 49%;
+
+}
+
+.clock{
+
+    width: 100%;
+    height: 70%;
+    background: transparent;
+    border-radius: 20px;
+    border: gold 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+
+}
+
+.clock span{
+
+    font-size: 25px;
+    color: white;
+    width: 61px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    top: -6px;
+
+}
+
+.clock span::after{
+
+    font-size: 10px;
+    color: white;
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translate(-50%);
+
+}
+
+#hrs::after{
+
+    content: 'Hours';
+
+}
+
+#min::after{
+
+    content: 'Minutes';
+
+}
+
+#sec::after{
+
+    content: 'Seconds';
+
+}

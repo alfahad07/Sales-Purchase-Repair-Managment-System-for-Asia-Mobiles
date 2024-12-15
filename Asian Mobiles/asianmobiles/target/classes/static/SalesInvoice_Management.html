@@ -1,0 +1,799 @@
+<html>
+
+<head>
+
+    <!--JQUARY LINK-->
+    <script src="Assets/jquery/jquery.js"></script>
+
+    <link rel="stylesheet" href="Assets/datatable/css/datatables.min.css">
+    <script src="Assets/datatable/js/datatables.min.js"></script>
+
+    <!--BOOSTRAP CSS & JS LINK-->
+    <link rel="stylesheet" href="Assets/bootstrap/css/bootstrap.min.css">
+    <script src="Assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--FONT AWESOME LINK-->
+    <link rel="stylesheet" href="Assets/fontawesome/css/all.css">
+
+    <!-- js, css & COMMON.JS LINK-->
+    <link rel="stylesheet" href="Assets/style/common.css">
+    <script src="Assets/script/common.js"></script>
+    <script src="Assets/script/salesinvoice.js"></script>
+    <script src="Assets/script/login.js"></script>
+
+    <title>SalesInvoice_Management-Asian_Mobiles</title>
+
+</head>
+
+<!--ADDED BACKGROUND PICTURE ON BODY TAG BY CSS-->
+<body style="background-image: url(Assets/images/desmal14.jpg); overflow-x: hidden; overflow-y: hidden; background-size: cover;">
+
+
+<!--NAVIGATION BAR BY BOOSTRAP5-->
+<div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
+    <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Administration
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li id="EMPLOYEE"><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
+                            <li id="USER"><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
+                            <li id="PRIVILEGE"><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Sales
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="CUSTOMER"><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
+                            <li id="PRE-ORDER"><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+                            <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Sales-Invoice Management System</a></li>
+                            <li id="SALES-PAYMENT"><a class="dropdown-item fw-bold" href="/customerpayment">Customer Payment Management System</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Purchase
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="SUPPLIER"><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
+                            <li id="QUOTATION-REQUEST"><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
+                            <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
+                            <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
+                            <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+                            <li id="PURCHASE-PAYMENT"><a class="dropdown-item fw-bold" href="/supplierpayment">Supplier Payment Management System</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Inventory
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="ITEMS-INVENTORY"><a class="dropdown-item fw-bold" href="/itemsinventory">Items Inventory Management System</a></li>
+                            <li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Reports
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="GRN-REPORT"><a class="dropdown-item fw-bold" href="/grnReports">GRN Reports</a></li>
+                            <!--<li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>-->
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            repair
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" onclick="signOutFunction()" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" style="-webkit-text-stroke: 1.5px rgb(0,196,255) ;font-size: 20px;" id="liaLoggedUser">LoggedUser Name</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+    <div class="container-fluid body">
+
+        <div class="row moduleTitleText">
+            <h1 class="fw-bold">SALES INVOICE MANAGEMENT SYSTEM</h1>
+        </div>
+
+        <div class="moduleManagementContainer" id="empMancontainer">
+
+            <!----SALES INVOICE TABLE CONTAINER-->
+            <div class="form-container moduleTable-container" id="employeeFormContainer">
+
+                <!--SALES INVOICE TABLE-->
+                <div class="row">
+
+                    <div class="col-9">
+
+                        <h2 class="fw-bold"><i class="fa fa-table"></i>SALES INVOICE TABLE</h2>
+
+                    </div>
+
+                    <div class="col-3 text-end">
+
+                        <button type="button" class="btn btn-outline-primary" onclick="printTable(tableSalesInvoice)">PRINT TABLE</button>
+
+                    </div>
+
+                </div><br>
+
+                <table class="table table-hover table-dark table-striped-columns" id="tableSalesInvoice">
+
+                    <thead class="table-secondary" style="text-transform: uppercase">
+
+                    <tr class="fw-bold">
+                        <th class="text-center" style="font-size: 13px">Index</th>
+                        <th class="text-center" style="font-size: 13px">Pre-Order Code</th>
+                        <th class="text-center" style="font-size: 13px">Bill No</th>
+                        <th class="text-center" style="font-size: 13px">Customer Name</th>
+                        <th class="text-center" style="font-size: 13px;">Model Name</th>
+                        <th class="text-center" style="font-size: 13px">Net Amount</th>
+                        <th class="text-center" style="font-size: 13px">Status</th>
+                        <th class="text-center modify" style="column-width: 250px;font-size: 13px">MODIFY</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+
+            <!----SALES INVOICE FORM CONTAINER-->
+            <div class="form-container moduleForm-container">
+
+                <!-- SALES INVOICE FORM -->
+                <form onsubmit="return false">
+
+                    <!--- SALES INVOICE FORM HEADING -->
+                    <div class="row">
+                        <h2 class="fw-bold"><i class="fa fa-tasks"></i> SALES INVOICE FORM</h2>
+                    </div>
+
+                    <!--- REQUIRED STAR MARK  -->
+                    <div class="row text-end">
+                        <span class="fw-bold" style="font-size: 18px;"><span id="star">*</span> Required
+                        </span>
+                    </div><br>
+
+                    <!--SALES INVOICE REGISTERED CUSTOMER /SALES INVOICE PRE-ORDER-->
+                    <div class="row">
+
+                        <!--SALES INVOICE REGISTERED CUSTOMER-->
+                        <div class="col-4 selectStyle" style="width: 50%">
+
+                            <label for="registeredCustomer" id="labelRegisteredCustomer" class="fw-bold">Registered Customer : </label>
+
+                            <select id="registeredCustomer" class="fw-bold" onchange="selectValidator(registeredCustomer, '','salesInvoice', 'customer_id','oldSalesInvoice')" >
+
+                            </select>
+
+                            <i style="top: 171px; width: 46%"></i>
+
+                        </div>
+
+                        <!--SALES INVOICE PRE-ORDER-->
+                        <div class="col-4 selectStyle" style="width: 50%">
+
+                            <label for="salesPreOrder" id="labelSalesPreOrder" class="fw-bold">Sales Pre-Order : </label>
+
+                            <select id="salesPreOrder" class="fw-bold" onchange="selectValidator(salesPreOrder, '', 'salesInvoice', 'pre_order_id','oldSalesInvoice'); invoiceItemByPreOrder()" >
+
+                            </select>
+
+                            <i style="top: 171px; width: 46%; left: 51%"></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--SALES INVOICE CUSTOMER NAME /SALES INVOICE CUSTOMER ADDRESS /SALES INVOICE CUSTOMER CONTACT NUMBER-->
+                    <div class="row">
+
+                        <!--SALES INVOICE CUSTOMER NAME-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="salesCustomerName"
+                                   onkeyup="nameCapitalLetterCheckValidtor(salesCustomerName,'^(([A-Za-z]{3,20}[\\s])+([A-Za-z]{1,16}))$','salesInvoice','customer_name','oldSalesInvoice')">
+
+                            <label for="salesCustomerName" id="labelSalesCustomerName" class="fw-bold">Customer Name (Ex: AXXX FXXX): </label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                        <!--SALES INVOICE CUSTOMER E-MAIL-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="salesCustomerEmail"
+                                   onkeyup="textFeildValidtor(salesCustomerEmail,'^[A-Za-z0-9]{5,20}[@][a-z]{4,10}[.][a-z]{2,5}$','salesInvoice','customer_email','oldSalesInvoice')">
+
+                            <label for="salesCustomerEmail" id="labelSalesCustomerEmail" class="fw-bold">Customer E-Mail: </label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                        <!--SALES INVOICE CUSTOMER CONTACT NUMBER -->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="salesContactNumber"
+                                   onkeyup="textFeildValidtor(salesContactNumber,'^[0][7][01245678][0-9]{7}$','salesInvoice','contact_number','oldSalesInvoice')">
+
+                            <label for="salesContactNumber" id="labelSalesContactNumber" class="fw-bold">Contact Number: </label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--SALES INVOICE CUSTOMER NIC /SALES INVOICE CUSTOMER E-MAIL /SALES INVOICE CUSTOMER TOTAL AMOUNT-->
+                    <div class="row">
+
+                        <!--SALES INVOICE CUSTOMER NIC-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="salesCustomerNic"
+                                   onkeyup="textFeildValidtor(salesCustomerNic,'^[0-9]{1,3}[.][0-9]{1,2}$','salesInvoice','customer_nic','oldSalesInvoice')">
+
+                            <label for="salesCustomerNic" id="labelSalesCustomerNic" class="fw-bold">Customer NIC : </label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                        <!--SALES INVOICE CUSTOMER ADDRESS-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="salesCustomerAddress"
+                                   onkeyup="textFeildValidtor(salesCustomerAddress,'^[A-Za-z0-9\\/\\.\\,]{1,250}$','salesInvoice','customer_address','oldSalesInvoice')">
+
+                            <label for="salesCustomerAddress" id="labelSalesCustomerAddress" class="fw-bold">Customer Address : </label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                        <!--SALES INVOICE CUSTOMER TOTAL AMOUNT-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="salesTotalAmount"
+                                   onkeyup="textFeildValidtor(salesTotalAmount,'^[0-9]{3,10}$','salesInvoice','total_amount','oldSalesInvoice'); gettingTheNetTotal()"  required>
+
+                            <label for="salesTotalAmount" id="labelSalesTotalAmount" class="fw-bold">Total Amount : <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--SALES INVOICE TAX /SALES INVOICE DISCOUNT /SALES INVOICE NET AMOUNT-->
+                    <div class="row">
+
+                        <!--SALES INVOICE TAX-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="salesTax"
+                                   onkeyup="textFeildValidtor(salesTax,'^[0-9]{1,3}[.][0-9]{1,2}$','salesInvoice','tax','oldSalesInvoice'); gettingTheNetTotal()" required>
+
+                            <label for="salesTax" id="labelSalesTax" class="fw-bold">Sales Tax %(Ex:xx.xx): <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                        <!--SALES INVOICE DISCOUNT-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="salesDiscount"
+                                   onkeyup="textFeildValidtor(salesDiscount,'^[0-9]{1,2}[.][0-9]{1,2}$','salesInvoice','discount','oldSalesInvoice'); gettingTheNetTotal()" required>
+
+                            <label for="salesDiscount" id="labelSalesDiscount" class="fw-bold">Sales Discount %(Ex:xx.xx): <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                        <!--SALES INVOICE NET AMOUNT-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="salesNetAmount"
+                                   onkeyup="textFeildValidtor(salesNetAmount,'^[0-9]{3,10}$','salesInvoice','net_amount','oldSalesInvoice')"
+                                   required>
+
+                            <label for="salesNetAmount" id="labelSalesNetAmount" class="fw-bold">Sales Net Amount : <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--SALES INVOICE STATUS-->
+                    <div class="row">
+
+                        <!--SALES INVOICE STATUS-->
+                        <div class="col-4 selectStyle" style="width: 50%">
+
+                            <label for="salesInvoiceStatus" id="labelSalesInvoiceStatus" class="fw-bold">Sales Invoice Status : <span id="star">*</span></label>
+
+                            <select id="salesInvoiceStatus" class="fw-bold" onchange="selectValidator(salesInvoiceStatus, '','salesInvoice', 'sales_invoice_status_id','oldSalesInvoice')" required>
+
+                            </select>
+
+                            <i style="top: 430px; width: 46%"></i>
+
+                        </div>
+
+                    </div><br><br><br>
+
+                    <!--SALES INVOICE INNER FORM & TABLE-->
+                    <div class="row" style="overflow-x: hidden">
+
+                        <!--SALES INVOICE INNER FORM-->
+                        <div class="col-3">
+
+                            <!--SALES INVOICE ITEM-->
+                            <div class="row">
+
+                                <!--SALES INVOICE ITEM-->
+                                <div class="selectStyle">
+
+                                    <label style="width: 100px" for="salesInvoiceItem" id="labelSalesInvoiceItem" class="fw-bold">Item : <span id="star">*</span></label>
+
+                                    <select style="width: 104%;" id="salesInvoiceItem" class="fw-bold" onchange="selectValidator(salesInvoiceItem,'','salesInvoiceHasItems','items_id','oldSalesInvoiceHasItems'), selectModelToGetUnitPrice()" required>
+
+                                    </select>
+
+                                    <i style="top: 545px; width: 23%"></i>
+
+                                </div>
+
+                            </div><br>
+
+                            <!--SALES INVOICE UNIT PRICE-->
+                            <div class="row">
+
+                                <!--SALES INVOICE UNIT PRICE-->
+                                <div class="col-12 inputBox">
+
+                                    <input type="text" class="fw-bold inputSelect" id="salesInvoiceUnitPrice" style="width: 345%;" onkeyup="textFeildValidtor(salesInvoiceUnitPrice,'^[0-9]{3,6}[.][0-9]{2}$', 'salesInvoiceHasItems','unit_price', 'oldSalesInvoiceHasItems')" required>
+
+                                    <label style="width: 100px" for="salesInvoiceUnitPrice" class="fw-bold">Unit Price : <span id="star">*</span></label>
+
+                                    <i style="width: 289%"></i>
+
+                                </div>
+
+                            </div><br>
+
+                            <!--SALES INVOICE DISCOUNT RATE-->
+                            <div class="row">
+
+                                <!--SALES INVOICE DISCOUNT RATE-->
+                                <div class="col-12 inputBox">
+
+                                    <input type="text" class="fw-bold inputSelect" id="salesInvoiceDiscountRate" style="width: 345%;" onkeyup="textFeildValidtor(salesInvoiceDiscountRate,'^[0-9]{1,2}[.][0-9]{2}$', 'salesInvoiceHasItems','discount_rate', 'oldSalesInvoiceHasItems'); innerDeductDiscountRateWithUnitPrice(); innerMultiplyQuantityWithDiscountedPrice()" required>
+
+                                    <label style="width: 200px" for="salesInvoiceDiscountRate" class="fw-bold">Discount Rate %: <span id="star">*</span></label>
+
+                                    <i style="width: 289%"></i>
+
+                                </div>
+
+                            </div><br>
+
+                            <!--SALES INVOICE DISCOUNTED PRICE-->
+                            <div class="row">
+
+                                <!--SALES INVOICE DISCOUNTED PRICE-->
+                                <div class="col-12 inputBox">
+
+                                    <input type="text" class="fw-bold inputSelect" id="salesInvoiceDiscountedPrice" style="width: 345%;" onkeyup="textFeildValidtor(salesInvoiceDiscountedPrice,'^[0-9]{3,7}[.][0-9]{2}$', 'salesInvoiceHasItems','discounted_price', 'oldSalesInvoiceHasItems')" required>
+
+                                    <label style="width: 200px" style="width: 100px" for="salesInvoiceDiscountedPrice" class="fw-bold">Discounted Price : <span id="star">*</span></label>
+
+                                    <i style="width: 289%"></i>
+
+                                </div>
+
+                            </div><br>
+
+                            <!--SALES INVOICE QUANTITY-->
+                            <div class="row">
+
+                                <!--PRE-ORDER QUANTITY-->
+                                <div class="col-12 inputBox">
+
+                                    <input type="text" class="fw-bold" id="salesInvoiceQuantity" style="width: 345%;" onkeyup="textFeildValidtor(salesInvoiceQuantity,'^[0-9]{1,5}$', 'salesInvoiceHasItems','quantity', 'oldSalesInvoiceHasItems')" required>
+
+                                    <label style="width: 100px" style="width: 100px" for="salesInvoiceQuantity" class="fw-bold">Quantity : <span id="star">*</span></label>
+
+                                    <i style="width: 289%"></i>
+
+                                </div>
+
+                            </div><br>
+
+                            <!--SALES INVOICE LINE TOTAL-->
+                            <div class="row">
+
+                                <!--SALES INVOICE LINE TOTAL-->
+                                <div class="col-12 inputBox">
+
+                                    <input type="text" class="fw-bold inputSelect" id="salesInvoiceLineTotal" style="width: 345%;"  onkeyup="textFeildValidtor(salesInvoiceLineTotal,'^[0-9]{3,7}[.][0-9]{2}$', 'salesInvoiceHasItems','line_amount', 'oldSalesInvoiceHasItems')" required>
+
+                                    <label style="width: 102px"  for="salesInvoiceLineTotal" class="fw-bold">Line Total : <span id="star">*</span></label>
+
+                                    <i style="width: 289%"></i>
+
+                                </div>
+
+                            </div><br>
+
+
+                            <!-- INNER FORM ADD, UPDATE & CLEAR BUTTON -->
+                            <div class="row text-center">
+
+                                <!--ADD BUTTON-->
+                                <div class="col-3">
+
+                                    <button class="btn btn-outline-success" id="innerFormBtnAdd" style="border-radius: 20px; width: 134%" onclick="innerAddMC()" > ADD </button>
+
+                                </div>
+
+                                <!--UPDATE BUTTON-->
+                                <div class="col-5">
+
+                                    <button class="btn btn-outline-warning" id="innerFormBtnUpdate" style="border-radius: 20px; width: 117%" onclick="innerUpdateMC()" > UPDATE </button>
+
+                                </div>
+
+                                <!--CLEAR BUTTON-->
+                                <div class="col-4">
+
+                                    <button class="btn btn-outline-primary" id="innerFormBtnClear" style="border-radius: 20px; width: 120%" onclick="innerClearMC()" > CLEAR </button>
+
+                                </div>
+
+                            </div><br>
+
+                        </div>
+
+                        <!--PRE-ORDER INNER TABLE-->
+                        <div class="col-9">
+
+                            <table class="table table-hover table-dark table-striped-columns" id="tableSalesInvoiceInnerTable">
+
+                                <thead class="table-secondary border" style="text-transform: uppercase">
+
+                                <tr class="fw-bold">
+                                    <th class="text-center" style="font-size: 13px">Index</th>
+                                    <th class="text-center" style="font-size: 13px">Item Name</th>
+                                    <th class="text-center" style="font-size: 13px">Unit Price</th>
+                                    <th class="text-center" style="font-size: 13px">Discounted Rate</th>
+                                    <th class="text-center" style="font-size: 13px">Discounted Price</th>
+                                    <th class="text-center" style="font-size: 13px;">Quantity</th>
+                                    <th class="text-center" style="font-size: 13px;">Line Total Amount</th>
+                                    <th class="text-center" style="column-width: 400px;font-size: 13px">MODIFY</th>
+                                </tr>
+
+                                </thead>
+
+                                <tbody>
+
+
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div> <br>
+
+                    <!--SALES INVOICE NOTE-->
+                    <div class="row">
+
+                        <!--MODEL NOTE-->
+                        <div class="col-12">
+
+                            <label for="salesNote" class="fw-bold empDescriptionLabel"> Sales Note : </label>
+
+                            <textarea class="textArea fw-bold" id="salesNote" cols="100" rows="5"></textarea>
+
+                        </div>
+
+                    </div><br><br>
+
+                    <!-- ADD, UPDATE & CLEAR BUTTON -->
+                    <div class="row text-center">
+
+                        <!--ADD BUTTON-->
+                        <div class="col-4">
+
+                            <button class="addBtn" id="btnAdd" onclick="submitBtnFunction()" > ADD  </button>
+
+                        </div>
+
+                        <!--CLEAR BUTTON-->
+                        <div class="col-4">
+
+                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR  </button>
+
+                        </div>
+
+                    </div><br>
+
+                </form>
+
+            </div>
+
+            <!--OVERLAY SLIDE-->
+            <div class="overlay-container">
+
+                <div class="overlay">
+
+                    <div class="overlay-panel overlay-left">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Sales Invoice Table!</h1>
+                        <p id="p" class="fw-bold">Please click the below button to display the Sales Invoice Table...</p>
+                        <button class="press" id="empTableBtn" onclick="refreshForm()">Sales Invoice Table</button>
+
+                    </div>
+
+                    <div class="overlay-panel overlay-right">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Sales Invoice  Form!</h1>
+                        <p class="fw-bold">Please click the below button to display the Sales Invoice Form...</p>
+                        <button class="press" id="empFormBtn">Sales Invoice Form</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                   <div class="row">
+
+                       <div class="col-5" style="background-image: url(Assets/images/allmobiles.jpg); background-size: cover" >
+
+                       </div>
+
+                       <div class="col-7">
+
+                           <div class="row">
+
+                               <div class="col-10">
+                                   <h4 class="modal-title" id="exampleModalLabel"> <i></i> Model Details </h4>
+
+                               </div>
+
+                               <div class="col-2">
+                                   <button type="button" class="btn-close btn-outline-danger text-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                               </div>
+
+                           </div> <br>
+
+                           <div class="row">
+
+                               <div class="col-12">
+
+                                   <table id="viewTable" class="table  table-striped table-hover shadow rounded">
+
+                                       <tr>
+                                           <th>
+                                               Sub Category :
+                                           </th>
+
+                                           <td id="modelSalesCustomerName">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+
+                                           <th>
+                                               Brand :
+                                           </th>
+
+                                           <td id="modelSalesCustomerAddress">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+
+                                           <th>
+                                               Model Name :
+                                           </th>
+
+                                           <td id="modelSalesContactNumber">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Model Number :
+                                           </th>
+
+                                           <td id="modelSalesCustomerNic">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Sales Price :
+                                           </th>
+
+                                           <td id="modelSalesCustomerEmail">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Purchase Price :
+                                           </th>
+
+                                           <td id="modelSalesTotalAmount">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Profit Rate :
+                                           </th>
+
+                                           <td id="modelSalesTax">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Minimum Discount Rate :
+                                           </th>
+
+                                           <td id="modelSalesDiscount">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Maximum Discount Rate  :
+                                           </th>
+
+                                           <td id="">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Model Status :
+                                           </th>
+
+                                           <td id="modelSalesNetAmount">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+
+                                           <th>
+                                               Model Note :
+                                           </th>
+
+                                           <td id="modelSalesNote">
+
+                                           </td>
+
+                                       </tr>
+
+                                   </table>
+
+                               </div>
+
+                           </div>
+
+                           <div class="row">
+
+                               <div class="col text-end">
+
+                                   <button type="button" class="btn btn-outline-primary" onclick="printView()">PRINT</button>
+
+                               </div>
+
+                           </div>
+
+                       </div>
+
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+

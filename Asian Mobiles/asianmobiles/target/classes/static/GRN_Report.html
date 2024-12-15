@@ -1,0 +1,281 @@
+<html>
+
+<head>
+
+    <!--JQUARY LINK-->
+    <script src="Assets/jquery/jquery.js"></script>
+
+    <link rel="stylesheet" href="Assets/datatable/css/datatables.min.css">
+    <script src="Assets/datatable/js/datatables.min.js"></script>
+
+    <!--BOOSTRAP CSS & JS LINK-->
+    <link rel="stylesheet" href="Assets/bootstrap/css/bootstrap.min.css">
+    <script src="Assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--FONT AWESOME LINK-->
+    <link rel="stylesheet" href="Assets/fontawesome/css/all.css">
+
+    <!--employee_js.JS , employee_css & COMMON.JS LINK-->
+    <link rel="stylesheet" href="Assets/style/common.css">
+    <script src="Assets/script/common.js"></script>
+    <script src="Assets/script/login.js"></script>
+
+    <!--<script src="Assets/script/login.js"></script>-->
+
+    <script>
+
+        //create function for refresh  table
+        const grnReportBtn = () => {
+
+            //create Array for employees
+            dates = new Array();
+
+            dates = getServiceRequest("/getgrnbydates/" + grnStartDate.value + "/" + grnEndDate.value);
+
+            //create display property list
+            let DisplayPropertyList = ['grn_code','supplier_company_name','bill_invoice_number','purchase_order_number', 'net_total_amount','username'];
+
+            //create display property list type
+            let DisplayPropertyListType = ['text','text',"text","text","text","text"];
+
+            // calling filldataintotable function to fill data
+            fillDataIntoTable(tableGRNReport, dates, DisplayPropertyList, DisplayPropertyListType, formRefill, rowDelete, rowView);
+
+            //Invisibling the Delete Button in the table when the Status is deleted (Once Deleted the Details or row, the Delete Btn will Disappear)
+            for (let index in dates){
+
+                tableGRNReport.children[1].children[index].children[7].remove();
+
+            }
+
+            //need to add jquery table
+            $('#tableGRNReport').dataTable();
+
+        }
+
+        const formRefill = () => {
+
+        }
+        const rowDelete = () => {
+
+        }
+        const rowView = () => {
+
+        }
+
+    </script>
+
+    <title>ItemsInventory_Management-Asian_Mobiles</title>
+
+</head>
+
+<!--ADDED BACKGROUND PICTURE ON BODY TAG BY CSS-->
+<body style="background-image: url(Assets/images/desmal14.jpg); overflow-x: hidden; overflow-y: hidden; background-size: cover;">
+
+
+<!--NAVIGATION BAR BY BOOSTRAP5-->
+<div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
+    <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Administration
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li id="EMPLOYEE"><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
+                            <li id="USER"><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
+                            <li id="PRIVILEGE"><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Sales
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="CUSTOMER"><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
+                            <li id="PRE-ORDER"><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+                            <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Sales-Invoice Management System</a></li>
+                            <li id="SALES-PAYMENT"><a class="dropdown-item fw-bold" href="/customerpayment">Customer Payment Management System</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Purchase
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="SUPPLIER"><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
+                            <li id="QUOTATION-REQUEST"><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
+                            <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
+                            <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
+                            <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+                            <li id="PURCHASE-PAYMENT"><a class="dropdown-item fw-bold" href="/supplierpayment">Supplier Payment Management System</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Inventory
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="ITEMS-INVENTORY"><a class="dropdown-item fw-bold" href="/itemsinventory">Items Inventory Management System</a></li>
+                            <li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Reports
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="GRN-REPORT"><a class="dropdown-item fw-bold" href="/grnReports">GRN Reports</a></li>
+                            <!--<li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>-->
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            repair
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" onclick="signOutFunction()" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" style="-webkit-text-stroke: 1.5px rgb(0,196,255) ;font-size: 20px;" id="liaLoggedUser">LoggedUser Name</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+    <div class="container-fluid body">
+
+
+        <div class="row moduleTitleText">
+            <h1 class="fw-bold">GRN REPORT</h1>
+        </div>
+
+        <div class="moduleManagementContainer" id="empMancontainer">
+
+            <!----DAILY REPORT TABLE CONTAINER-->
+            <div class="form-container moduleTable-container" id="employeeFormContainer">
+
+                <!--DAILY REPORT TABLE-->
+                <div class="row">
+
+                    <div class="col-9">
+
+                        <h2 class="fw-bold"><i class="fa fa-table"></i>GRN REPORT TABLE</h2>
+
+                    </div>
+
+                    <div class="col-3 text-end">
+
+                        <button type="button" class="btn btn-outline-primary" onclick="printTable(tableGRNReport)">PRINT REPORT</button>
+
+                    </div>
+
+                </div><br>
+
+                <div class="row">
+
+                    <div class="col-4 text-end">
+
+                        <input type="text" class="fw-bold" id="grnStartDate" name="date" onfocus="(this.type='date')"
+                        onblur="if(!this.value) this.type='text'" required>
+
+                        <label for="grnStartDate" class="fw-bold">Start Date<span id="star">*</span></label>
+
+                        <i style="width: 100%"></i>
+
+                    </div>
+
+                    <div class="col-4 text-end">
+
+                        <input type="text" class="fw-bold" id="grnEndDate" name="date" onfocus="(this.type='date')"
+                               onblur="if(!this.value) this.type='text'" required>
+
+                        <label for="grnEndDate" class="fw-bold">End Date<span id="star">*</span></label>
+
+                        <i style="width: 100%"></i>
+
+                    </div>
+
+                    <div class="col-4 text-end">
+
+                        <button type="button" class="btn btn-outline-success" onclick="grnReportBtn()">GENERATE GRN</button>
+
+                    </div>
+
+                </div><br>
+
+                <table class="table table-hover table-dark table-striped-columns" id="tableGRNReport">
+
+                    <thead class="table-secondary">
+
+                    <tr class="fw-bold">
+                        <th class="text-center">#</th>
+                        <th class="text-center" style="font-size: 13px">GRN CODE</th>
+                        <th class="text-center" style="font-size: 13px">Supplier NAME</th>
+                        <th class="text-center" style="font-size: 13px">BILL INVOICE NO</th>
+                        <th class="text-center" style="font-size: 13px">PRE-ORDER NO</th>
+                        <th class="text-center" style="font-size: 13px">TOTAL AMOUNT</th>
+                        <th class="text-center" style="font-size: 13px">ADDED USER</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody class="text-center">
+
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+
+            <!--OVERLAY SLIDE-->
+            <div class="overlay-container">
+
+                <div class="overlay">
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
+
+

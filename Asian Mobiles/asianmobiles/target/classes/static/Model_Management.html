@@ -1,0 +1,682 @@
+<html>
+
+<head>
+
+    <!--JQUARY LINK-->
+    <script src="Assets/jquery/jquery.js"></script>
+
+    <link rel="stylesheet" href="Assets/datatable/css/datatables.min.css">
+    <script src="Assets/datatable/js/datatables.min.js"></script>
+
+    <!--BOOSTRAP CSS & JS LINK-->
+    <link rel="stylesheet" href="Assets/bootstrap/css/bootstrap.min.css">
+    <script src="Assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--FONT AWESOME LINK-->
+    <link rel="stylesheet" href="Assets/fontawesome/css/all.css">
+
+    <!--employee_js.JS , employee_css & COMMON.JS LINK-->
+    <link rel="stylesheet" href="Assets/style/common.css">
+    <script src="Assets/script/common.js"></script>
+    <script src="Assets/script/model.js"></script>
+    <script src="Assets/script/login.js"></script>
+
+    <title>Model_Management-Asian_Mobiles</title>
+
+</head>
+
+<!--ADDED BACKGROUND PICTURE ON BODY TAG BY CSS-->
+<body style="background-image: url(Assets/images/desmal14.jpg); overflow-x: hidden; overflow-y: hidden; background-size: cover;">
+
+
+<!--NAVIGATION BAR BY BOOSTRAP5-->
+<div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
+    <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Administration
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li id="EMPLOYEE"><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
+                            <li id="USER"><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
+                            <li id="PRIVILEGE"><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Sales
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="CUSTOMER"><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
+                            <li id="PRE-ORDER"><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+                            <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Sales-Invoice Management System</a></li>
+                            <li id="SALES-PAYMENT"><a class="dropdown-item fw-bold" href="/customerpayment">Customer Payment Management System</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Purchase
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="SUPPLIER"><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
+                            <li id="QUOTATION-REQUEST"><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
+                            <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
+                            <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
+                            <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+                            <li id="PURCHASE-PAYMENT"><a class="dropdown-item fw-bold" href="/supplierpayment">Supplier Payment Management System</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Inventory
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="ITEMS-INVENTORY"><a class="dropdown-item fw-bold" href="/itemsinventory">Items Inventory Management System</a></li>
+                            <li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Reports
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="GRN-REPORT"><a class="dropdown-item fw-bold" href="/grnReports">GRN Reports</a></li>
+                            <!--<li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>-->
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            repair
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" onclick="signOutFunction()" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" style="-webkit-text-stroke: 1.5px rgb(0,196,255) ;font-size: 20px;" id="liaLoggedUser">LoggedUser Name</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+    <div class="container-fluid body">
+
+
+        <div class="row moduleTitleText">
+            <h1 class="fw-bold">MODEL MANAGEMENT SYSTEM</h1>
+        </div>
+
+        <div class="moduleManagementContainer" id="empMancontainer">
+
+            <!----MODEL TABLE CONTAINER-->
+            <div class="form-container moduleTable-container" id="employeeFormContainer">
+
+                <!--MODEL TABLE-->
+                <div class="row">
+
+                    <div class="col-9">
+
+                        <h2 class="fw-bold"><i class="fa fa-table"></i>MODEL TABLE</h2>
+
+                    </div>
+
+                    <div class="col-3 text-end">
+
+                        <button type="button" class="btn btn-outline-primary" onclick="printTable(tableModel)">PRINT TABLE</button>
+
+                    </div>
+
+                </div><br>
+
+                <table class="table table-hover table-dark table-striped-columns" id="tableModel">
+
+                    <thead class="table-secondary" style="text-transform: uppercase">
+
+                    <tr class="fw-bold">
+                        <th class="text-center" style="font-size: 13px">Index</th>
+                        <th class="text-center" style="font-size: 13px">Sub-Category</th>
+                        <th class="text-center" style="font-size: 13px">Model Name</th>
+                        <th class="text-center" style="font-size: 13px;">Model Number</th>
+                        <th class="text-center" style="font-size: 13px">Sales Price</th>
+                        <th class="text-center" style="font-size: 13px">Purchase Price</th>
+                        <th class="text-center" style="font-size: 13px">Status</th>
+                        <th class="text-center modify" style="column-width: 250px;font-size: 13px">MODIFY</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+
+            <!----MODEL FORM CONTAINER-->
+            <div class="form-container moduleForm-container">
+
+                <!-- MODEL FORM -->
+                <form onsubmit="return false">
+
+                    <!--- MODEL FORM HEADING -->
+                    <div class="row">
+                        <h2 class="fw-bold"><i class="fa fa-tasks"></i> MODEL FORM</h2>
+                    </div>
+
+                    <!--- REQUIRED STAR MARK  -->
+                    <div class="row text-end">
+                        <span class="fw-bold" style="font-size: 18px;"><span id="star">*</span> Required
+                        </span>
+                    </div><br>
+
+                    <!--MODEL CATEGORY /MODEL SUBCATEGORY /MODEL BRAND-->
+                    <div class="row">
+
+                        <!--MODEL CATEGORY-->
+                        <div class="col-4 selectStyle">
+
+                            <label for="modelCategory" id="labelModelCategory" class="fw-bold">Model Category : <span id="star">*</span></label>
+
+                            <select id="modelCategory" class="fw-bold" required>
+
+                            </select>
+
+                            <i style="top: 171px; width: 31%"></i>
+
+                        </div>
+
+                        <!--MODEL SUB-CATEGORY-->
+                        <div class="col-4 selectStyle" >
+
+                            <label for="modelSubCategory" id="labelModelSubCategory" class="fw-bold">Model Sub-Category : <span id="star">*</span></label>
+
+                            <select id="modelSubCategory" class="fw-bold" onchange="selectValidator(modelSubCategory, '','model', 'sub_catergory_id','oldModel')" required>
+
+                            </select>
+
+                            <i style="top: 171px; width: 31%; left: 35%"></i>
+
+                        </div>
+
+                        <!--MODEL BRAND-->
+                        <div class="col-4 selectStyle">
+
+                            <label for="modelBrand" id="labelModelBrand" class="fw-bold">Model Brand : <span id="star">*</span></label>
+
+                            <select id="modelBrand" class="fw-bold" onchange="selectValidator(modelBrand, '','model', 'brand_id','oldModel'); generateModelName()" required>
+
+                            </select>
+
+                            <i style="top: 171px; width: 31%; left: 67%"></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--PHONE SERIES /PHONE MODEL /MODEL CAPACITY-->
+                    <div class="row">
+
+                        <!--PHONE SERIES-->
+                        <div class="col-4 selectStyle">
+
+                            <label for="phoneModel" id="labelPhoneSeries" class="fw-bold">Phone Series : </label>
+
+                            <select id="phoneSeries" class="fw-bold">
+
+                            </select>
+
+                            <i style="top: 243px; width: 31%"></i>
+
+                        </div>
+
+                        <!--PHONE MODEL-->
+                        <div class="col-4 selectStyle">
+
+                            <label for="phoneModel" id="labelPhoneModel" class="fw-bold">Phone Model : <span id="star">*</span></label>
+
+                            <select id="phoneModel" class="fw-bold" onchange="selectValidator(phoneModel, '','model', 'phone_model_name_id','oldModel'); generateModelName()" required>
+
+                            </select>
+
+                            <i style="top: 243px; width: 31%; left: 35%"></i>
+
+                        </div>
+
+                        <!--MODEL CAPACITY-->
+                        <div class="col-4 selectStyle">
+
+                            <label for="modelCapacity" id="labelModelCapacity" class="fw-bold">Model Capacity : <span id="star">*</span></label>
+
+                            <select id="modelCapacity" class="fw-bold" onchange="selectValidator(modelCapacity, '','model', 'capacity_id','oldModel'); generateModelName()" required>
+
+                            </select>
+
+                            <i style="top: 243px; width: 31%; left: 67%"></i>
+
+                        </div>
+
+
+                    </div><br>
+
+                    <!--MODEL NAME /MODEL NUMBER-->
+                    <div class="row">
+
+                        <!--MODEL NAME-->
+                        <div class="col-6 inputBox" style="width: 50%">
+
+                            <input type="text" class="fw-bold" id="modelName"
+                                   onkeyup="textFeildValidtor(modelName,'^[A-Za-z0-9\\s]{7,25}$','model','model_name','oldModel')"
+                                   required>
+
+                            <label for="modelName" id="labelModelName" class="fw-bold">Model Name : <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 100%"></i>
+
+                        </div>
+
+                        <!--MODEL NUMBER-->
+                        <div class="col-6 inputBox" style="width: 50%">
+
+                            <input type="text" class="fw-bold" id="modelNumber"
+                                   onkeyup="textFeildValidtor(modelNumber,'^[A-Z0-9\\/\\-]{4,15}$','model','model_number','oldModel')"
+                                   required>
+
+                            <label for="modelNumber" id="labelModelNumber" class="fw-bold">Model Number : <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 100%"></i>
+
+                        </div>
+
+
+                    </div><br>
+
+                    <!--MODEL SALE PRICE/ MODEL PURCHASE PRICE/ MODEL STATUS-->
+                    <div class="row">
+
+                        <!--MODEL SALE PRICE-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="modelSalesPrice"
+                                   onkeyup="textFeildValidtor(modelSalesPrice,'^[0-9]{3,6}$','model','sales_price','oldModel')"
+                                   required>
+
+                            <label for="modelSalesPrice" id="labelModelSalesPrice" class="fw-bold">Model Sale Price : <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                        <!--MODEL PURCHASE PRICE-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="modelPurchasePrice"
+                                   onkeyup="textFeildValidtor(modelPurchasePrice,'^[0-9]{3,6}$','model','purchase_price','oldModel')"
+                                   required>
+
+                            <label for="modelPurchasePrice" id="labelModelPurchasePrice" class="fw-bold">Model Purchase Price : <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                        <!--MODEL STATUS-->
+                        <div class="col-4 selectStyle">
+
+                            <label for="modelStatus" id="labelModelStatus" class="fw-bold">Model Status : <span id="star">*</span></label>
+
+                            <select id="modelStatus" class="fw-bold" onchange="selectValidator(modelStatus, '','model','model_status_id','oldModel')" required>
+
+                            </select>
+
+                            <i style="top: 377px; width: 31%; left: 67%"></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--MODEL PROFIT RATE /MODEL MINIMUM DISCOUNT /MODEL MAXIMUM DISCOUNT-->
+                    <div class="row">
+
+                        <!--MODEL PROFIT RATE-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="modelProfitRate"
+                                   onkeyup="textFeildValidtor(modelProfitRate,'^[0-9]{1,3}[.][0-9]{1,2}$','model','profit_rate','oldModel')"
+                                   required>
+
+                            <label for="modelProfitRate" id="labelModelProfitRate" class="fw-bold">Model Profit Rate (ex:-xx.xx) : <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                        <!--MODEL MINIMUM DISCOUNT-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="modelMinimumDiscount"
+                                   onkeyup="textFeildValidtor(modelMinimumDiscount,'^[0-9]{1,2}[.][0-9]{1,2}$','model','min_discount_rate','oldModel')"
+                                   required>
+
+                            <label for="modelMinimumDiscount" id="labelModelMinimumDiscount" class="fw-bold">Model Minimum Discount (ex:-xx.xx) : <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                        <!--MODEL MAXIMUM DISCOUNT-->
+                        <div class="col-4 inputBox">
+
+                            <input type="text" class="fw-bold" id="modelMaximumDiscount"
+                                   onkeyup="textFeildValidtor(modelMaximumDiscount,'^[0-9]{1,2}[.][0-9]{1,2}$','model','max_discount_rate','oldModel')"
+                                   required>
+
+                            <label for="modelMaximumDiscount" id="labelModelMaximumDiscount" class="fw-bold">Model Maximum Discount (ex:-xx.xx) : <span
+                                    id="star">*</span></label>
+
+                            <i style="width: 96%"></i>
+
+                        </div>
+
+                    </div><br><br><br>
+
+                    <!--MODEL NOTE-->
+                    <div class="row">
+
+                        <!--MODEL NOTE-->
+                        <div class="col-12">
+
+                            <label for="modelNote" class="fw-bold empDescriptionLabel"> Model Note :
+                            </label>
+
+                            <textarea class="textArea fw-bold" id="modelNote" cols="100" rows="5"></textarea>
+
+                        </div>
+
+                    </div><br><br>
+
+                    <!-- ADD, UPDATE & CLEAR BUTTON -->
+                    <div class="row text-center">
+
+                        <!--ADD BUTTON-->
+                        <div class="col-4">
+
+                            <button class="addBtn" id="btnAdd" onclick="submitBtnFunction()" > ADD  </button>
+
+                        </div>
+
+                        <!--UPDATE BUTTON-->
+                        <div class="col-4">
+
+                            <button class="updateBtn" id="btnUpdate"  onclick="updateBTN()" > UPDATE </button>
+
+                        </div>
+
+                        <!--CLEAR BUTTON-->
+                        <div class="col-4">
+
+                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR  </button>
+
+                        </div>
+
+                    </div><br>
+
+                </form>
+
+            </div>
+
+            <!--OVERLAY SLIDE-->
+            <div class="overlay-container">
+
+                <div class="overlay">
+
+                    <div class="overlay-panel overlay-left">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Model Table!</h1>
+                        <p id="p" class="fw-bold">Please click the below button to display the Model Table...</p>
+                        <button class="press" id="empTableBtn" onclick="refreshForm()">Model Table</button>
+
+                    </div>
+
+                    <div class="overlay-panel overlay-right">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Model Form!</h1>
+                        <p class="fw-bold">Please click the below button to display the Model Form...</p>
+                        <button class="press" id="empFormBtn">Model Form</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                   <div class="row">
+
+                       <div class="col-5" style="background-image: url(Assets/images/allmobiles.jpg); background-size: cover" >
+
+                       </div>
+
+                       <div class="col-7">
+
+                           <div class="row">
+
+                               <div class="col-10">
+                                   <h4 class="modal-title" id="exampleModalLabel"> <i></i> Model Details </h4>
+
+                               </div>
+
+                               <div class="col-2">
+                                   <button type="button" class="btn-close btn-outline-danger text-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                               </div>
+
+                           </div> <br>
+
+                           <div class="row">
+
+                               <div class="col-12">
+
+                                   <table id="viewTable" class="table  table-striped table-hover shadow rounded">
+
+                                       <tr>
+                                           <th>
+                                               Sub Category :
+                                           </th>
+
+                                           <td id="modSubCategory">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+
+                                           <th>
+                                               Brand :
+                                           </th>
+
+                                           <td id="modBrand">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+
+                                           <th>
+                                               Model Name :
+                                           </th>
+
+                                           <td id="modModelName">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Model Number :
+                                           </th>
+
+                                           <td id="modModelNo">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Sales Price :
+                                           </th>
+
+                                           <td id="modSalesPrice">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Purchase Price :
+                                           </th>
+
+                                           <td id="modPurchasePrice">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Profit Rate :
+                                           </th>
+
+                                           <td id="modProfitRate">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Minimum Discount Rate :
+                                           </th>
+
+                                           <td id="modMinDiscountRate">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Maximum Discount Rate  :
+                                           </th>
+
+                                           <td id="modMaxDiscountRate">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Model Status :
+                                           </th>
+
+                                           <td id="modModelStatus">
+
+                                           </td>
+
+                                       </tr>
+
+                                       <tr>
+
+                                           <th>
+                                               Model Note :
+                                           </th>
+
+                                           <td id="modNote">
+
+                                           </td>
+
+                                       </tr>
+
+                                   </table>
+
+                               </div>
+
+                           </div>
+
+                           <div class="row">
+
+                               <div class="col text-end">
+
+                                   <button type="button" class="btn btn-outline-primary" onclick="printView()">PRINT</button>
+
+                               </div>
+
+                           </div>
+
+                       </div>
+
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,491 @@
+<html>
+
+<head>
+
+    <!--JQUARY LINK-->
+    <script src="Assets/jquery/jquery.js"></script>
+
+    <link rel="stylesheet" href="Assets/datatable/css/datatables.min.css">
+    <script src="Assets/datatable/js/datatables.min.js"></script>
+
+    <!--BOOSTRAP CSS & JS LINK-->
+    <link rel="stylesheet" href="Assets/bootstrap/css/bootstrap.min.css">
+    <script src="Assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--FONT AWESOME LINK-->
+    <link rel="stylesheet" href="Assets/fontawesome/css/all.css">
+
+    <!--employee_js.JS , employee_css & COMMON.JS LINK-->
+    <link rel="stylesheet" href="Assets/style/common.css">
+    <script src="Assets/script/common.js"></script>
+    <script src="Assets/script/customer.js"></script>
+    <script src="Assets/script/login.js"></script>
+
+    <title>Customer_Management-Asian_Mobiles</title>
+
+</head>
+
+<!--ADDED BACKGROUND PICTURE ON BODY TAG BY CSS-->
+<body style="background-image: url(Assets/images/desmal14.jpg); overflow-x: hidden; overflow-y: hidden; background-size: cover;">
+
+
+<!--NAVIGATION BAR BY BOOSTRAP5-->
+<div class="row topNavBar" > <!--ADDED A CLASS CALLED topNavBar COZ TO DARK THE BACKGROUND OF THE NAV BAR-->
+    <nav class="navbar navbar-expand-lg fw-bold navbar-dark" >
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#"><img src="Assets/images/asiaMobile.jpg" style="width: 190px;height: 40px;border-radius: 8px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/dashboard" style=" font-size: 20px;"><i class="fa-solid fa-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Administration
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li id="EMPLOYEE"><a class="dropdown-item fw-bold" href="/employee">Employee Management System</a></li>
+                            <li id="USER"><a class="dropdown-item fw-bold" href="/user">User Management System</a></li>
+                            <li id="PRIVILEGE"><a class="dropdown-item fw-bold" href="/privilege">Privilege Management System</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Sales
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="CUSTOMER"><a class="dropdown-item fw-bold" href="/customer">Customer Management System</a></li>
+                            <li id="PRE-ORDER"><a class="dropdown-item fw-bold" href="/preorder">Pre-Order Management System</a></li>
+                            <li id="SALES-INVOICE"><a class="dropdown-item fw-bold" href="/salesinvoice">Sales-Invoice Management System</a></li>
+                            <li id="SALES-PAYMENT"><a class="dropdown-item fw-bold" href="/customerpayment">Customer Payment Management System</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Purchase
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="SUPPLIER"><a class="dropdown-item fw-bold" href="/supplier">Supplier Management System</a></li>
+                            <li id="QUOTATION-REQUEST"><a class="dropdown-item fw-bold" href="/quotationrequest">Quotation Request Management System</a></li>
+                            <li id="QUOTATION"><a class="dropdown-item fw-bold" href="/quotation">Quotation Management System</a></li>
+                            <li id="PURCHASE-ORDER"><a class="dropdown-item fw-bold" href="/purchaseorder">Purchase-Order Management System</a></li>
+                            <li id="GOODS-RECEIVE-NOTE"><a class="dropdown-item fw-bold" href="/goodsreceivenote">Goods Receive Note Management System</a></li>
+                            <li id="PURCHASE-PAYMENT"><a class="dropdown-item fw-bold" href="/supplierpayment">Supplier Payment Management System</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Inventory
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="ITEMS-INVENTORY"><a class="dropdown-item fw-bold" href="/itemsinventory">Items Inventory Management System</a></li>
+                            <li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            Reports
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                            <li id="GRN-REPORT"><a class="dropdown-item fw-bold" href="/grnReports">GRN Reports</a></li>
+                            <!--<li id="MODEL"><a class="dropdown-item fw-bold" href="/model">Model Management System</a></li>
+                            <li id="ITEMS"><a class="dropdown-item fw-bold" href="/items">Items Management System</a></li>-->
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
+                            repair
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                            <li><a class="dropdown-item fw-bold" href="#"></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" onclick="signOutFunction()" style="-webkit-text-stroke: 1.5px rgb(255, 0, 0) ;font-size: 20px;">Log-Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" style="-webkit-text-stroke: 1.5px rgb(0,196,255) ;font-size: 20px;" id="liaLoggedUser">LoggedUser Name</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+    <div class="container-fluid body">
+
+
+        <div class="row moduleTitleText">
+            <h1 class="fw-bold">CUSTOMER MANAGEMENT SYSTEM</h1>
+        </div>
+
+        <div class="moduleManagementContainer" id="empMancontainer">
+
+            <!----CUSTOMER TABLE CONTAINER-->
+            <div class="form-container moduleTable-container" id="employeeFormContainer">
+
+                <!--CUSTOMER TABLE-->
+                <div class="row">
+
+                    <div class="col-9">
+
+                        <h2 class="fw-bold"><i class="fa fa-table"></i>CUSTOMER TABLE</h2>
+
+                    </div>
+
+                    <div class="col-3 text-end">
+
+                        <button type="button" class="btn btn-outline-primary" onclick="printTable(tableCustomer)">PRINT TABLE</button>
+
+                    </div>
+
+                </div><br>
+
+                <table class="table table-hover table-dark table-striped-columns" id="tableCustomer">
+
+                    <thead class="table-secondary">
+
+                    <tr class="fw-bold">
+                        <th class="text-center">#</th>
+                        <th class="text-center" style="font-size: 13px">CUSTOMER NAME</th>
+                        <th class="text-center" style="font-size: 13px">CUSTOMER NIC</th>
+                        <th class="text-center" style="font-size: 13px;">E-MAIL</th>
+                        <th class="text-center" style="font-size: 13px">CONTACT NO</th>
+                        <th class="text-center" style="font-size: 13px">ADDRESS</th>
+                        <th class="text-center" style="font-size: 13px">STATUS</th>
+                        <th class="text-center modify" style="column-width: 800px;font-size: 13px">MODIFY</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+
+            <!----CUSTOMER FORM CONTAINER-->
+            <div class="form-container moduleForm-container">
+
+                <!--  CUSTOMER FORM -->
+                <form onsubmit="return false">
+
+                    <!--- CUSTOMER FORM HEADING -->
+                    <div class="row">
+                        <h2 class="fw-bold"><i class="fa fa-user"></i>CUSTOMER FORM</h2>
+                    </div>
+
+                    <!--- REQUIRED STAR MARK  -->
+                    <div class="row text-end">
+                        <span class="fw-bold" style="font-size: 18px;"><span id="star">*</span> Required
+                        </span>
+                    </div><br>
+
+                    <!--CUSTOMER NAME /USER NAME-->
+                    <div class="row">
+
+                        <!--CUSTOMER NAME-->
+                        <div class="col-6 inputBox" style="width: 50%;">
+
+                            <input type="text" class="fw-bold" id="customerFullname" onkeyup="nameCapitalLetterCheckValidtor(customerFullname,'^(([A-Za-z]{3,20}[\\s])+([A-Za-z]{3,16}))$','customer','fullname','oldCustomer')"  required>
+
+                            <label for="customerFullname" id="labelCustomerFullname" class="fw-bold">Customer Fullname : <span
+                                    id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--CUSTOMER NIC-->
+                        <div class="col-6 inputBox" style="width: 50%;">
+
+                            <input type="text" class="fw-bold" id="customerNic" onkeyup="textFeildValidtor(customerNic,'^(([0-9]{9}[VvXx])|([0-9]){12})$','customer','nic','oldCustomer')"  required>
+
+                            <label for="customerNic" id="labelCustomerNic" class="fw-bold">Customer NIC : <span
+                                    id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--CUSTOMER CONTACT NO /CUSTOMER EMAIL-->
+                    <div class="row">
+
+                        <!--CUSTOMER CONTACT NO -->
+                        <div class="col-6 inputBox" style="width: 50%;">
+
+                            <input type="text" class="fw-bold" id="customerMobile"  onkeyup="textFeildValidtor(customerMobile,'^[0][7][01245678][0-9]{7}$','customer','mobile','oldCustomer')" required>
+
+                            <label for="customerMobile" id="labelCustomerMobile" class="fw-bold">Contact Number :  <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                        <!--CUSTOMER EMAIL-->
+                        <div class="col-6 inputBox" style="width: 50%;">
+
+                            <input type="text" class="fw-bold" id="customerEmail" onkeyup="textFeildValidtor(customerEmail,'^[A-Za-z0-9]{5,20}[@][a-z]{4,10}[.][a-z]{2,5}$','customer','email','oldCustomer')" required>
+
+                            <label for="customerEmail" id="labelCustomerEmail" class="fw-bold">Customer Email :  <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+
+                    </div><br>
+
+                    <!--CUSTOMER STATUS /CUSTOMER ADDRESS-->
+                    <div class="row">
+
+                        <!--CUSTOMER STATUS-->
+                        <div class="col-6 selectStyle" style="width: 47%;">
+
+                            <label for="customerStatus" id="labelCustomerStatus" class="fw-bold">Customer Status : <span id="star">*</span></label>
+
+                            <select id="customerStatus" class="fw-bold" onchange="selectValidator(customerStatus, '','customer', 'customer_status_id','oldCustomer')" required>
+
+                            </select>
+
+                            <i style="top: 299px; width: 45%;"></i>
+
+                        </div>
+
+
+                        <!--CUSTOMER ADDRESS-->
+                        <div class="col-6 inputBox" style="width: 50%; left: 3%">
+
+                            <input type="text" class="fw-bold" id="customerAddress" onkeyup="textFeildValidtor(customerAddress,'^[A-Za-z0-9\\/\\.\\,\\s]{1,250}$','customer','address','oldCustomer')" required>
+
+                            <label for="customerAddress" id="labelCustomerAddress" class="fw-bold">Customer Address :  <span id="star">*</span></label>
+
+                            <i></i>
+
+                        </div>
+
+                    </div><br>
+
+                    <!--CUSTOMER NOTE-->
+                    <div class="row">
+
+                        <!--CUSTOMER NOTE-->
+                        <div class="col-12">
+
+                            <label for="customerNote" class="fw-bold empDescriptionLabel"> Customer Note :
+                            </label>
+
+                            <textarea class="textArea fw-bold" id="customerNote" cols="100" rows="5"></textarea>
+
+                        </div>
+
+                    </div><br><br>
+
+                    <!-- ADD, UPDATE & CLEAR BUTTON -->
+                    <div class="row text-center">
+
+                        <!--ADD BUTTON-->
+                        <div class="col-4">
+
+                            <button class="addBtn" id="btnAdd" onclick="submitBtnFunction()" > ADD  </button>
+
+                        </div>
+
+                        <!--UPDATE BUTTON-->
+                        <div class="col-4">
+
+                            <button class="updateBtn" id="btnUpdate"  onclick="updateBTN()" > UPDATE </button>
+
+                        </div>
+
+                        <!--CLEAR BUTTON-->
+                        <div class="col-4">
+
+                            <button class="clearBtn" id="btnClear" onclick="clearBtn()" > CLEAR  </button>
+
+                        </div>
+
+                    </div><br>
+
+                </form>
+
+            </div>
+
+            <!--OVERLAY SLIDE-->
+            <div class="overlay-container">
+
+                <div class="overlay">
+
+                    <div class="overlay-panel overlay-left">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Customer Table!</h1>
+                        <p id="p" class="fw-bold">Please click the below button to display the Customer Table...</p>
+                        <button class="press" id="empTableBtn">Customer Table</button>
+
+                    </div>
+
+                    <div class="overlay-panel overlay-right">
+
+                        <h1 class="overlayPanelH1 fw-bold" id="overlayPanelH1">Customer Form!</h1>
+                        <p class="fw-bold">Please click the below button to display the Customer Form...</p>
+                        <button class="press" id="empFormBtn">Customer Form</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                   <div class="row">
+
+                       <div class="col-5" style="background-image: url(Assets/images/allmobiles.jpg); background-size: cover" >
+
+                       </div>
+
+                       <div class="col-7">
+
+                           <div class="row">
+
+                               <div class="col-10">
+                                   <h4 class="modal-title" id="exampleModalLabel"> <i class="fa fa-user"></i> User Details</h4>
+
+                               </div>
+
+                               <div class="col-2">
+
+                                   <button type="button" class="btn-close btn-outline-danger text-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                               </div>
+
+                           </div> <br>
+
+                           <div class="row">
+
+                               <div class="col-12">
+
+                                   <table id="viewTable" class="table  table-striped table-hover shadow rounded">
+
+                                       <tr>
+                                           <th>
+                                               Employee Number :
+                                           </th>
+
+                                           <td id="modUserEmpNo">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               Employee Name :
+                                           </th>
+
+                                           <td id="modUserEmpName">
+
+                                           </td>
+                                       </tr>
+
+                                           <th>
+                                               Employee Username :
+                                           </th>
+
+                                           <td id="modUserName">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               User E-mail :
+                                           </th>
+
+                                           <td id="modUserEmail">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               User Status :
+                                           </th>
+
+                                           <td id="modUserStatus">
+
+                                           </td>
+                                       </tr>
+
+                                       <tr>
+                                           <th>
+                                               User Roles :
+                                           </th>
+
+                                           <td id="modUserRoles">
+
+                                           </td>
+                                       </tr>
+
+
+                                   </table>
+
+                               </div>
+
+                           </div>
+
+                           <div class="row">
+
+                               <div class="col text-end">
+
+                                   <button type="button" class="btn btn-outline-primary" onclick="printView()">PRINT</button>
+
+                               </div>
+
+                           </div>
+
+                       </div>
+
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+
